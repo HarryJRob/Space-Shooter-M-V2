@@ -31,13 +31,23 @@ namespace SpaceShooterV2
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            //#region Force FullScreen
-            //_graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            //_graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            //Window.AllowUserResizing = false;
-            //_graphics.ToggleFullScreen();
+            #region Force FullScreen
 
-            //#endregion
+            if (!_testing)
+            {
+                _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                Window.AllowUserResizing = false;
+                _graphics.ToggleFullScreen();
+            }
+
+            #endregion
+
+            #region Console SetUp
+
+            Console.Title = "Developer console";
+
+            #endregion
 
             _graphics.ApplyChanges();
         }
@@ -78,6 +88,7 @@ namespace SpaceShooterV2
 
         protected override void Update(GameTime gameTime)
         {
+            Console.Clear();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -119,6 +130,7 @@ namespace SpaceShooterV2
                            Console.WriteLine("Collision at: {0},{1}",x ,y );
                            //Do collision check
                             var filteredBullets = ObjectCollisionList[x, y].OfType<Bullet>();
+                            //Check if any bullets collide with ships
                             foreach (Bullet b in filteredBullets)
                             {
                                 
@@ -127,8 +139,6 @@ namespace SpaceShooterV2
                     }
             }
             #endregion
-
-            Console.WriteLine("Update fps: {0}", Convert.ToInt32(1 / gameTime.ElapsedGameTime.TotalSeconds));
 
             base.Update(gameTime);
         }
