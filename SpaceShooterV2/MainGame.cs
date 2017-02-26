@@ -9,16 +9,17 @@ namespace SpaceShooterV2
 {
     public class MainGame : Game
     {
-        GraphicsDeviceManager _graphics;
-        SpriteBatch _spriteBatch;
+        // '_' denotes private/protected, 'Capital' denotes public
+        private GraphicsDeviceManager _graphics;
+        private SpriteBatch _spriteBatch;
 
         private const bool _testing = true;
         private Texture2D _collisionTex;
 
         private const int _columnNum = 10;
         private const int _rowNum = 10;
-        public float TileWidth;
-        public float TileHeight;
+        private float _tileWidth;
+        private float _tileHeight;
 
         public List<object>[,] ObjectCollisionList;
         public List<object> ObjectList;
@@ -69,8 +70,8 @@ namespace SpaceShooterV2
             }
             #endregion
 
-            TileWidth = (float) Window.ClientBounds.Width/_columnNum;
-            TileHeight = (float) Window.ClientBounds.Height/_rowNum;
+            _tileWidth = (float) Window.ClientBounds.Width/_columnNum;
+            _tileHeight = (float) Window.ClientBounds.Height/_rowNum;
 
             base.Initialize();
         }
@@ -157,8 +158,8 @@ namespace SpaceShooterV2
                     for (int y = 0; y < _rowNum; y++)
                     {
                         _spriteBatch.Draw(_collisionTex,
-                            new Rectangle((int) (x*TileWidth), (int) (y*TileHeight), (int) (TileWidth),
-                                (int) (TileHeight)), Color.White);
+                            new Rectangle((int) (x*_tileWidth), (int) (y*_tileHeight), (int) (_tileWidth),
+                                (int) (_tileHeight)), Color.White);
                     }
                 }
             }
