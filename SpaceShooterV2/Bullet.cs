@@ -8,5 +8,6 @@ namespace SpaceShooterV2
 {
     class Bullet
     {
+        
     }
 }
