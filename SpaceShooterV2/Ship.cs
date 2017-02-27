@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace SpaceShooterV2
 {
@@ -11,6 +12,7 @@ namespace SpaceShooterV2
         protected bool _collision;
         protected int _xVelocity;
         protected int _yVelocity;
+        protected int _health;
 
         public Ship() { } //No use but to allow inheritance
 
@@ -23,15 +25,17 @@ namespace SpaceShooterV2
             _yVelocity = yVelocity;
         }
 
-        public void Draw(SpriteBatch _spriteBatch, Texture2D _tex)
+        public void Draw(SpriteBatch spriteBatch, Texture2D tex)
         {
-            _spriteBatch.Draw(_tex,new Rectangle((int)_position.X,(int)_position.Y,_width,_height), Color.White);
+            spriteBatch.Draw(tex,new Rectangle((int)_position.X,(int)_position.Y,_width,_height), Color.White);
         }
 
-        public virtual void Update(GameTime _gameTime)
+        public virtual void Update(GameTime gameTime)
         {
-            _position.X += _xVelocity * _gameTime.ElapsedGameTime.Ticks;
+            _position.X += _xVelocity * gameTime.ElapsedGameTime.Ticks;
         }
+
+        public virtual void Update(GameTime gameTime, KeyboardState curKeyState) { }
 
         public Rectangle BoundingBox
         {

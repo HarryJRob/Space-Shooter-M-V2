@@ -9,7 +9,7 @@ namespace SpaceShooterV2
 {
     public class MainGame : Game
     {
-        // '_' denotes private/protected, 'Capital' denotes public
+        // '_' denotes private/protected, 'Capital' denotes public (I know this doesnt follow standard naming conventions)
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
@@ -21,8 +21,9 @@ namespace SpaceShooterV2
         private float _tileWidth;
         private float _tileHeight;
 
-        public List<object>[,] ObjectCollisionList;
-        public List<object> ObjectList;
+        private List<object>[,] ObjectCollisionList;
+        private List<object> ObjectList;
+        private List<Texture2D> TextureList;
 
         private const int _shipScale = 13;
         private const int _bulletScale = 50;
@@ -47,6 +48,7 @@ namespace SpaceShooterV2
             #region Console SetUp
 
             Console.Title = "Developer console";
+            Console.CursorVisible = false;
 
             #endregion
 
@@ -82,40 +84,11 @@ namespace SpaceShooterV2
             _collisionTex = Content.Load<Texture2D>("CollisionArea");
         }
 
-        protected override void UnloadContent()
-        {
-
-        }
-
         protected override void Update(GameTime gameTime)
         {
-            Console.Clear();
+            Console.Out.NewLine = "\r\n\r\n";
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            #region UpdateObjects
-
-            foreach (object CurObj in ObjectList)
-            {
-                if (CurObj.GetType() == typeof(PlayerShip))
-                {
-                    
-                }
-                else if (CurObj.GetType() == typeof(EnemyShip))
-                {
-                    
-                }
-                else if (CurObj.GetType() == typeof(Bullet))
-                {
-
-                }
-                else
-                {
-
-                }
-            }
-
-            #endregion
 
             #region Collision Check
             for (var x = 0; x < _columnNum; x++)
@@ -131,14 +104,49 @@ namespace SpaceShooterV2
                            Console.WriteLine("Collision at: {0},{1}",x ,y );
                            //Do collision check
                             var filteredBullets = ObjectCollisionList[x, y].OfType<Bullet>();
+                            var filteredShips = ObjectCollisionList[x, y].OfType<Ship>();
                             //Check if any bullets collide with ships
-                            foreach (Bullet b in filteredBullets)
+                            foreach (Bullet curBullet in filteredBullets)
                             {
-                                
+                                foreach (Ship curShip in filteredShips)
+                                {
+                                    if (curBullet.BoundingBox.Intersects(curShip.BoundingBox))
+                                    {
+                                        curShip.Collision = true;
+                                    }
+                                    else
+                                    {
+                                        curShip.Collision = false;
+                                    }
+                                }
                             }
                         }
                     }
             }
+            #endregion
+
+            #region UpdateObjects
+
+            foreach (object CurObj in ObjectList)
+            {
+                if (CurObj.GetType() == typeof(PlayerShip))
+                {
+
+                }
+                else if (CurObj.GetType() == typeof(EnemyShip))
+                {
+
+                }
+                else if (CurObj.GetType() == typeof(Bullet))
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+
             #endregion
 
             base.Update(gameTime);
@@ -158,8 +166,8 @@ namespace SpaceShooterV2
                     for (int y = 0; y < _rowNum; y++)
                     {
                         _spriteBatch.Draw(_collisionTex,
-                            new Rectangle((int) (x*_tileWidth), (int) (y*_tileHeight), (int) (_tileWidth),
-                                (int) (_tileHeight)), Color.White);
+                            new Rectangle((int)(x*_tileWidth), (int)(y*_tileHeight), (int)_tileWidth,
+                                (int)_tileHeight), Color.White);
                     }
                 }
             }
