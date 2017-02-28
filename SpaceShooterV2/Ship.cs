@@ -10,6 +10,11 @@ namespace SpaceShooterV2
 
         public Ship() { } //No use but to allow inheritance
 
+        public Ship(int Width, int Height, byte TexNum, int xVelocity, int yVelocity) : base(Width,Height, TexNum, xVelocity, yVelocity)
+        {
+            
+        }
+
         public virtual void Update(GameTime gameTime, KeyboardState curKeyState) { }
     }
 }

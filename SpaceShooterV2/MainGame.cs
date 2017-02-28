@@ -95,7 +95,7 @@ namespace SpaceShooterV2
 
             #region UpdateObjects
 
-            foreach (Ship CurObj in ObjectList)
+            foreach (GameObject CurObj in ObjectList)
             {
                 if (CurObj.GetType() == typeof(PlayerShip))
                 {
@@ -109,25 +109,22 @@ namespace SpaceShooterV2
                 {
                     CurObj.Update(gameTime);
                 }
-                else
-                {
 
-                }
-                if (CurObj.BoundingBox.Y > 0 && CurObj.BoundingBox.X > 0)
+                if (CurObj.BoundingBox.Y > 0 && CurObj.BoundingBox.X > 0 && !CurObj.Collision)
                 {
-                    Rectangle CurObjRec = CurObj.BoundingBox;
+                    Rectangle curObjRec = CurObj.BoundingBox;
                     ObjectCollisionList[
-                        (int) Math.Truncate(CurObjRec.X/_tileWidth),
-                        (int)Math.Truncate(CurObjRec.Y / _tileHeight)].Add(CurObj);
+                        (int)Math.Truncate(curObjRec.X/_tileWidth),
+                        (int)Math.Truncate(curObjRec.Y / _tileHeight)].Add(CurObj);
                     ObjectCollisionList[
-                        (int)Math.Truncate((CurObjRec.X + CurObjRec.Width) / _tileWidth),
-                        (int)Math.Truncate(CurObjRec.Y / _tileHeight)].Add(CurObj);
+                        (int)Math.Truncate((curObjRec.X + curObjRec.Width) / _tileWidth),
+                        (int)Math.Truncate(curObjRec.Y / _tileHeight)].Add(CurObj);
                     ObjectCollisionList[
-                        (int)Math.Truncate(CurObjRec.X / _tileWidth),
-                        (int)Math.Truncate((CurObjRec.Y + CurObjRec.Height) / _tileHeight)].Add(CurObj);
+                        (int)Math.Truncate(curObjRec.X / _tileWidth),
+                        (int)Math.Truncate((curObjRec.Y + curObjRec.Height) / _tileHeight)].Add(CurObj);
                     ObjectCollisionList[
-                        (int)Math.Truncate((CurObjRec.X + CurObjRec.Width) / _tileWidth),
-                        (int)Math.Truncate((CurObjRec.Y + CurObjRec.Height) / _tileHeight)].Add(CurObj);
+                        (int)Math.Truncate((curObjRec.X + curObjRec.Width) / _tileWidth),
+                        (int)Math.Truncate((curObjRec.Y + curObjRec.Height) / _tileHeight)].Add(CurObj);
                 }
             }
 
@@ -146,18 +143,22 @@ namespace SpaceShooterV2
                         {
                            //Do collision check
                             //Check if any bullets collide with ships
-                            foreach (Bullet curBullet in ObjectCollisionList[x, y])
+                            foreach (Bullet curBullet in ObjectCollisionList[x, y].OfType<Bullet>())
                             {
-                                foreach (Ship curShip in ObjectCollisionList[x,y])
+                                if (!curBullet.Collision)
                                 {
-                                    if (curShip.BoundingBox.Intersects(curBullet.BoundingBox))
+                                    foreach (Ship curShip in ObjectCollisionList[x, y].OfType<Ship>())
                                     {
-                                        Console.WriteLine("Collision at: {0},{1},{2}", x, y, (curShip.BoundingBox.Intersects(curBullet.BoundingBox)));
-                                        curShip.Collision = true;
-                                    }
-                                    else
-                                    {
-                                        curShip.Collision = false;
+                                        if (curShip.BoundingBox.Intersects(curBullet.BoundingBox) && !curShip.Collision)
+                                        {
+                                            Console.WriteLine("Collision at: {0},{1},{2}", x, y,
+                                                curShip.BoundingBox.Intersects(curBullet.BoundingBox));
+                                            curShip.Collision = true;
+                                        }
+                                        else
+                                        {
+                                            curShip.Collision = false;
+                                        }
                                     }
                                 }
                             }
@@ -194,7 +195,7 @@ namespace SpaceShooterV2
 
             #region Drawing Objects
 
-            foreach (Ship curShip in ObjectList)
+            foreach (GameObject curShip in ObjectList)
             {
                 curShip.Draw(_spriteBatch, _collisionTex);
             }

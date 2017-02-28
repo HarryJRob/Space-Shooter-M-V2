@@ -49,6 +49,7 @@ namespace SpaceShooterV2
         public bool Collision
         {
             set { _collision = value; }
+            get { return _collision;}
         }
     }
 }
