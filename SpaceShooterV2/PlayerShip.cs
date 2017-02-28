@@ -27,8 +27,6 @@ namespace SpaceShooterV2
 
         public override void Update(GameTime _gameTime)
         {
-
-
             base.Update(_gameTime); 
         }
     }

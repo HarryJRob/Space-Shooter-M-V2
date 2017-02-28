@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Bullet.cs" />
     <Compile Include="EnemyShip.cs" />
+    <Compile Include="GameObject.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="PlayerShip.cs" />
     <Compile Include="Program.cs" />

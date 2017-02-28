@@ -21,8 +21,8 @@ namespace SpaceShooterV2
         private float _tileWidth;
         private float _tileHeight;
 
-        private List<object>[,] ObjectCollisionList;
-        private List<object> ObjectList;
+        private List<GameObject>[,] ObjectCollisionList;
+        private List<GameObject> ObjectList;
         private List<Texture2D> TextureList;
 
         private const int _shipScale = 13;
@@ -58,16 +58,19 @@ namespace SpaceShooterV2
         protected override void Initialize()
         {
 
-            ObjectList = new List<object>();
+            ObjectList = new List<GameObject>();
+
+            ObjectList.Add(new PlayerShip(50,50,1,0,0,1,""));
+            ObjectList.Add(new Bullet(50,50,1,0,-1));
 
             #region ObjectCollisionList Set Up
-            ObjectCollisionList = new List<object>[_columnNum, _rowNum];
+            ObjectCollisionList = new List<GameObject>[_columnNum, _rowNum];
 
             for (int x = 0; x < _columnNum; x++)
             {
                 for (int y = 0; y < _rowNum; y++)
                 {
-                    ObjectCollisionList[x,y] = new List<object>();
+                    ObjectCollisionList[x, y] = new List<GameObject>();
                 }
             }
             #endregion
@@ -86,9 +89,49 @@ namespace SpaceShooterV2
 
         protected override void Update(GameTime gameTime)
         {
-            Console.Out.NewLine = "\r\n\r\n";
+            Console.Clear();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            #region UpdateObjects
+
+            foreach (Ship CurObj in ObjectList)
+            {
+                if (CurObj.GetType() == typeof(PlayerShip))
+                {
+
+                }
+                else if (CurObj.GetType() == typeof(EnemyShip))
+                {
+
+                }
+                else if (CurObj.GetType() == typeof(Bullet))
+                {
+                    CurObj.Update(gameTime);
+                }
+                else
+                {
+
+                }
+                if (CurObj.BoundingBox.Y > 0 && CurObj.BoundingBox.X > 0)
+                {
+                    Rectangle CurObjRec = CurObj.BoundingBox;
+                    ObjectCollisionList[
+                        (int) Math.Truncate(CurObjRec.X/_tileWidth),
+                        (int)Math.Truncate(CurObjRec.Y / _tileHeight)].Add(CurObj);
+                    ObjectCollisionList[
+                        (int)Math.Truncate((CurObjRec.X + CurObjRec.Width) / _tileWidth),
+                        (int)Math.Truncate(CurObjRec.Y / _tileHeight)].Add(CurObj);
+                    ObjectCollisionList[
+                        (int)Math.Truncate(CurObjRec.X / _tileWidth),
+                        (int)Math.Truncate((CurObjRec.Y + CurObjRec.Height) / _tileHeight)].Add(CurObj);
+                    ObjectCollisionList[
+                        (int)Math.Truncate((CurObjRec.X + CurObjRec.Width) / _tileWidth),
+                        (int)Math.Truncate((CurObjRec.Y + CurObjRec.Height) / _tileHeight)].Add(CurObj);
+                }
+            }
+
+            #endregion
 
             #region Collision Check
             for (var x = 0; x < _columnNum; x++)
@@ -101,17 +144,15 @@ namespace SpaceShooterV2
                              ContainsCompareTypes(typeof(EnemyShip), ObjectCollisionList[x, y])) &&
                             ContainsCompareTypes(typeof(Bullet), ObjectCollisionList[x, y]))
                         {
-                           Console.WriteLine("Collision at: {0},{1}",x ,y );
                            //Do collision check
-                            var filteredBullets = ObjectCollisionList[x, y].OfType<Bullet>();
-                            var filteredShips = ObjectCollisionList[x, y].OfType<Ship>();
                             //Check if any bullets collide with ships
-                            foreach (Bullet curBullet in filteredBullets)
+                            foreach (Bullet curBullet in ObjectCollisionList[x, y])
                             {
-                                foreach (Ship curShip in filteredShips)
+                                foreach (Ship curShip in ObjectCollisionList[x,y])
                                 {
-                                    if (curBullet.BoundingBox.Intersects(curShip.BoundingBox))
+                                    if (curShip.BoundingBox.Intersects(curBullet.BoundingBox))
                                     {
+                                        Console.WriteLine("Collision at: {0},{1},{2}", x, y, (curShip.BoundingBox.Intersects(curBullet.BoundingBox)));
                                         curShip.Collision = true;
                                     }
                                     else
@@ -121,32 +162,9 @@ namespace SpaceShooterV2
                                 }
                             }
                         }
+                    ObjectCollisionList[x,y].Clear();
                     }
             }
-            #endregion
-
-            #region UpdateObjects
-
-            foreach (object CurObj in ObjectList)
-            {
-                if (CurObj.GetType() == typeof(PlayerShip))
-                {
-
-                }
-                else if (CurObj.GetType() == typeof(EnemyShip))
-                {
-
-                }
-                else if (CurObj.GetType() == typeof(Bullet))
-                {
-
-                }
-                else
-                {
-
-                }
-            }
-
             #endregion
 
             base.Update(gameTime);
@@ -174,12 +192,21 @@ namespace SpaceShooterV2
 
             #endregion
 
+            #region Drawing Objects
+
+            foreach (Ship curShip in ObjectList)
+            {
+                curShip.Draw(_spriteBatch, _collisionTex);
+            }
+
+            #endregion
+
             base.Draw(gameTime);
             Console.WriteLine("Draw fps: {0}", Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds));
             _spriteBatch.End();
         }
 
-        private bool ContainsCompareTypes(Type t, List<object>objList)
+        private bool ContainsCompareTypes(Type t, List<GameObject> objList)
         {
             foreach (object Obj in objList)
             {
