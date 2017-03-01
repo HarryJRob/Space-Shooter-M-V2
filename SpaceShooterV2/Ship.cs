@@ -10,7 +10,7 @@ namespace SpaceShooterV2
 
         public Ship() { } //No use but to allow inheritance
 
-        public Ship(int Width, int Height, byte TexNum, int xVelocity, int yVelocity) : base(Width,Height, TexNum, xVelocity, yVelocity)
+        public Ship(int width, int height, byte texNum, int xVelocity, int yVelocity) : base(width,height, texNum, xVelocity, yVelocity)
         {
             
         }

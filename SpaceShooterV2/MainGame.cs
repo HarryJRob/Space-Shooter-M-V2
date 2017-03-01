@@ -14,7 +14,7 @@ namespace SpaceShooterV2
         private SpriteBatch _spriteBatch;
 
         private const bool _testing = true;
-        private int PreviousFPS = 0;
+        private int _previousFPS;
 
         private const int _columnNum = 10;
         private const int _rowNum = 10;
@@ -42,6 +42,9 @@ namespace SpaceShooterV2
                 Window.AllowUserResizing = false;
                 _graphics.ToggleFullScreen();
             }
+            Window.IsBorderless = true;
+
+            Console.WriteLine("Window Size: ({0},{1})",Window.ClientBounds.Width,Window.ClientBounds.Height);
 
             #endregion
 
@@ -93,7 +96,7 @@ namespace SpaceShooterV2
 
             #endregion
 
-            ObjectList.Add(new PlayerShip(TextureList[2].Width / TextureList[2].Height, Window.ClientBounds.Height / _shipScale, 1, 0, 0, 1, new List<Keys> {Keys.W,Keys.D,Keys.S,Keys.A,Keys.Space}));
+            ObjectList.Add(new PlayerShip(TextureList[2].Width / TextureList[2].Height, Window.ClientBounds.Height / _shipScale,1, 5, 5, 1, "W,A,S,D,Space", Window.ClientBounds.X, Window.ClientBounds.Y));
             ObjectList.Add(new Bullet(TextureList[2].Width / TextureList[2].Height, Window.ClientBounds.Height / _bulletScale, 1, 0, -1));
         }
 
@@ -193,7 +196,12 @@ namespace SpaceShooterV2
             GraphicsDevice.Clear(Color.SkyBlue);
             _spriteBatch.Begin();
 
-            //_spriteBatch.Draw(TextureList[1], new Rectangle(0,0,_graphics.PreferredBackBufferWidth,_graphics.PreferredBackBufferHeight), Color.White);
+            if (!_testing)
+            {
+                _spriteBatch.Draw(TextureList[1],
+                    new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight),
+                    Color.White);
+            }
 
             #region Drawing Collision Boxes
 
@@ -223,10 +231,10 @@ namespace SpaceShooterV2
 
             base.Draw(gameTime);
 
-            if (PreviousFPS != Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds))
+            if (_previousFPS != Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds))
             {
                 Console.WriteLine("Draw fps: {0}", Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds));
-                PreviousFPS = Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds);
+                _previousFPS = Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds);
             }
 
             _spriteBatch.End();
