@@ -16,7 +16,7 @@ namespace SpaceShooterV2
 
         public GameObject(int Width, int Height, byte TexNum, int xVelocity, int yVelocity)
         {
-            _width = Width;
+            _width = Width * Height;
             _height = Height;
             _texNum = TexNum;
             _xVelocity = xVelocity;
@@ -25,7 +25,7 @@ namespace SpaceShooterV2
 
         public void Draw(SpriteBatch spriteBatch, Texture2D tex)
         {
-            if (_collision)
+            if (!_collision)
             {
                 spriteBatch.Draw(tex, new Rectangle((int)_position.X, (int)_position.Y, _width, _height), Color.White);
             }

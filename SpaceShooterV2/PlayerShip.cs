@@ -21,7 +21,7 @@ namespace SpaceShooterV2
             {
                 _position.Y = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height/2 - Height/2;
             }
-            _position.X += 50;
+            _position.X += 40;
             
         }
 

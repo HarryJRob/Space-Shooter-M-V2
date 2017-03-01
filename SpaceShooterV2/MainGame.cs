@@ -13,8 +13,7 @@ namespace SpaceShooterV2
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private const bool _testing = true;
-        private Texture2D _collisionTex;
+        private const bool _testing = false;
 
         private const int _columnNum = 10;
         private const int _rowNum = 10;
@@ -25,8 +24,8 @@ namespace SpaceShooterV2
         private List<GameObject> ObjectList;
         private List<Texture2D> TextureList;
 
-        private const int _shipScale = 13;
-        private const int _bulletScale = 50;
+        private const int _shipScale = 11;
+        private const int _bulletScale = 15;
 
         public MainGame()
         {
@@ -59,9 +58,7 @@ namespace SpaceShooterV2
         {
 
             ObjectList = new List<GameObject>();
-
-            ObjectList.Add(new PlayerShip(50,50,1,0,0,1,""));
-            ObjectList.Add(new Bullet(50,50,1,0,-1));
+            TextureList = new List<Texture2D>();
 
             #region ObjectCollisionList Set Up
             ObjectCollisionList = new List<int>[_columnNum, _rowNum];
@@ -84,7 +81,19 @@ namespace SpaceShooterV2
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _collisionTex = Content.Load<Texture2D>("CollisionArea");
+
+            #region Load Textures
+
+            TextureList.Add(Content.Load<Texture2D>("Game Resources/CollisionArea"));
+            TextureList.Add(Content.Load<Texture2D>("Game Resources/Backgrounds/BackGround"));
+            TextureList.Add(Content.Load<Texture2D>("Game Resources/Ships/ship"));
+
+            Console.WriteLine("Assets loaded");
+
+            #endregion
+
+            ObjectList.Add(new PlayerShip(TextureList[2].Width / TextureList[2].Height, Window.ClientBounds.Height / _shipScale, 1, 0, 0, 1, ""));
+            ObjectList.Add(new Bullet(TextureList[2].Width / TextureList[2].Height, Window.ClientBounds.Height / _bulletScale, 1, 0, -1));
         }
 
         protected override void Update(GameTime gameTime)
@@ -182,6 +191,8 @@ namespace SpaceShooterV2
             GraphicsDevice.Clear(Color.SkyBlue);
             _spriteBatch.Begin();
 
+            //_spriteBatch.Draw(TextureList[1], new Rectangle(0,0,_graphics.PreferredBackBufferWidth,_graphics.PreferredBackBufferHeight), Color.White);
+
             #region Drawing Collision Boxes
 
             if (_testing)
@@ -190,7 +201,7 @@ namespace SpaceShooterV2
                 {
                     for (int y = 0; y < _rowNum; y++)
                     {
-                        _spriteBatch.Draw(_collisionTex,
+                        _spriteBatch.Draw(TextureList[0],
                             new Rectangle((int)(x*_tileWidth), (int)(y*_tileHeight), (int)_tileWidth,
                                 (int)_tileHeight), Color.White);
                     }
@@ -203,7 +214,7 @@ namespace SpaceShooterV2
 
             foreach (GameObject curObj in ObjectList)
             {
-                curObj.Draw(_spriteBatch, _collisionTex);
+                curObj.Draw(_spriteBatch, TextureList[2]);
             }
 
             #endregion
