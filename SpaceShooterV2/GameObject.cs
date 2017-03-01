@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace SpaceShooterV2
 {
@@ -23,7 +24,7 @@ namespace SpaceShooterV2
             _yVelocity = yVelocity;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Texture2D tex)
+        public virtual void Draw(SpriteBatch spriteBatch, Texture2D tex)
         {
             if (!_collision)
             {
@@ -45,6 +46,8 @@ namespace SpaceShooterV2
                 _yVelocity = 1;
             }
         }
+
+        public virtual void Update(GameTime gameTime, KeyboardState curKeyboardState) { }
 
         public Rectangle BoundingBox
         {

@@ -13,7 +13,8 @@ namespace SpaceShooterV2
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private const bool _testing = false;
+        private const bool _testing = true;
+        private int PreviousFPS = 0;
 
         private const int _columnNum = 10;
         private const int _rowNum = 10;
@@ -92,15 +93,16 @@ namespace SpaceShooterV2
 
             #endregion
 
-            ObjectList.Add(new PlayerShip(TextureList[2].Width / TextureList[2].Height, Window.ClientBounds.Height / _shipScale, 1, 0, 0, 1, ""));
+            ObjectList.Add(new PlayerShip(TextureList[2].Width / TextureList[2].Height, Window.ClientBounds.Height / _shipScale, 1, 0, 0, 1, new List<Keys> {Keys.W,Keys.D,Keys.S,Keys.A,Keys.Space}));
             ObjectList.Add(new Bullet(TextureList[2].Width / TextureList[2].Height, Window.ClientBounds.Height / _bulletScale, 1, 0, -1));
         }
 
         protected override void Update(GameTime gameTime)
         {
-            Console.Clear();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            KeyboardState keyState = Keyboard.GetState();
 
             #region UpdateObjects
 
@@ -108,7 +110,7 @@ namespace SpaceShooterV2
             {
                 if (ObjectList[i].GetType() == typeof(PlayerShip))
                 {
-
+                    ObjectList[i].Update(gameTime, keyState);
                 }
                 else if (ObjectList[i].GetType() == typeof(EnemyShip))
                 {
@@ -167,7 +169,7 @@ namespace SpaceShooterV2
                                         //Now do the collision check
                                         if (curShip.BoundingBox.Intersects(curBullet.BoundingBox))
                                         {
-                                            Console.Write("Collision at ({0},{1})", x, y);
+                                            Console.WriteLine("Collision at ({0},{1})", x, y);
                                             curShip.Collision = true;
                                             curBullet.Collision = true;
                                         }
@@ -220,7 +222,13 @@ namespace SpaceShooterV2
             #endregion
 
             base.Draw(gameTime);
-            Console.WriteLine("Draw fps: {0}", Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds));
+
+            if (PreviousFPS != Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds))
+            {
+                Console.WriteLine("Draw fps: {0}", Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds));
+                PreviousFPS = Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds);
+            }
+
             _spriteBatch.End();
         }
 

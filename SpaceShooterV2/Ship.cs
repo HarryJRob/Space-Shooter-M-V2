@@ -14,7 +14,5 @@ namespace SpaceShooterV2
         {
             
         }
-
-        public virtual void Update(GameTime gameTime, KeyboardState curKeyState) { }
     }
 }

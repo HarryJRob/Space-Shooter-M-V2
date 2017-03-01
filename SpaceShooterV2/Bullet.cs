@@ -6,7 +6,7 @@ namespace SpaceShooterV2
     {
         public Bullet(int Width, int Height, byte TexNum, int xVelocity, int yVelocity): base(Width, Height, TexNum, xVelocity, yVelocity)
         {
-            _position = new Vector2(20,500);
+            _position = new Vector2(20,200);
         }
     }
 }
