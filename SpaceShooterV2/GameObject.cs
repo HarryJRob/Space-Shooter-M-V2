@@ -39,6 +39,11 @@ namespace SpaceShooterV2
         {
             _position.X += _xVelocity;
             _position.Y += _yVelocity;
+
+            if (_collision)
+            {
+                _yVelocity = 1;
+            }
         }
 
         public Rectangle BoundingBox

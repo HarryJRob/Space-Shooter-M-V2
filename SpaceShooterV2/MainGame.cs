@@ -21,7 +21,7 @@ namespace SpaceShooterV2
         private float _tileWidth;
         private float _tileHeight;
 
-        private List<GameObject>[,] ObjectCollisionList;
+        private List<int>[,] ObjectCollisionList;
         private List<GameObject> ObjectList;
         private List<Texture2D> TextureList;
 
@@ -64,13 +64,13 @@ namespace SpaceShooterV2
             ObjectList.Add(new Bullet(50,50,1,0,-1));
 
             #region ObjectCollisionList Set Up
-            ObjectCollisionList = new List<GameObject>[_columnNum, _rowNum];
+            ObjectCollisionList = new List<int>[_columnNum, _rowNum];
 
             for (int x = 0; x < _columnNum; x++)
             {
                 for (int y = 0; y < _rowNum; y++)
                 {
-                    ObjectCollisionList[x, y] = new List<GameObject>();
+                    ObjectCollisionList[x, y] = new List<int>();
                 }
             }
             #endregion
@@ -95,77 +95,83 @@ namespace SpaceShooterV2
 
             #region UpdateObjects
 
-            foreach (GameObject CurObj in ObjectList)
+            for (int i = 0; i < ObjectList.Count; i++)
             {
-                if (CurObj.GetType() == typeof(PlayerShip))
+                if (ObjectList[i].GetType() == typeof(PlayerShip))
                 {
 
                 }
-                else if (CurObj.GetType() == typeof(EnemyShip))
+                else if (ObjectList[i].GetType() == typeof(EnemyShip))
                 {
 
                 }
-                else if (CurObj.GetType() == typeof(Bullet))
+                else if (ObjectList[i].GetType() == typeof(Bullet))
                 {
-                    CurObj.Update(gameTime);
+                    ObjectList[i].Update(gameTime);
                 }
 
-                if (CurObj.BoundingBox.Y > 0 && CurObj.BoundingBox.X > 0 && !CurObj.Collision)
+                if (ObjectList[i].BoundingBox.Y > 0 && ObjectList[i].BoundingBox.X > 0 && !ObjectList[i].Collision)
                 {
-                    Rectangle curObjRec = CurObj.BoundingBox;
+                    Rectangle curObjRec = ObjectList[i].BoundingBox;
                     ObjectCollisionList[
                         (int)Math.Truncate(curObjRec.X/_tileWidth),
-                        (int)Math.Truncate(curObjRec.Y / _tileHeight)].Add(CurObj);
+                        (int)Math.Truncate(curObjRec.Y / _tileHeight)].Add(i);
                     ObjectCollisionList[
                         (int)Math.Truncate((curObjRec.X + curObjRec.Width) / _tileWidth),
-                        (int)Math.Truncate(curObjRec.Y / _tileHeight)].Add(CurObj);
+                        (int)Math.Truncate(curObjRec.Y / _tileHeight)].Add(i);
                     ObjectCollisionList[
                         (int)Math.Truncate(curObjRec.X / _tileWidth),
-                        (int)Math.Truncate((curObjRec.Y + curObjRec.Height) / _tileHeight)].Add(CurObj);
+                        (int)Math.Truncate((curObjRec.Y + curObjRec.Height) / _tileHeight)].Add(i);
                     ObjectCollisionList[
                         (int)Math.Truncate((curObjRec.X + curObjRec.Width) / _tileWidth),
-                        (int)Math.Truncate((curObjRec.Y + curObjRec.Height) / _tileHeight)].Add(CurObj);
+                        (int)Math.Truncate((curObjRec.Y + curObjRec.Height) / _tileHeight)].Add(i);
                 }
             }
 
             #endregion
 
             #region Collision Check
+
             for (var x = 0; x < _columnNum; x++)
-            {
                 for (var y = 0; y < _rowNum; y++)
-                    {
+                {
                     //If there are things which can collide
-                        if ((ObjectCollisionList[x, y].Count >= 2) &&
-                            (ContainsCompareTypes(typeof(PlayerShip), ObjectCollisionList[x, y]) ||
-                             ContainsCompareTypes(typeof(EnemyShip), ObjectCollisionList[x, y])) &&
-                            ContainsCompareTypes(typeof(Bullet), ObjectCollisionList[x, y]))
-                        {
-                           //Do collision check
-                            //Check if any bullets collide with ships
-                            foreach (Bullet curBullet in ObjectCollisionList[x, y].OfType<Bullet>())
-                            {
-                                if (!curBullet.Collision)
-                                {
-                                    foreach (Ship curShip in ObjectCollisionList[x, y].OfType<Ship>())
-                                    {
-                                        if (curShip.BoundingBox.Intersects(curBullet.BoundingBox) && !curShip.Collision)
+                    if ((ObjectCollisionList[x, y].Count >= 2) &&
+                        (ContainsCompareTypes(typeof(PlayerShip), ObjectCollisionList[x, y]) ||
+                         ContainsCompareTypes(typeof(EnemyShip), ObjectCollisionList[x, y])) &&
+                        ContainsCompareTypes(typeof(Bullet), ObjectCollisionList[x, y]))
+                    {
+                        //Do collision check
+                        //Get the objects which are contained within that square
+                        var filteredList = new List<GameObject>();
+                        foreach (var i in ObjectCollisionList[x, y])
+                            filteredList.Add(ObjectList[i]);
+
+                        //Check if any bullets collide with ships
+                        foreach (var curBullet in filteredList.OfType<Bullet>())
+                            //Dont check if the bullet has already collided with something
+                            if (!curBullet.Collision)
+                                //Check collision with ships
+                                foreach (var curShip in filteredList.OfType<Ship>())
+                                    //Don't check if the ship has already collided with something
+                                    if (!curShip.Collision)
+                                        //Now do the collision check
+                                        if (curShip.BoundingBox.Intersects(curBullet.BoundingBox))
                                         {
-                                            Console.WriteLine("Collision at: {0},{1},{2}", x, y,
-                                                curShip.BoundingBox.Intersects(curBullet.BoundingBox));
+                                            Console.Write("Collision at ({0},{1})", x, y);
                                             curShip.Collision = true;
+                                            curBullet.Collision = true;
                                         }
                                         else
                                         {
                                             curShip.Collision = false;
+                                            curBullet.Collision = false;
                                         }
-                                    }
-                                }
-                            }
-                        }
-                    ObjectCollisionList[x,y].Clear();
+                        filteredList.Clear();
                     }
-            }
+                    ObjectCollisionList[x, y].Clear();
+                }
+
             #endregion
 
             base.Update(gameTime);
@@ -195,9 +201,9 @@ namespace SpaceShooterV2
 
             #region Drawing Objects
 
-            foreach (GameObject curShip in ObjectList)
+            foreach (GameObject curObj in ObjectList)
             {
-                curShip.Draw(_spriteBatch, _collisionTex);
+                curObj.Draw(_spriteBatch, _collisionTex);
             }
 
             #endregion
@@ -207,11 +213,11 @@ namespace SpaceShooterV2
             _spriteBatch.End();
         }
 
-        private bool ContainsCompareTypes(Type t, List<GameObject> objList)
+        private bool ContainsCompareTypes(Type t, List<int> intList)
         {
-            foreach (object Obj in objList)
+            foreach (int i in intList)
             {
-                if (Obj.GetType() == t)
+                if (ObjectList[i].GetType() == t)
                 {
                     return true;
                 }
