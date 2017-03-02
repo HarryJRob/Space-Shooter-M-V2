@@ -96,7 +96,7 @@ namespace SpaceShooterV2
 
             #endregion
 
-            ObjectList.Add(new PlayerShip(TextureList[2].Width / TextureList[2].Height, Window.ClientBounds.Height / _shipScale,1, 5, 5, 1, "W,A,S,D,Space", Window.ClientBounds.X, Window.ClientBounds.Y));
+            ObjectList.Add(new PlayerShip(TextureList[2].Width / TextureList[2].Height, Window.ClientBounds.Height / _shipScale,1, 5, 5, 1, "W,A,S,D,Space", Window.ClientBounds.Width, Window.ClientBounds.Height));
             ObjectList.Add(new Bullet(TextureList[2].Width / TextureList[2].Height, Window.ClientBounds.Height / _bulletScale, 1, 0, -1));
         }
 
@@ -124,21 +124,47 @@ namespace SpaceShooterV2
                     ObjectList[i].Update(gameTime);
                 }
 
-                if (ObjectList[i].BoundingBox.Y > 0 && ObjectList[i].BoundingBox.X > 0 && !ObjectList[i].Collision)
+                Rectangle curObjRec = ObjectList[i].BoundingBox;
+
+                if (!ObjectList[i].Collision)
                 {
-                    Rectangle curObjRec = ObjectList[i].BoundingBox;
-                    ObjectCollisionList[
-                        (int)Math.Truncate(curObjRec.X/_tileWidth),
-                        (int)Math.Truncate(curObjRec.Y / _tileHeight)].Add(i);
-                    ObjectCollisionList[
-                        (int)Math.Truncate((curObjRec.X + curObjRec.Width) / _tileWidth),
-                        (int)Math.Truncate(curObjRec.Y / _tileHeight)].Add(i);
-                    ObjectCollisionList[
-                        (int)Math.Truncate(curObjRec.X / _tileWidth),
-                        (int)Math.Truncate((curObjRec.Y + curObjRec.Height) / _tileHeight)].Add(i);
-                    ObjectCollisionList[
-                        (int)Math.Truncate((curObjRec.X + curObjRec.Width) / _tileWidth),
-                        (int)Math.Truncate((curObjRec.Y + curObjRec.Height) / _tileHeight)].Add(i);
+                    if (curObjRec.X > 0 && curObjRec.Y > 0 && curObjRec.X < Window.ClientBounds.Width && curObjRec.Y < Window.ClientBounds.Height)
+                    {
+                        //top left
+                        ObjectCollisionList[
+                            (int) Math.Truncate(curObjRec.X/_tileWidth),
+                            (int) Math.Truncate(curObjRec.Y/_tileHeight)].Add(i);
+                    }
+                    if (curObjRec.X + curObjRec.Width > 0 && curObjRec.Y > 0 && curObjRec.X + curObjRec.Width < Window.ClientBounds.Width && curObjRec.Y < Window.ClientBounds.Height)
+                    {
+                        //top right
+                        ObjectCollisionList[
+                            (int) Math.Truncate((curObjRec.X + curObjRec.Width)/_tileWidth),
+                            (int) Math.Truncate(curObjRec.Y/_tileHeight)].Add(i);
+                    }
+                    if (curObjRec.X > 0 && curObjRec.Y + curObjRec.Height > 0 && curObjRec.X < Window.ClientBounds.Width && curObjRec.Y + curObjRec.Height < Window.ClientBounds.Height)
+                    {
+                        //bottom left
+                        ObjectCollisionList[
+                            (int) Math.Truncate(curObjRec.X/_tileWidth),
+                            (int) Math.Truncate((curObjRec.Y + curObjRec.Height)/_tileHeight)].Add(i);
+                    }
+                    if (curObjRec.X + curObjRec.Width > 0 && curObjRec.Y + curObjRec.Height > 0 && curObjRec.X + curObjRec.Width < Window.ClientBounds.Width &&
+                        curObjRec.Y + curObjRec.Height < Window.ClientBounds.Height)
+                    {
+                        //bottom right
+                        ObjectCollisionList[
+                            (int) Math.Truncate((curObjRec.X + curObjRec.Width)/_tileWidth),
+                            (int) Math.Truncate((curObjRec.Y + curObjRec.Height)/_tileHeight)].Add(i);
+                    }
+                }
+                else
+                {
+                    if (ObjectList[i].GetType() == typeof(Bullet) && (curObjRec.Y + curObjRec.Height < 0 || curObjRec.X + curObjRec.Width < 0 || curObjRec.X > Window.ClientBounds.Width || curObjRec.Y > Window.ClientBounds.Height))
+                    {
+                        Console.WriteLine("Object {0} left screen", i);
+                        ObjectList.RemoveAt(i);
+                    }
                 }
             }
 

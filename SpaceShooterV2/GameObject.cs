@@ -43,7 +43,8 @@ namespace SpaceShooterV2
 
             if (_collision)
             {
-                _yVelocity = 1;
+                _yVelocity *= -1;
+                _collision = !_collision;
             }
         }
 

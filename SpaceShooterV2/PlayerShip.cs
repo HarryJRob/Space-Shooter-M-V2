@@ -155,6 +155,8 @@ namespace SpaceShooterV2
             }
             #endregion
 
+            _collision = false;
+
             #region Action Based on Control State 
 
             for (int i = 0; i < _controlScheme.keyStates.Count; i++)
@@ -184,17 +186,18 @@ namespace SpaceShooterV2
                             }
                             break;
                         case 2:
-                            if (_position.Y - _height > WindowY)
+
+                            if (_position.Y + _height >= WindowY)
                             {
-                                _position.Y = WindowY + _height;
+                                _position.Y = WindowY - _height;
                             }
                             else
                             {
-                                _position.Y += _xVelocity;
+                                _position.Y += _yVelocity;
                             }
                             break;
                         case 3:
-                            if (_position.X + _width > WindowX)
+                            if (_position.X + _width >= WindowX)
                             {
                                 _position.X = WindowX - _width;
                             }
