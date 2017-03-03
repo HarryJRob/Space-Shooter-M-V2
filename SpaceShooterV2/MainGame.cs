@@ -120,7 +120,8 @@ namespace SpaceShooterV2
                 {
                     if (ObjectList[i].GetType() == typeof(PlayerShip))
                     {
-                        ObjectList[i].Update(gameTime, keyState);
+                        ((PlayerShip)ObjectList[i]).Update(gameTime,keyState);
+                        
                     }
                     else if (ObjectList[i].GetType() == typeof(EnemyShip))
                     {

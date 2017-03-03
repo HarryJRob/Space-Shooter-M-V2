@@ -139,7 +139,7 @@ namespace SpaceShooterV2
 
         }
 
-        public override void Update(GameTime gameTime, KeyboardState curKeyboardState)
+        public void Update(GameTime gameTime, KeyboardState curKeyboardState)
         {
             #region Check Controls
             if (curKeyboardState.GetPressedKeys() != _previousKeyBoardState.GetPressedKeys())
@@ -218,7 +218,7 @@ namespace SpaceShooterV2
             {
                 _health -= 1;
                 _collision = false;
-                Console.WriteLine(_health + " - " + this.ToString());
+                Console.WriteLine("Health: " +_health + " - " + this.ToString());
             }
         }
 

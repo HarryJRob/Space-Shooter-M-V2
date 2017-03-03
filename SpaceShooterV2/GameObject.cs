@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace SpaceShooterV2
 {
@@ -12,7 +11,6 @@ namespace SpaceShooterV2
         protected bool _collision;
         protected int _xVelocity;
         protected int _yVelocity;
-        protected bool _firing;
 
         public GameObject() { }
 
@@ -27,7 +25,7 @@ namespace SpaceShooterV2
 
         public virtual void Draw(SpriteBatch spriteBatch, Texture2D tex)
         {
-                spriteBatch.Draw(tex, new Rectangle((int)_position.X, (int)_position.Y, _width, _height), Color.White);
+            spriteBatch.Draw(tex, new Rectangle((int)_position.X, (int)_position.Y, _width, _height), Color.White);
         }
 
         public virtual void Update(GameTime gameTime)
@@ -35,8 +33,6 @@ namespace SpaceShooterV2
             _position.X += _xVelocity;
             _position.Y += _yVelocity;
         }
-
-        public virtual void Update(GameTime gameTime, KeyboardState curKeyboardState) { }
 
         public Rectangle BoundingBox
         {
@@ -47,12 +43,6 @@ namespace SpaceShooterV2
         {
             set { _collision = value; }
             get { return _collision;}
-        }
-
-        public bool Firing
-        {
-            get { return _firing; }
-            set { _firing = value; }
         }
 
         public int TexNum
