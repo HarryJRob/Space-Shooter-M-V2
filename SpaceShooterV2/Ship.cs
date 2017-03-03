@@ -1,8 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-
-namespace SpaceShooterV2
+﻿namespace SpaceShooterV2
 {
     class Ship : GameObject
     {
@@ -10,9 +6,6 @@ namespace SpaceShooterV2
 
         public Ship() { } //No use but to allow inheritance
 
-        public Ship(int width, int height, byte texNum, int xVelocity, int yVelocity) : base(width,height, texNum, xVelocity, yVelocity)
-        {
-            
-        }
+        public Ship(int width, int height, byte texNum, int xVelocity, int yVelocity) : base(width, height, texNum, xVelocity, yVelocity) { }
     }
 }

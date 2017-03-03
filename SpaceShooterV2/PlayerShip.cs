@@ -14,17 +14,21 @@ namespace SpaceShooterV2
             public List<bool> keyStates;
         }
 
-        private int WindowX;
-        private int WindowY;
-
         private KeyboardState _previousKeyBoardState;
         private ControlScheme _controlScheme;
 
-        public PlayerShip(int width, int height, byte texNum, int xVelocity, int yVelocity, byte playerID,string keyStr,int winX, int winY) : base(width, height,texNum, xVelocity, yVelocity)
+        private int _windowX;
+        private int _windowY;
+        private const int _velocityScale = 16;
+
+        public PlayerShip(int width, int height, byte texNum, byte playerID,string keyStr,int winX, int winY) : base(width, height,texNum, 0, 0)
         {
             _health = 5;
-            WindowX = winX;
-            WindowY = winY;
+            _windowX = winX;
+            _windowY = winY;
+
+            _xVelocity = _width/_velocityScale;
+            _yVelocity = _height/_velocityScale;
 
             #region Calculating Control Scheme
 
@@ -155,8 +159,6 @@ namespace SpaceShooterV2
             }
             #endregion
 
-            _collision = false;
-
             #region Action Based on Control State 
 
             for (int i = 0; i < _controlScheme.keyStates.Count; i++)
@@ -187,9 +189,9 @@ namespace SpaceShooterV2
                             break;
                         case 2:
 
-                            if (_position.Y + _height >= WindowY)
+                            if (_position.Y + _height >= _windowY)
                             {
-                                _position.Y = WindowY - _height;
+                                _position.Y = _windowY - _height;
                             }
                             else
                             {
@@ -197,9 +199,9 @@ namespace SpaceShooterV2
                             }
                             break;
                         case 3:
-                            if (_position.X + _width >= WindowX)
+                            if (_position.X + _width >= _windowX)
                             {
-                                _position.X = WindowX - _width;
+                                _position.X = _windowX - _width;
                             }
                             else
                             {
@@ -211,6 +213,13 @@ namespace SpaceShooterV2
             }
 
             #endregion
+
+            if (_collision)
+            {
+                _health -= 1;
+                _collision = false;
+                Console.WriteLine(_health + "  " + this.ToString());
+            }
         }
 
     }

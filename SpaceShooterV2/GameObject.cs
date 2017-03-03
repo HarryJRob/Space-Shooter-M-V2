@@ -12,6 +12,7 @@ namespace SpaceShooterV2
         protected bool _collision;
         protected int _xVelocity;
         protected int _yVelocity;
+        protected bool _firing;
 
         public GameObject() { }
 
@@ -26,26 +27,13 @@ namespace SpaceShooterV2
 
         public virtual void Draw(SpriteBatch spriteBatch, Texture2D tex)
         {
-            if (!_collision)
-            {
                 spriteBatch.Draw(tex, new Rectangle((int)_position.X, (int)_position.Y, _width, _height), Color.White);
-            }
-            else
-            {
-                spriteBatch.Draw(tex, new Rectangle((int)_position.X, (int)_position.Y, _width, _height), Color.Red);
-            }
         }
 
         public virtual void Update(GameTime gameTime)
         {
             _position.X += _xVelocity;
             _position.Y += _yVelocity;
-
-            if (_collision)
-            {
-                _yVelocity *= -1;
-                _collision = !_collision;
-            }
         }
 
         public virtual void Update(GameTime gameTime, KeyboardState curKeyboardState) { }
@@ -59,6 +47,17 @@ namespace SpaceShooterV2
         {
             set { _collision = value; }
             get { return _collision;}
+        }
+
+        public bool Firing
+        {
+            get { return _firing; }
+            set { _firing = value; }
+        }
+
+        public int TexNum
+        {
+            get { return _texNum;}
         }
     }
 }
