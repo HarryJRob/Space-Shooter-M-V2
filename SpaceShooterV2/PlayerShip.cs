@@ -17,6 +17,9 @@ namespace SpaceShooterV2
         private KeyboardState _previousKeyBoardState;
         private ControlScheme _controlScheme;
 
+        private int _bulletCoolDown;
+        private const int _bulletCDTotal = 40;
+
         private int _windowX;
         private int _windowY;
         private const int _velocityScale = 17;
@@ -54,11 +57,11 @@ namespace SpaceShooterV2
             }
             else if (playerID == 2)
             {
-                _position.Y = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - height;
+                _position.Y = _windowY - 2*_height;
             }
             else
             {
-                _position.Y = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height/2 - height/2;
+                _position.Y = _windowY/2 - _height/2;
             }
             _position.X += 40;
             #endregion
@@ -208,6 +211,14 @@ namespace SpaceShooterV2
                                 _position.X += _xVelocity;
                             }
                             break;
+                        case 4:
+                            if (_bulletCoolDown >= _bulletCDTotal)
+                            {
+                                Console.WriteLine("Firing");
+                                _bulletCoolDown = 0;
+                                _firing = true;
+                            }
+                            break;
                     }
                 }
             }
@@ -220,6 +231,8 @@ namespace SpaceShooterV2
                 _collision = false;
                 Console.WriteLine("Health: " +_health + " - " + this.ToString());
             }
+
+            _bulletCoolDown += 1;
         }
 
     }
