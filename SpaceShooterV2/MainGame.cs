@@ -14,7 +14,7 @@ namespace SpaceShooterV2
         private SpriteBatch _spriteBatch;
 
         private const bool _testing = true;
-        private int _previousFPS;
+        private int _previousFPS = 60;
 
         private const int _columnNum = 10;
         private const int _rowNum = 10;
@@ -129,15 +129,19 @@ namespace SpaceShooterV2
                     else if (ObjectList[i].GetType() == typeof(Bullet))
                     {
                         ObjectList[i].Update(gameTime);
+                        if (ObjectList[i].Collision)
+                        {
+                                ObjectList[i] = null;
+                        }
                     }
 
 
                     #region Updating ObjectCollisionList
 
-                    Rectangle curObjRec = ObjectList[i].BoundingBox;
-
-                    if (!ObjectList[i].Collision)
+                    if (ObjectList[i] != null && !ObjectList[i].Collision)
                     {
+                        Rectangle curObjRec = ObjectList[i].BoundingBox;
+
                         if (curObjRec.X > 0 && curObjRec.Y > 0 && curObjRec.X < Window.ClientBounds.Width &&
                             curObjRec.Y < Window.ClientBounds.Height)
                         {
@@ -231,21 +235,6 @@ namespace SpaceShooterV2
                     }
                     ObjectCollisionList[x, y].Clear();
                 }
-
-            #endregion
-
-            #region Update Based On Collision
-
-            for(int i = 0; i < ObjectList.Count;i++)
-            {
-                if (ObjectList[i] != null)
-                {
-                    if (ObjectList[i].Collision && ObjectList[i].GetType() == typeof(Bullet))
-                    {
-                        ObjectList[i] = null;
-                    }
-                }
-            }
 
             #endregion
 

@@ -19,7 +19,7 @@ namespace SpaceShooterV2
 
         private int _windowX;
         private int _windowY;
-        private const int _velocityScale = 16;
+        private const int _velocityScale = 17;
 
         public PlayerShip(int width, int height, byte texNum, byte playerID,string keyStr,int winX, int winY) : base(width, height,texNum, 0, 0)
         {
@@ -28,7 +28,7 @@ namespace SpaceShooterV2
             _windowY = winY;
 
             _xVelocity = _width/_velocityScale;
-            _yVelocity = _height/_velocityScale;
+            _yVelocity = _xVelocity;
 
             #region Calculating Control Scheme
 
@@ -218,7 +218,7 @@ namespace SpaceShooterV2
             {
                 _health -= 1;
                 _collision = false;
-                Console.WriteLine(_health + "  " + this.ToString());
+                Console.WriteLine(_health + " - " + this.ToString());
             }
         }
 
