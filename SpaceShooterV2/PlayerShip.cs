@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace SpaceShooterV2
@@ -18,7 +17,7 @@ namespace SpaceShooterV2
         private ControlScheme _controlScheme;
 
         private int _bulletCoolDown;
-        private const int _bulletCDTotal = 40;
+        private const int _bulletCDTotal = 30;
 
         private int _windowX;
         private int _windowY;
@@ -231,8 +230,10 @@ namespace SpaceShooterV2
                 _collision = false;
                 Console.WriteLine("Health: " +_health + " - " + this.ToString());
             }
-
-            _bulletCoolDown += 1;
+            if (_bulletCoolDown != _bulletCDTotal)
+            {
+                _bulletCoolDown += 1;
+            }
         }
 
     }

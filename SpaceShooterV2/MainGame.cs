@@ -13,7 +13,7 @@ namespace SpaceShooterV2
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private const bool _multiplayer = false;
+        private const bool _multiplayer = true;
 
         private const bool _testing = false;
         private int _previousFPS = 60;
@@ -28,7 +28,7 @@ namespace SpaceShooterV2
         private List<Texture2D> TextureList;
 
         private const int _shipScale = 11;
-        private const int _bulletScale = 15;
+        private const int _bulletScale = 60;
 
         public MainGame()
         {
@@ -93,30 +93,35 @@ namespace SpaceShooterV2
             TextureList.Add(Content.Load<Texture2D>("Game Resources/CollisionArea"));
             TextureList.Add(Content.Load<Texture2D>("Game Resources/Backgrounds/BackGround"));
             TextureList.Add(Content.Load<Texture2D>("Game Resources/Ships/ship"));
-
+            TextureList.Add(Content.Load<Texture2D>("Game Resources/Bullets/Bullet"));
 
             //0 = collisionTex, 1 = Background, 2 = playerShip
             Console.WriteLine("Assets loaded");
 
             #endregion
 
+            #region MyRegion
+
             if (_multiplayer)
             {
-                ObjectList.Add(new PlayerShip(TextureList[2].Width/TextureList[2].Height,
-                    Window.ClientBounds.Height/_shipScale, 2, 1, "W,A,S,D,Space", Window.ClientBounds.Width,
+                ObjectList.Add(new PlayerShip(TextureList[2].Width / TextureList[2].Height,
+                    Window.ClientBounds.Height / _shipScale, 2, 1, "W,A,S,D,Space", Window.ClientBounds.Width,
                     Window.ClientBounds.Height));
-                ObjectList.Add(new PlayerShip(TextureList[2].Width/TextureList[2].Height,
-                    Window.ClientBounds.Height/_shipScale, 2, 2, "Up,Left,Down,Right,Enter", Window.ClientBounds.Width,
+                ObjectList.Add(new PlayerShip(TextureList[2].Width / TextureList[2].Height,
+                    Window.ClientBounds.Height / _shipScale, 2, 2, "Up,Left,Down,Right,Enter", Window.ClientBounds.Width,
                     Window.ClientBounds.Height));
             }
             else
             {
-                ObjectList.Add(new PlayerShip(TextureList[2].Width/TextureList[2].Height,
-                    Window.ClientBounds.Height/_shipScale, 2, 0, "W,A,S,D,Space", Window.ClientBounds.Width,
+                ObjectList.Add(new PlayerShip(TextureList[2].Width / TextureList[2].Height,
+                    Window.ClientBounds.Height / _shipScale, 2, 0, "W,A,S,D,Space", Window.ClientBounds.Width,
                     Window.ClientBounds.Height));
             }
-            ObjectList.Add(new Bullet(TextureList[2].Width / TextureList[2].Height, Window.ClientBounds.Height / _bulletScale, 2, 0, -2, false));
-            ObjectList.Add(new Bullet(TextureList[2].Width / TextureList[2].Height, Window.ClientBounds.Height / _bulletScale, 2, 0, 0, false));
+
+            #endregion
+
+            ObjectList.Add(new Bullet(TextureList[3].Width / TextureList[3].Height, Window.ClientBounds.Height / _bulletScale, 3, 0, -2,new Vector2(200, 200), false));
+            ObjectList.Add(new Bullet(TextureList[3].Width / TextureList[3].Height, Window.ClientBounds.Height / _bulletScale,3 ,0, 0,new Vector2(200,200), false));
         }
 
         protected override void Update(GameTime gameTime)
@@ -137,6 +142,11 @@ namespace SpaceShooterV2
                     if (ObjectList[i].GetType() == typeof(PlayerShip))
                     {
                         ((PlayerShip)ObjectList[i]).Update(gameTime,keyState);
+                        if (((PlayerShip) ObjectList[i]).Firing)
+                        {
+                            ObjectList.Add(new Bullet(TextureList[3].Width / TextureList[3].Height, Window.ClientBounds.Height / _bulletScale, 3, Window.ClientBounds.Width/_bulletScale, 0,((PlayerShip)ObjectList[i]).getCenterPoint, true));
+                            ((PlayerShip) ObjectList[i]).Firing = false;
+                        }
                         
                     }
                     else if (ObjectList[i].GetType() == typeof(EnemyShip))
@@ -237,7 +247,7 @@ namespace SpaceShooterV2
                                     //Don't check if the ship has already collided with something
                                     if (!curShip.Collision)
                                         //Now do the collision check
-                                        if (((curShip.GetType() == typeof(PlayerShip) && !curBullet.Owner) ||(curShip.GetType() == typeof(EnemyShip) && curBullet.Owner)) && curShip.BoundingBox.Intersects(curBullet.BoundingBox))
+                                        if (((curShip.GetType() == typeof(PlayerShip) && !curBullet.Owner) || (curShip.GetType() == typeof(EnemyShip) && curBullet.Owner)) && curShip.BoundingBox.Intersects(curBullet.BoundingBox))
                                         {
                                             Console.WriteLine("Collision at ({0},{1})", x, y);
                                             curShip.Collision = true;
@@ -318,8 +328,9 @@ namespace SpaceShooterV2
 
             if (_previousFPS != Convert.ToInt32(1 / gameTime.ElapsedGameTime.TotalSeconds))
             {
-                Console.WriteLine("Draw fps: {0}", Convert.ToInt32(1 / gameTime.ElapsedGameTime.TotalSeconds));
-                _previousFPS = Convert.ToInt32(1 / gameTime.ElapsedGameTime.TotalSeconds);
+                Console.WriteLine("Draw fps: {0}, No. Objects {1}", Convert.ToInt32(1 / gameTime.ElapsedGameTime.TotalSeconds),ObjectList.Count);
+                _previousFPS = Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds);
+                //Aprox 500 objects without fps drop
             }
 
             #endregion

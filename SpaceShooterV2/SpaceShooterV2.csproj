@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Game Resources\Bullets\Bullet.png" />
     <Content Include="Content\Game Resources\CollisionArea.png" />
     <Content Include="Content\Game Resources\Backgrounds\BackGround.jpg" />
     <Content Include="Content\Game Resources\Bullets\BulletSheet.png" />
