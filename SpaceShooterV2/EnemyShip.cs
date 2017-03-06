@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpaceShooterV2
+﻿namespace SpaceShooterV2
 {
-    class EnemyShip
+    class EnemyShip : Ship
     {
+        private int _score;
+
+        public EnemyShip(int width, int height, byte texNum, int xVelocity, int yVelocity, int score)
+            : base(width, height, texNum, xVelocity, yVelocity)
+        {
+            _score = score;
+        }
+
+        public int Score
+        {
+            get { return _score; }
+        }
     }
 }
