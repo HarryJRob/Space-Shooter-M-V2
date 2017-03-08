@@ -6,8 +6,18 @@ namespace SpaceShooterV2
 {
     class Charger : EnemyShip
     {
+        private enum fireState
+        {
+            Firing,
+            Charging,
+            Charged,
+            Fired,
+        }
+
+        private fireState _curState = fireState.Charging;
         private const int _coolDownTotal = 40;
         private int _currentCoolDown;
+        private int _curCharge;
         private List<int> _bulletListPos = new List<int>();
         private int _bulVel;
 
@@ -15,12 +25,30 @@ namespace SpaceShooterV2
             : base(width, height, texNum, 0 , 0, score)
         {
             _bulVel = bulVel;
+            _position = new Vector2(400,400);
         }
 
         public override void Update(GameTime gameTime)
         {
-            _currentCoolDown += 1;
+            if (_currentCoolDown < _coolDownTotal && _curState == fireState.Charging)
+            {
+                _currentCoolDown += 1;
+            }
+            if (_currentCoolDown >= _coolDownTotal && _curState == fireState.Charging)
+            {
+                _curState = fireState.Charged;
+                _curCharge += 1;
+            }
 
+            if (_curCharge >= 4)
+            {
+                _curState = fireState.Firing;
+            }
+
+            if (_curState == fireState.Fired && _bulletListPos.Count == 0)
+            {
+                _curState = fireState.Charging;
+            }
             base.Update(gameTime);
         }
 
@@ -31,27 +59,12 @@ namespace SpaceShooterV2
             return Math.Atan2(yDif, xDif);
         }
 
-        public int Firing()
-        {
-            if (_currentCoolDown == _coolDownTotal && _bulletListPos.Count == 4)
-            {
-                _currentCoolDown = 0;
-                return 0;
-            }
-            if (_currentCoolDown == _coolDownTotal)
-            {
-                _currentCoolDown = 0;
-                return 1;
-            }
-            return 2;
-        }
-
-        public List<int> getBulletReference
+        public List<int> GetBulletReference
         {
             get { return _bulletListPos; }
         }
 
-        public void addBulletReference(int bulletRef)
+        public void AddBulletReference(int bulletRef)
         {
             _bulletListPos.Add(bulletRef);
         }
@@ -59,6 +72,21 @@ namespace SpaceShooterV2
         public int getBulVel
         {
             get { return _bulVel;}
+        }
+
+        public int getState()
+        {
+            if (_curState == fireState.Firing)
+            {
+                _curState = fireState.Fired;
+                return 0;
+            }
+            if (_curState == fireState.Charged)
+            {
+                _curState = fireState.Charging;
+                return 1;
+            }
+            return 2;
         }
     }
 }

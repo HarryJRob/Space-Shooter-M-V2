@@ -115,7 +115,7 @@ namespace SpaceShooterV2
             #endregion
 
             ObjectList.Add(new Charger(TextureList[2].Width / TextureList[2].Height,
-                Window.ClientBounds.Height / _shipScale,2,Window.ClientBounds.Width/_bulletScale,50));
+                Window.ClientBounds.Height / _shipScale,2,Window.ClientBounds.Height/_bulletScale,50));
         }
 
         protected override void Update(GameTime gameTime)
@@ -143,12 +143,15 @@ namespace SpaceShooterV2
                             ((PlayerShip) ObjectList[i]).Firing = false;
                         }
                     }
+
                     else if (ObjectList[i].GetType() == typeof(Charger))
                     {
-                       ((Charger)ObjectList[i]).Update(gameTime);
-                        if (((Charger) ObjectList[i]).Firing() == 0)
+                        #region Charger Update
+                        ((Charger)ObjectList[i]).Update(gameTime);
+                        int curState = ((Charger) ObjectList[i]).getState();
+                        if (curState == 0)
                         {
-                            List<int> intList = ((Charger) ObjectList[i]).getBulletReference;
+                            List<int> intList = ((Charger) ObjectList[i]).GetBulletReference;
                             int _bulXVel = ((Charger) ObjectList[i]).getBulVel;
                             Vector2 _playerPosition;
                             if (_multiplayer)
@@ -164,16 +167,19 @@ namespace SpaceShooterV2
                             {
                                 if (ObjectList[curRef] != null && ObjectList[curRef].GetType() == typeof(Bullet))
                                 {
-                                    double Angle = ((Charger) ObjectList[i]).GetAngleTwoPoints(_playerPosition, ObjectList[curRef].getCenterPoint);
-                                    ((Bullet)ObjectList[curRef]).xVel = (int)(_bulXVel * Math.Cos(Angle));
-                                    ((Bullet)ObjectList[curRef]).yVel = (int)(_bulXVel * Math.Sin(Angle));
+                                    double angle = ((Charger) ObjectList[i]).GetAngleTwoPoints(_playerPosition, ObjectList[curRef].getCenterPoint);
+                                    ((Bullet)ObjectList[curRef]).xVel = (int)(_bulXVel * Math.Cos(angle));
+                                    ((Bullet)ObjectList[curRef]).yVel = (int)(_bulXVel * Math.Sin(angle));
                                 }
                             }
                         }
-                        else if (((Charger) ObjectList[i]).Firing() == 1)
+                        else if (curState == 1)
                         {
-                            
+                            ObjectList.Add(new Bullet(TextureList[3].Width / TextureList[3].Height,
+                                Window.ClientBounds.Height / _bulletScale, 3, 0, -1, ObjectList[i].getCenterPoint, false));
+                            ((Charger) ObjectList[i]).AddBulletReference(ObjectList.Count - 1);
                         }
+                        #endregion
                     }
                     else if (ObjectList[i].GetType() == typeof(Bullet))
                     {
