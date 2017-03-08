@@ -7,6 +7,8 @@ namespace SpaceShooterV2
 {
     class PlayerShip : Ship
     {
+        protected bool _firing;
+
         private struct ControlScheme
         {
             public List<Keys> controls;
@@ -236,5 +238,10 @@ namespace SpaceShooterV2
             }
         }
 
+        public bool Firing
+        {
+            get { return _firing; }
+            set { _firing = value; }
+        }
     }
 }

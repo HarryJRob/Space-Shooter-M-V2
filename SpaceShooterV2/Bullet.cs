@@ -15,5 +15,17 @@ namespace SpaceShooterV2
         {
             get { return _owner; }
         }
+
+        public int xVel
+        {
+            get { return _xVelocity; }
+            set { _xVelocity = value; }
+        }
+
+        public int yVel
+        {
+            get { return _yVelocity;}
+            set { _yVelocity = value; }
+        }
     }
 }

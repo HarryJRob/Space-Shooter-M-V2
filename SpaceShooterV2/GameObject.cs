@@ -49,5 +49,10 @@ namespace SpaceShooterV2
         {
             get { return _texNum;}
         }
+
+        public Vector2 getCenterPoint
+        {
+            get { return new Vector2(_position.X + _width / 2, _position.Y + _height / 2); }
+        }
     }
 }
