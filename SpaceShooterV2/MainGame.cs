@@ -15,7 +15,7 @@ namespace SpaceShooterV2
 
         private const bool _multiplayer = false;
 
-        private const bool _testing = false;
+        private const bool _testing = true;
         private int _previousFPS = 60;
 
         private const int _columnNum = 10;
@@ -108,9 +108,12 @@ namespace SpaceShooterV2
                     Window.ClientBounds.Height/_shipScale, 2, 2, "Up,Left,Down,Right,Enter", Window.ClientBounds.Width,
                     Window.ClientBounds.Height));
             }
-            ObjectList.Add(new PlayerShip(TextureList[2].Width/TextureList[2].Height,
-                Window.ClientBounds.Height/_shipScale, 2, 0, "W,A,S,D,Space", Window.ClientBounds.Width,
-                Window.ClientBounds.Height));
+            else
+            {
+                ObjectList.Add(new PlayerShip(TextureList[2].Width/TextureList[2].Height,
+                    Window.ClientBounds.Height/_shipScale, 2, 0, "W,A,S,D,Space", Window.ClientBounds.Width,
+                    Window.ClientBounds.Height));
+            }
 
             #endregion
 
@@ -148,37 +151,36 @@ namespace SpaceShooterV2
                     {
                         #region Charger Update
                         ((Charger)ObjectList[i]).Update(gameTime);
-                        int curState = ((Charger) ObjectList[i]).getState();
-                        if (curState == 0)
+
+                        if (((Charger) ObjectList[i]).WillFire)
                         {
-                            List<int> intList = ((Charger) ObjectList[i]).GetBulletReference;
-                            int _bulXVel = ((Charger) ObjectList[i]).getBulVel;
-                            Vector2 _playerPosition;
+                            ((Charger) ObjectList[i]).WillFire = false;
+
                             if (_multiplayer)
                             {
-                                Random x = new Random();
-                                _playerPosition = ObjectList[x.Next(0,1)].getCenterPoint;
+                                Random whichShip = new Random();
+                                double movementAngle =
+                                    ((Charger) ObjectList[i]).GetAngleTwoPoints(ObjectList[i].getCenterPoint,
+                                        ObjectList[whichShip.Next(0,2)].getCenterPoint);
+                                ObjectList.Add(new Bullet(TextureList[3].Width/TextureList[3].Height,
+                                Window.ClientBounds.Height / _bulletScale, 3, (int)(((Charger)ObjectList[i]).getBulVel * Math.Cos(movementAngle) * -1), (int)(((Charger)ObjectList[i]).getBulVel * Math.Sin(movementAngle) * -1),
+                                ((Charger) ObjectList[i]).getCenterPoint, false));
+
                             }
                             else
                             {
-                                _playerPosition = ObjectList[0].getCenterPoint;
+                                var movementAngle =
+                                    ((Charger) ObjectList[i]).GetAngleTwoPoints(ObjectList[i].getCenterPoint,
+                                        ObjectList[0].getCenterPoint);
+                                ObjectList.Add(new Bullet(TextureList[3].Width/TextureList[3].Height,
+                                    Window.ClientBounds.Height/_bulletScale, 3,
+                                    (int)(((Charger) ObjectList[i]).getBulVel*Math.Cos(movementAngle) * -1),
+                                    (int) (((Charger) ObjectList[i]).getBulVel*Math.Sin(movementAngle) * -1),
+                                    ((Charger) ObjectList[i]).getCenterPoint, false));
                             }
-                            foreach (int curRef in intList)
-                            {
-                                if (ObjectList[curRef] != null && ObjectList[curRef].GetType() == typeof(Bullet))
-                                {
-                                    double angle = ((Charger) ObjectList[i]).GetAngleTwoPoints(_playerPosition, ObjectList[curRef].getCenterPoint);
-                                    ((Bullet)ObjectList[curRef]).xVel = (int)(_bulXVel * Math.Cos(angle));
-                                    ((Bullet)ObjectList[curRef]).yVel = (int)(_bulXVel * Math.Sin(angle));
-                                }
-                            }
+                             ((Charger) ObjectList[i]).UpdateCurCharge();
                         }
-                        else if (curState == 1)
-                        {
-                            ObjectList.Add(new Bullet(TextureList[3].Width / TextureList[3].Height,
-                                Window.ClientBounds.Height / _bulletScale, 3, 0, -1, ObjectList[i].getCenterPoint, false));
-                            ((Charger) ObjectList[i]).AddBulletReference(ObjectList.Count - 1);
-                        }
+
                         #endregion
                     }
                     else if (ObjectList[i].GetType() == typeof(Bullet))
@@ -239,7 +241,7 @@ namespace SpaceShooterV2
                 {
                     //If there are things which can collide
                     if ((ObjectCollisionList[x, y].Count >= 2) &&
-                        (ContainsCompareTypes(typeof(PlayerShip), ObjectCollisionList[x, y]) ||
+                        (ContainsCompareTypes(typeof(PlayerShip), ObjectCollisionList[x, y]) |
                          ContainsCompareTypes(typeof(EnemyShip), ObjectCollisionList[x, y])) &&
                         ContainsCompareTypes(typeof(Bullet), ObjectCollisionList[x, y]))
                     {
@@ -247,7 +249,10 @@ namespace SpaceShooterV2
                         //Get the objects which are contained within that square
                         var filteredList = new List<GameObject>();
                         foreach (var i in ObjectCollisionList[x, y])
+                        {
+                            if (!filteredList.Contains(ObjectList[i]))
                             filteredList.Add(ObjectList[i]);
+                        }
 
                         //Check if any bullets collide with ships
                         foreach (var curBullet in filteredList.OfType<Bullet>())
@@ -256,18 +261,13 @@ namespace SpaceShooterV2
                                 foreach (var curShip in filteredList.OfType<Ship>())
                                     if (!curShip.Collision)
                                         //Now do the collision check
-                                        if ((((curShip.GetType() == typeof(PlayerShip)) && !curBullet.Owner) ||
+                                        if ((((curShip.GetType() == typeof(PlayerShip)) && curBullet.Owner == false) ||
                                              ((curShip.GetType() == typeof(EnemyShip)) && curBullet.Owner)) &&
                                             curShip.BoundingBox.Intersects(curBullet.BoundingBox))
                                         {
                                             Console.WriteLine("Collision at ({0},{1})", x, y);
                                             curShip.Collision = true;
                                             curBullet.Collision = true;
-                                        }
-                                        else
-                                        {
-                                            curShip.Collision = false;
-                                            curBullet.Collision = false;
                                         }
                         filteredList.Clear();
                     }
