@@ -73,7 +73,7 @@
 /processorParam:TextureFormat=Color
 /build:Game Resources/Ships/SpaceShip.png
 
-#begin Game Resources/Bullets/Bullet.png
+#begin Game Resources/Bullets/LongBullet.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -83,5 +83,29 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Game Resources/Bullets/Bullet.png
+/build:Game Resources/Bullets/LongBullet.png
+
+#begin Game Resources/Bullets/RoundBullet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Game Resources/Bullets/RoundBullet.png
+
+#begin Game Resources/Ships/HealthBarPiece.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Game Resources/Ships/HealthBarPiece.png
 

@@ -12,59 +12,71 @@ namespace SpaceShooterV2
 
         private struct ControlScheme
         {
-            public List<Keys> controls;
-            public List<bool> keyStates;
+            public List<Keys> Controls;
+            public List<bool> KeyStates;
         }
 
         private KeyboardState _previousKeyBoardState;
         private ControlScheme _controlScheme;
 
+        private Vector2 _healthBarPos;
+        private int _healthUnitWidth;
+        private int _healthUnitHeight;
+        private const int UIScale = 40;
+
         private int _bulletCoolDown;
-        private const int _bulletCDTotal = 30;
+        private const int BulletCdTotal = 30;
 
         private int _deathAnimationFrame;
 
         private int _windowX;
         private int _windowY;
-        private const int _velocityScale = 17;
+        private const int VelocityScale = 17;
 
-        public PlayerShip(int width, int height, byte texNum, byte playerID,string keyStr,int winX, int winY) : base(width, height,texNum, 0, 0)
+        public PlayerShip(int width, int height, byte texNum, byte playerID,string keyStr,int winX, int winY, double UIWidthHeightRatio) : base(width, height,texNum, 0, 0)
         {
             _health = 5;
             _windowX = winX;
             _windowY = winY;
 
-            _xVelocity = _width/_velocityScale;
+            _xVelocity = _width/VelocityScale;
             _yVelocity = _xVelocity;
 
             #region Calculating Control Scheme
 
             Console.WriteLine("ID: {0}, Control Scheme: {1}", playerID,keyStr);
 
-            _controlScheme.controls = new List<Keys>();
-            _controlScheme.keyStates = new List<bool>();
+            _controlScheme.Controls = new List<Keys>();
+            _controlScheme.KeyStates = new List<bool>();
 
             string[] _keys = keyStr.Split(',');
 
             foreach (string curStr in _keys)
             {
-                _controlScheme.controls.Add(GetKeyCode(curStr));
-                _controlScheme.keyStates.Add(false);
+                _controlScheme.Controls.Add(GetKeyCode(curStr));
+                _controlScheme.KeyStates.Add(false);
             }
 
             #endregion
 
-            #region Calculating Starting Position
+            #region Calculating Starting Position and UI
+
+            _healthUnitHeight = winY / UIScale;
+            _healthUnitWidth = (int)(UIWidthHeightRatio * _healthUnitHeight);
+
             if (playerID == 1)
             {
+                _healthBarPos = new Vector2(_healthUnitWidth, _healthUnitHeight);
                 _position.Y = height;
             }
             else if (playerID == 2)
             {
+                _healthBarPos = new Vector2(_windowX - 6 * _healthUnitWidth,_healthUnitHeight);
                 _position.Y = _windowY - 2*_height;
             }
             else
             {
+                _healthBarPos = new Vector2(_healthUnitWidth, _healthUnitHeight);
                 _position.Y = _windowY/2 - _height/2;
             }
             _position.X += 40;
@@ -79,11 +91,11 @@ namespace SpaceShooterV2
 
                 if (curKeyboardState.GetPressedKeys() != _previousKeyBoardState.GetPressedKeys())
                 {
-                    for (var i = 0; i < _controlScheme.controls.Count; i++)
-                        if (curKeyboardState.IsKeyDown(_controlScheme.controls[i]))
-                            _controlScheme.keyStates[i] = true;
+                    for (var i = 0; i < _controlScheme.Controls.Count; i++)
+                        if (curKeyboardState.IsKeyDown(_controlScheme.Controls[i]))
+                            _controlScheme.KeyStates[i] = true;
                         else
-                            _controlScheme.keyStates[i] = false;
+                            _controlScheme.KeyStates[i] = false;
                     _previousKeyBoardState = curKeyboardState;
                 }
 
@@ -91,8 +103,8 @@ namespace SpaceShooterV2
 
                 #region Action Based on Control State 
 
-                for (var i = 0; i < _controlScheme.keyStates.Count; i++)
-                    if (_controlScheme.keyStates[i])
+                for (var i = 0; i < _controlScheme.KeyStates.Count; i++)
+                    if (_controlScheme.KeyStates[i])
                         switch (i)
                         {
                             case 0:
@@ -121,7 +133,7 @@ namespace SpaceShooterV2
                                     _position.X += _xVelocity;
                                 break;
                             case 4:
-                                if (_bulletCoolDown >= _bulletCDTotal)
+                                if (_bulletCoolDown >= BulletCdTotal)
                                 {
                                     Console.WriteLine("Firing");
                                     _bulletCoolDown = 0;
@@ -138,28 +150,39 @@ namespace SpaceShooterV2
                     _collision = false;
                     Console.WriteLine("Health: " + _health + " - " + ToString());
                 }
-                if (_bulletCoolDown != _bulletCDTotal)
+                if (_bulletCoolDown != BulletCdTotal)
                     _bulletCoolDown += 1;
             }
         }
 
-        public void DrawDeath(SpriteBatch _spriteBatch, Texture2D _shipTex)
+        public void DrawUI(SpriteBatch spriteBatch, Texture2D healthBarTex)
+        {
+            for (int i = 0; i < _health; i++)
+            {
+                if (i < _health)
+                {
+                    spriteBatch.Draw(healthBarTex, new Rectangle((int)_healthBarPos.X + _healthUnitWidth * i,(int)_healthBarPos.Y,_healthUnitWidth,_healthUnitHeight),Color.White);
+                }
+            }
+        }
+
+        public void DrawDeath(SpriteBatch spriteBatch, Texture2D shipTex)
         {
             if (_deathAnimationFrame < 25)
             {
-                _spriteBatch.Draw(_shipTex, new Rectangle((int) _position.X, (int) _position.Y, _width, _height),
+                spriteBatch.Draw(shipTex, new Rectangle((int) _position.X, (int) _position.Y, _width, _height),
                     Color.White);
                 _deathAnimationFrame += 1;
             }
             else if (_deathAnimationFrame < 45)
             {
-                _spriteBatch.Draw(_shipTex, new Rectangle((int)_position.X, (int)_position.Y, _width, _height),
+                spriteBatch.Draw(shipTex, new Rectangle((int)_position.X, (int)_position.Y, _width, _height),
       new Color(75,75,75,150));
                 _deathAnimationFrame += 1;
             }
             else if (_deathAnimationFrame < 60)
             {
-                _spriteBatch.Draw(_shipTex, new Rectangle((int)_position.X, (int)_position.Y, _width, _height),
+                spriteBatch.Draw(shipTex, new Rectangle((int)_position.X, (int)_position.Y, _width, _height),
                     Color.White);
                 _deathAnimationFrame += 1;
             }

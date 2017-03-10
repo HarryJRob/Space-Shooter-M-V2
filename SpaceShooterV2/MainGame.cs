@@ -13,7 +13,7 @@ namespace SpaceShooterV2
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private const bool _multiplayer = true;
+        private const bool _multiplayer = false;
         private bool _dead;
 
         private const bool Testing = false;
@@ -28,8 +28,8 @@ namespace SpaceShooterV2
         private List<GameObject> _objectList;
         private List<Texture2D> _textureList;
 
-        private const int ShipScale = 11;
-        private const int BulletScale = 60;
+        private const int ShipScale = 13;
+        private const int BulletScale = 70;
 
         public MainGame()
         {
@@ -91,9 +91,11 @@ namespace SpaceShooterV2
             _textureList.Add(Content.Load<Texture2D>("Game Resources/CollisionArea"));
             _textureList.Add(Content.Load<Texture2D>("Game Resources/Backgrounds/BackGround"));
             _textureList.Add(Content.Load<Texture2D>("Game Resources/Ships/ship"));
-            _textureList.Add(Content.Load<Texture2D>("Game Resources/Bullets/Bullet"));
+            _textureList.Add(Content.Load<Texture2D>("Game Resources/Bullets/LongBullet"));
+            _textureList.Add(Content.Load<Texture2D>("Game Resources/Bullets/RoundBullet"));
+            _textureList.Add(Content.Load<Texture2D>("Game Resources/Ships/HealthBarPiece"));
 
-            //0 = collisionTex, 1 = Background, 2 = playerShip
+            //0 = collisionTex, 1 = Background, 2 = playerShip, 3 = Long Bullet, 4 = Round Bullet, 5 = Health bar piece
             Console.WriteLine("Assets loaded");
 
             #endregion
@@ -104,16 +106,16 @@ namespace SpaceShooterV2
             {
                 _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
                     Window.ClientBounds.Height/ShipScale, 2, 1, "W,A,S,D,Space", Window.ClientBounds.Width,
-                    Window.ClientBounds.Height));
+                    Window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
                 _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
                     Window.ClientBounds.Height/ShipScale, 2, 2, "Up,Left,Down,Right,Enter", Window.ClientBounds.Width,
-                    Window.ClientBounds.Height));
+                    Window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
             }
             else
             {
                 _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
                     Window.ClientBounds.Height/ShipScale, 2, 0, "W,A,S,D,Space", Window.ClientBounds.Width,
-                    Window.ClientBounds.Height));
+                    Window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
             }
 
             #endregion
@@ -172,8 +174,8 @@ namespace SpaceShooterV2
                                             ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
                                                 _objectList[whichShip.Next(0, 2)].getCenterPoint);
 
-                                        _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
-                                            Window.ClientBounds.Height/BulletScale, 3,
+                                        _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                            Window.ClientBounds.Height/BulletScale, 4,
                                             (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
                                             (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
                                             ((Charger) _objectList[i]).getCenterPoint, false));
@@ -184,8 +186,8 @@ namespace SpaceShooterV2
                                             ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
                                                 _objectList[0].getCenterPoint);
 
-                                        _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
-                                            Window.ClientBounds.Height/BulletScale, 3,
+                                        _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                            Window.ClientBounds.Height/BulletScale, 4,
                                             (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
                                             (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
                                             ((Charger) _objectList[i]).getCenterPoint, false));
@@ -196,8 +198,8 @@ namespace SpaceShooterV2
                                             ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
                                                 _objectList[1].getCenterPoint);
 
-                                        _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
-                                            Window.ClientBounds.Height/BulletScale, 3,
+                                        _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                            Window.ClientBounds.Height/BulletScale, 4,
                                             (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
                                             (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
                                             ((Charger) _objectList[i]).getCenterPoint, false));
@@ -209,8 +211,8 @@ namespace SpaceShooterV2
                                     var movementAngle =
                                         ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
                                             _objectList[0].getCenterPoint);
-                                    _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
-                                        Window.ClientBounds.Height/BulletScale, 3,
+                                    _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                        Window.ClientBounds.Height/BulletScale, 4,
                                         (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
                                         (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
                                         ((Charger) _objectList[i]).getCenterPoint, false));
@@ -381,13 +383,18 @@ namespace SpaceShooterV2
 
             foreach (var curObj in _objectList)
                 if (curObj != null)
-                    if (!(curObj.GetType() == typeof(PlayerShip) && ((PlayerShip) curObj).Health == 0))
+                    if (!(curObj.GetType() == typeof(PlayerShip)))
                     {
                         curObj.Draw(_spriteBatch, _textureList[curObj.TexNum]);
                     }
+                    else if (((PlayerShip) curObj).Health == 0)
+                    {
+                        ((PlayerShip) curObj).DrawDeath(_spriteBatch, _textureList[curObj.TexNum]);
+                    }
                     else
                     {
-                        ((PlayerShip)curObj).DrawDeath(_spriteBatch, _textureList[curObj.TexNum]);
+                        curObj.Draw(_spriteBatch, _textureList[curObj.TexNum]);
+                       ((PlayerShip) curObj).DrawUI(_spriteBatch,_textureList[5]); 
                     }
 
             #endregion
