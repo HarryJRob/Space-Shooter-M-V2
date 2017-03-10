@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace SpaceShooterV2
@@ -20,6 +21,8 @@ namespace SpaceShooterV2
 
         private int _bulletCoolDown;
         private const int _bulletCDTotal = 30;
+
+        private int _deathAnimationFrame;
 
         private int _windowX;
         private int _windowY;
@@ -68,10 +71,104 @@ namespace SpaceShooterV2
             #endregion
         }
 
+        public void Update(GameTime gameTime, KeyboardState curKeyboardState)
+        {
+            if (_health != 0)
+            {
+                #region Check Controls
+
+                if (curKeyboardState.GetPressedKeys() != _previousKeyBoardState.GetPressedKeys())
+                {
+                    for (var i = 0; i < _controlScheme.controls.Count; i++)
+                        if (curKeyboardState.IsKeyDown(_controlScheme.controls[i]))
+                            _controlScheme.keyStates[i] = true;
+                        else
+                            _controlScheme.keyStates[i] = false;
+                    _previousKeyBoardState = curKeyboardState;
+                }
+
+                #endregion
+
+                #region Action Based on Control State 
+
+                for (var i = 0; i < _controlScheme.keyStates.Count; i++)
+                    if (_controlScheme.keyStates[i])
+                        switch (i)
+                        {
+                            case 0:
+                                if (_position.Y - _yVelocity < 0)
+                                    _position.Y = 0;
+                                else
+                                    _position.Y -= _yVelocity;
+                                break;
+                            case 1:
+                                if (_position.X - _xVelocity < 0)
+                                    _position.X = 0;
+                                else
+                                    _position.X -= _xVelocity;
+                                break;
+                            case 2:
+
+                                if (_position.Y + _height >= _windowY)
+                                    _position.Y = _windowY - _height;
+                                else
+                                    _position.Y += _yVelocity;
+                                break;
+                            case 3:
+                                if (_position.X + _width >= _windowX)
+                                    _position.X = _windowX - _width;
+                                else
+                                    _position.X += _xVelocity;
+                                break;
+                            case 4:
+                                if (_bulletCoolDown >= _bulletCDTotal)
+                                {
+                                    Console.WriteLine("Firing");
+                                    _bulletCoolDown = 0;
+                                    _firing = true;
+                                }
+                                break;
+                        }
+
+                #endregion
+
+                if (_collision)
+                {
+                    _health -= 1;
+                    _collision = false;
+                    Console.WriteLine("Health: " + _health + " - " + ToString());
+                }
+                if (_bulletCoolDown != _bulletCDTotal)
+                    _bulletCoolDown += 1;
+            }
+        }
+
+        public void DrawDeath(SpriteBatch _spriteBatch, Texture2D _shipTex)
+        {
+            if (_deathAnimationFrame < 25)
+            {
+                _spriteBatch.Draw(_shipTex, new Rectangle((int) _position.X, (int) _position.Y, _width, _height),
+                    Color.White);
+                _deathAnimationFrame += 1;
+            }
+            else if (_deathAnimationFrame < 45)
+            {
+                _spriteBatch.Draw(_shipTex, new Rectangle((int)_position.X, (int)_position.Y, _width, _height),
+      new Color(75,75,75,150));
+                _deathAnimationFrame += 1;
+            }
+            else if (_deathAnimationFrame < 60)
+            {
+                _spriteBatch.Draw(_shipTex, new Rectangle((int)_position.X, (int)_position.Y, _width, _height),
+                    Color.White);
+                _deathAnimationFrame += 1;
+            }
+        }
+
         private Keys GetKeyCode(string curStr)
         {
             curStr = curStr.ToUpper();
-            switch(curStr)
+            switch (curStr)
             {
                 case "Q":
                     return Keys.Q;
@@ -143,105 +240,15 @@ namespace SpaceShooterV2
 
         }
 
-        public void Update(GameTime gameTime, KeyboardState curKeyboardState)
-        {
-            #region Check Controls
-            if (curKeyboardState.GetPressedKeys() != _previousKeyBoardState.GetPressedKeys())
-            {
-                for (int i = 0; i < _controlScheme.controls.Count; i++)
-                {
-                    if (curKeyboardState.IsKeyDown(_controlScheme.controls[i]))
-                    {
-                        _controlScheme.keyStates[i] = true;
-                    }
-                    else
-                    {
-                        _controlScheme.keyStates[i] = false;
-                    }
-                }
-                _previousKeyBoardState = curKeyboardState;
-            }
-            #endregion
-
-            #region Action Based on Control State 
-
-            for (int i = 0; i < _controlScheme.keyStates.Count; i++)
-            {
-                if (_controlScheme.keyStates[i])
-                {
-                    switch (i)
-                    {
-                        case 0:
-                            if (_position.Y - _yVelocity < 0)
-                            {
-                                _position.Y = 0;
-                            }
-                            else
-                            {
-                                _position.Y -= _yVelocity;
-                            }
-                            break;
-                        case 1:
-                            if (_position.X - _xVelocity < 0)
-                            {
-                                _position.X = 0;
-                            }
-                            else
-                            {
-                                _position.X -= _xVelocity;  
-                            }
-                            break;
-                        case 2:
-
-                            if (_position.Y + _height >= _windowY)
-                            {
-                                _position.Y = _windowY - _height;
-                            }
-                            else
-                            {
-                                _position.Y += _yVelocity;
-                            }
-                            break;
-                        case 3:
-                            if (_position.X + _width >= _windowX)
-                            {
-                                _position.X = _windowX - _width;
-                            }
-                            else
-                            {
-                                _position.X += _xVelocity;
-                            }
-                            break;
-                        case 4:
-                            if (_bulletCoolDown >= _bulletCDTotal)
-                            {
-                                Console.WriteLine("Firing");
-                                _bulletCoolDown = 0;
-                                _firing = true;
-                            }
-                            break;
-                    }
-                }
-            }
-
-            #endregion
-
-            if (_collision)
-            {
-                _health -= 1;
-                _collision = false;
-                Console.WriteLine("Health: " +_health + " - " + this.ToString());
-            }
-            if (_bulletCoolDown != _bulletCDTotal)
-            {
-                _bulletCoolDown += 1;
-            }
-        }
-
         public bool Firing
         {
             get { return _firing; }
             set { _firing = value; }
+        }
+
+        public int Health
+        {
+            get { return _health; }
         }
     }
 }

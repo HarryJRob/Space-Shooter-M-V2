@@ -13,9 +13,10 @@ namespace SpaceShooterV2
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private const bool _multiplayer = false;
+        private const bool _multiplayer = true;
+        private bool _dead;
 
-        private const bool Testing = true;
+        private const bool Testing = false;
         private int _previousFPS = 60;
 
         private const int ColumnNum = 10;
@@ -27,8 +28,8 @@ namespace SpaceShooterV2
         private List<GameObject> _objectList;
         private List<Texture2D> _textureList;
 
-        private const int _shipScale = 11;
-        private const int _bulletScale = 60;
+        private const int ShipScale = 11;
+        private const int BulletScale = 60;
 
         public MainGame()
         {
@@ -102,23 +103,23 @@ namespace SpaceShooterV2
             if (_multiplayer)
             {
                 _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
-                    Window.ClientBounds.Height/_shipScale, 2, 1, "W,A,S,D,Space", Window.ClientBounds.Width,
+                    Window.ClientBounds.Height/ShipScale, 2, 1, "W,A,S,D,Space", Window.ClientBounds.Width,
                     Window.ClientBounds.Height));
                 _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
-                    Window.ClientBounds.Height/_shipScale, 2, 2, "Up,Left,Down,Right,Enter", Window.ClientBounds.Width,
+                    Window.ClientBounds.Height/ShipScale, 2, 2, "Up,Left,Down,Right,Enter", Window.ClientBounds.Width,
                     Window.ClientBounds.Height));
             }
             else
             {
                 _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
-                    Window.ClientBounds.Height/_shipScale, 2, 0, "W,A,S,D,Space", Window.ClientBounds.Width,
+                    Window.ClientBounds.Height/ShipScale, 2, 0, "W,A,S,D,Space", Window.ClientBounds.Width,
                     Window.ClientBounds.Height));
             }
 
             #endregion
 
             _objectList.Add(new Charger(_textureList[2].Width / _textureList[2].Height,
-                Window.ClientBounds.Height / _shipScale,2,Window.ClientBounds.Height/_bulletScale,50));
+                Window.ClientBounds.Height / ShipScale,2,Window.ClientBounds.Height/BulletScale,50));
         }
 
         protected override void Update(GameTime gameTime)
@@ -129,165 +130,229 @@ namespace SpaceShooterV2
 
             KeyboardState keyState = Keyboard.GetState();
 
-            #region UpdateObjects
+            if (!_dead)
+            {
+                #region Update Objects
 
-            for (var i = 0; i < _objectList.Count; i++)
-                if (_objectList[i] != null)
-                {
-                    if (_objectList[i].GetType() == typeof(PlayerShip))
+                for (var i = 0; i < _objectList.Count; i++)
+                    if (_objectList[i] != null)
                     {
-                        ((PlayerShip) _objectList[i]).Update(gameTime, keyState);
-                        if (((PlayerShip) _objectList[i]).Firing)
+                        if (_objectList[i].GetType() == typeof(PlayerShip))
                         {
-                            _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
-                                Window.ClientBounds.Height/_bulletScale, 3, Window.ClientBounds.Width/_bulletScale, 0,
-                                ((PlayerShip) _objectList[i]).getCenterPoint, true));
-                            ((PlayerShip) _objectList[i]).Firing = false;
-                        }
-                    }
-
-                    else if (_objectList[i].GetType() == typeof(Charger))
-                    {
-                        #region Charger Update
-                        ((Charger)_objectList[i]).Update(gameTime);
-
-                        if (((Charger) _objectList[i]).WillFire)
-                        {
-                            ((Charger) _objectList[i]).WillFire = false;
-
-                            if (_multiplayer)
+                            ((PlayerShip) _objectList[i]).Update(gameTime, keyState);
+                            if (((PlayerShip) _objectList[i]).Firing)
                             {
-                                Random whichShip = new Random();
-                                double movementAngle =
-                                    ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
-                                        _objectList[whichShip.Next(0,2)].getCenterPoint);
                                 _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
-                                Window.ClientBounds.Height / _bulletScale, 3, (int)(((Charger)_objectList[i]).getBulVel * Math.Cos(movementAngle) * -1), (int)(((Charger)_objectList[i]).getBulVel * Math.Sin(movementAngle) * -1),
-                                ((Charger) _objectList[i]).getCenterPoint, false));
-
+                                    Window.ClientBounds.Height/BulletScale, 3, Window.ClientBounds.Width/BulletScale,
+                                    0,
+                                    ((PlayerShip) _objectList[i]).getCenterPoint, true));
+                                ((PlayerShip) _objectList[i]).Firing = false;
                             }
-                            else
-                            {
-                                var movementAngle =
-                                    ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
-                                        _objectList[0].getCenterPoint);
-                                _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
-                                    Window.ClientBounds.Height/_bulletScale, 3,
-                                    (int)(((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle) * -1),
-                                    (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle) * -1),
-                                    ((Charger) _objectList[i]).getCenterPoint, false));
-                            }
-                             ((Charger) _objectList[i]).UpdateCurCharge();
                         }
 
-                        if (_objectList[i].Collision)
+                        else if (_objectList[i].GetType() == typeof(Charger))
                         {
-                            _objectList[i] = null;
+                            #region Charger Update
+
+                            ((Charger) _objectList[i]).Update(gameTime);
+
+                            if (((Charger) _objectList[i]).WillFire)
+                            {
+                                ((Charger) _objectList[i]).WillFire = false;
+
+                                if (_multiplayer)
+                                {
+                                    Random whichShip = new Random();
+                                    double movementAngle;
+
+                                    if (((PlayerShip) _objectList[0]).Health != 0 &&
+                                        ((PlayerShip) _objectList[1]).Health != 0)
+                                    {
+                                        movementAngle =
+                                            ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
+                                                _objectList[whichShip.Next(0, 2)].getCenterPoint);
+
+                                        _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
+                                            Window.ClientBounds.Height/BulletScale, 3,
+                                            (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
+                                            (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
+                                            ((Charger) _objectList[i]).getCenterPoint, false));
+                                    }
+                                    else if (((PlayerShip) _objectList[0]).Health != 0)
+                                    {
+                                        movementAngle =
+                                            ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
+                                                _objectList[0].getCenterPoint);
+
+                                        _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
+                                            Window.ClientBounds.Height/BulletScale, 3,
+                                            (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
+                                            (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
+                                            ((Charger) _objectList[i]).getCenterPoint, false));
+                                    }
+                                    else if (((PlayerShip) _objectList[1]).Health != 0)
+                                    {
+                                        movementAngle =
+                                            ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
+                                                _objectList[1].getCenterPoint);
+
+                                        _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
+                                            Window.ClientBounds.Height/BulletScale, 3,
+                                            (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
+                                            (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
+                                            ((Charger) _objectList[i]).getCenterPoint, false));
+                                    }
+
+                                }
+                                else
+                                {
+                                    var movementAngle =
+                                        ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
+                                            _objectList[0].getCenterPoint);
+                                    _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
+                                        Window.ClientBounds.Height/BulletScale, 3,
+                                        (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
+                                        (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
+                                        ((Charger) _objectList[i]).getCenterPoint, false));
+                                }
+                                ((Charger) _objectList[i]).UpdateCurCharge();
+                            }
+
+                            if (_objectList[i].Collision)
+                            {
+                                _objectList[i] = null;
+                            }
+
+                            #endregion
                         }
+                        else if (_objectList[i].GetType() == typeof(Bullet))
+                        {
+                            _objectList[i].Update(gameTime);
+                            if (_objectList[i].Collision)
+                                _objectList[i] = null;
+                        }
+
+                        #region Updating ObjectCollisionList
+
+                        if ((_objectList[i] != null) && !_objectList[i].Collision)
+                        {
+                            if (
+                                !(_objectList[i].GetType() == typeof(PlayerShip) &&
+                                  ((PlayerShip) _objectList[i]).Health == 0))
+                            {
+                                var curObjRec = _objectList[i].BoundingBox;
+
+                                if ((curObjRec.X > 0) && (curObjRec.Y > 0) && (curObjRec.X < Window.ClientBounds.Width) &&
+                                    (curObjRec.Y < Window.ClientBounds.Height))
+                                    _objectCollisionList[
+                                        (int) Math.Truncate(curObjRec.X/_tileWidth),
+                                        (int) Math.Truncate(curObjRec.Y/_tileHeight)].Add(i);
+                                if ((curObjRec.X + curObjRec.Width > 0) && (curObjRec.Y > 0) &&
+                                    (curObjRec.X + curObjRec.Width < Window.ClientBounds.Width) &&
+                                    (curObjRec.Y < Window.ClientBounds.Height))
+                                    _objectCollisionList[
+                                        (int) Math.Truncate((curObjRec.X + curObjRec.Width)/_tileWidth),
+                                        (int) Math.Truncate(curObjRec.Y/_tileHeight)].Add(i);
+                                if ((curObjRec.X > 0) && (curObjRec.Y + curObjRec.Height > 0) &&
+                                    (curObjRec.X < Window.ClientBounds.Width) &&
+                                    (curObjRec.Y + curObjRec.Height < Window.ClientBounds.Height))
+                                    _objectCollisionList[
+                                        (int) Math.Truncate(curObjRec.X/_tileWidth),
+                                        (int) Math.Truncate((curObjRec.Y + curObjRec.Height)/_tileHeight)].Add(i);
+                                if ((curObjRec.X + curObjRec.Width > 0) && (curObjRec.Y + curObjRec.Height > 0) &&
+                                    (curObjRec.X + curObjRec.Width < Window.ClientBounds.Width) &&
+                                    (curObjRec.Y + curObjRec.Height < Window.ClientBounds.Height))
+                                    _objectCollisionList[
+                                        (int) Math.Truncate((curObjRec.X + curObjRec.Width)/_tileWidth),
+                                        (int) Math.Truncate((curObjRec.Y + curObjRec.Height)/_tileHeight)].Add(i);
+
+                                if ((_objectList[i].GetType() == typeof(Bullet)) &&
+                                    ((curObjRec.Y + curObjRec.Height < 0) || (curObjRec.X + curObjRec.Width < 0) ||
+                                     (curObjRec.X > Window.ClientBounds.Width) ||
+                                     (curObjRec.Y > Window.ClientBounds.Height)))
+                                {
+                                    Console.WriteLine("Object {0} left screen", i);
+                                    _objectList[i] = null;
+                                }
+                            }
+                        }
+
                         #endregion
                     }
-                    else if (_objectList[i].GetType() == typeof(Bullet))
+
+                #endregion
+
+                #region Collision Check
+
+                for (int x = 0; x < ColumnNum; x++)
+                    for (int y = 0; y < RowNum; y++)
                     {
-                        _objectList[i].Update(gameTime);
-                        if (_objectList[i].Collision)
-                            _objectList[i] = null;
-                    }
-
-                    #region Updating ObjectCollisionList
-
-                    if ((_objectList[i] != null) && !_objectList[i].Collision)
-                    {
-                        var curObjRec = _objectList[i].BoundingBox;
-
-                        if ((curObjRec.X > 0) && (curObjRec.Y > 0) && (curObjRec.X < Window.ClientBounds.Width) &&
-                            (curObjRec.Y < Window.ClientBounds.Height))
-                            _objectCollisionList[
-                                (int) Math.Truncate(curObjRec.X/_tileWidth),
-                                (int) Math.Truncate(curObjRec.Y/_tileHeight)].Add(i);
-                        if ((curObjRec.X + curObjRec.Width > 0) && (curObjRec.Y > 0) &&
-                            (curObjRec.X + curObjRec.Width < Window.ClientBounds.Width) &&
-                            (curObjRec.Y < Window.ClientBounds.Height))
-                            _objectCollisionList[
-                                (int) Math.Truncate((curObjRec.X + curObjRec.Width)/_tileWidth),
-                                (int) Math.Truncate(curObjRec.Y/_tileHeight)].Add(i);
-                        if ((curObjRec.X > 0) && (curObjRec.Y + curObjRec.Height > 0) &&
-                            (curObjRec.X < Window.ClientBounds.Width) &&
-                            (curObjRec.Y + curObjRec.Height < Window.ClientBounds.Height))
-                            _objectCollisionList[
-                                (int) Math.Truncate(curObjRec.X/_tileWidth),
-                                (int) Math.Truncate((curObjRec.Y + curObjRec.Height)/_tileHeight)].Add(i);
-                        if ((curObjRec.X + curObjRec.Width > 0) && (curObjRec.Y + curObjRec.Height > 0) &&
-                            (curObjRec.X + curObjRec.Width < Window.ClientBounds.Width) &&
-                            (curObjRec.Y + curObjRec.Height < Window.ClientBounds.Height))
-                            _objectCollisionList[
-                                (int) Math.Truncate((curObjRec.X + curObjRec.Width)/_tileWidth),
-                                (int) Math.Truncate((curObjRec.Y + curObjRec.Height)/_tileHeight)].Add(i);
-
-                        if ((_objectList[i].GetType() == typeof(Bullet)) &&
-                            ((curObjRec.Y + curObjRec.Height < 0) || (curObjRec.X + curObjRec.Width < 0) ||
-                             (curObjRec.X > Window.ClientBounds.Width) || (curObjRec.Y > Window.ClientBounds.Height)))
+                        //If there are things which can collide
+                        if ((_objectCollisionList[x, y].Count >= 2) &&
+                            (ContainsCompareTypes(typeof(PlayerShip), _objectCollisionList[x, y]) |
+                             ContainsCompareTypes(typeof(EnemyShip), _objectCollisionList[x, y])) &&
+                            ContainsCompareTypes(typeof(Bullet), _objectCollisionList[x, y]))
                         {
-                            Console.WriteLine("Object {0} left screen", i);
-                            _objectList[i] = null;
+                            //Do collision check
+                            //Get the objects which are contained within that square
+                            List<GameObject> filteredList = new List<GameObject>();
+                            foreach (int i in _objectCollisionList[x, y])
+                            {
+                                if (!filteredList.Contains(_objectList[i]))
+                                    filteredList.Add(_objectList[i]);
+                            }
+
+                            //Check if any bullets collide with ships
+                            foreach (Bullet curBullet in filteredList.OfType<Bullet>())
+                                //Dont check if the bullet has already collided with something
+                                if (!curBullet.Collision)
+                                    foreach (Ship curShip in filteredList.OfType<Ship>())
+                                        if (!curShip.Collision)
+                                            //Now do the collision check
+                                            if ((((curShip.GetType() == typeof(PlayerShip)) && !curBullet.Owner) ||
+                                                 (curShip.GetType().IsSubclassOf(typeof(EnemyShip)) && curBullet.Owner)) &&
+                                                curShip.BoundingBox.Intersects(curBullet.BoundingBox))
+                                            {
+                                                Console.WriteLine("Collision at ({0},{1})", x, y);
+                                                curShip.Collision = true;
+                                                curBullet.Collision = true;
+                                            }
+                            filteredList.Clear();
                         }
+                        _objectCollisionList[x, y].Clear();
                     }
 
-                    #endregion
-                }
+                #endregion
 
-            #endregion
-
-            #region Collision Check
-
-            for (int x = 0; x < ColumnNum; x++)
-                for (int y = 0; y < RowNum; y++)
+                #region Deleted null from ObjectList
+                //!_objectList.OfType<EnemyShip>().Any()
+                if (_objectList.Contains(null))
                 {
-                    //If there are things which can collide
-                    if ((_objectCollisionList[x, y].Count >= 2) &&
-                        (ContainsCompareTypes(typeof(PlayerShip), _objectCollisionList[x, y]) |
-                         ContainsCompareTypes(typeof(EnemyShip), _objectCollisionList[x, y])) &&
-                        ContainsCompareTypes(typeof(Bullet), _objectCollisionList[x, y]))
-                    {
-                        //Do collision check
-                        //Get the objects which are contained within that square
-                        List<GameObject> filteredList = new List<GameObject>();
-                        foreach (int i in _objectCollisionList[x, y])
-                        {
-                            if (!filteredList.Contains(_objectList[i]))
-                            filteredList.Add(_objectList[i]);
-                        }
-
-                        //Check if any bullets collide with ships
-                        foreach (Bullet curBullet in filteredList.OfType<Bullet>())
-                            //Dont check if the bullet has already collided with something
-                            if (!curBullet.Collision)
-                                foreach (Ship curShip in filteredList.OfType<Ship>())
-                                    if (!curShip.Collision)
-                                        //Now do the collision check
-                                        if ((((curShip.GetType() == typeof(PlayerShip)) && !curBullet.Owner) ||
-                                             (curShip.GetType().IsSubclassOf(typeof(EnemyShip)) && curBullet.Owner)) &&
-                                            curShip.BoundingBox.Intersects(curBullet.BoundingBox))
-                                        {
-                                            Console.WriteLine("Collision at ({0},{1})", x, y);
-                                            curShip.Collision = true;
-                                            curBullet.Collision = true;
-                                        }
-                        filteredList.Clear();
-                    }
-                    _objectCollisionList[x, y].Clear();
+                    _objectList.RemoveAll(item => item == null);
+                    Console.WriteLine("Collapsed ObjectList");
                 }
-            #endregion
 
-            #region Deleted null from ObjectList
+                #endregion
 
-            if (!_objectList.OfType<EnemyShip>().Any() && _objectList.Contains(null))
-            {
-                _objectList.RemoveAll(item => item == null);
-                Console.WriteLine("Collapsed ObjectList");
+                #region CheckAlive
+
+                if (_multiplayer)
+                {
+                    if (((PlayerShip) _objectList[0]).Health + ((PlayerShip) _objectList[1]).Health == 0)
+                    {
+                        _dead = true;
+                    }
+                }
+                else
+                {
+                    if (((PlayerShip)_objectList[0]).Health == 0)
+                    {
+                        _dead = true;
+                    }
+                }
+
+                #endregion
             }
-
-            #endregion
-
             base.Update(gameTime);
         }
 
@@ -316,7 +381,23 @@ namespace SpaceShooterV2
 
             foreach (var curObj in _objectList)
                 if (curObj != null)
-                    curObj.Draw(_spriteBatch, _textureList[curObj.TexNum]);
+                    if (!(curObj.GetType() == typeof(PlayerShip) && ((PlayerShip) curObj).Health == 0))
+                    {
+                        curObj.Draw(_spriteBatch, _textureList[curObj.TexNum]);
+                    }
+                    else
+                    {
+                        ((PlayerShip)curObj).DrawDeath(_spriteBatch, _textureList[curObj.TexNum]);
+                    }
+
+            #endregion
+
+            #region Game Over
+
+            if (_dead)
+            {
+               Console.WriteLine("Game Over"); 
+            }
 
             #endregion
 

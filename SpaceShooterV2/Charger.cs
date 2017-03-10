@@ -13,11 +13,10 @@ namespace SpaceShooterV2
         }
 
         private fireState _curState = fireState.Charging;
-        private bool _willFire = false;
+        private bool _willFire;
         private const int _coolDownTotal = 40;
         private int _currentCoolDown;
         private int _curCharge;
-        private List<int> _bulletListPos = new List<int>();
         private int _bulVel;
 
         public Charger(int width, int height, byte texNum,int bulVel, int score)
