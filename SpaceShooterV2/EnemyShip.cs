@@ -2,7 +2,7 @@
 {
     class EnemyShip : Ship
     {
-        private int _score;
+        protected int _score;
 
         public EnemyShip(int width, int height, byte texNum, int xVelocity, int yVelocity, int score)
             : base(width, height, texNum, xVelocity, yVelocity)

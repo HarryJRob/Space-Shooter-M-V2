@@ -9,27 +9,28 @@ namespace SpaceShooterV2
 {
     public class MainGame : Game
     {
-        // '_' denotes private/protected, 'Capital' denotes public (I know this doesnt follow standard naming conventions)
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private const bool _multiplayer = false;
-        private bool _dead;
-
-        private const bool Testing = false;
-        private int _previousFPS = 60;
-
+        private const int ShipScale = 13;
+        private const int BulletScale = 70;
         private const int ColumnNum = 10;
         private const int RowNum = 10;
-        private float _tileWidth;
-        private float _tileHeight;
+
+        private const bool Testing = true;
+        private const bool _multiplayer = true;
 
         private List<int>[,] _objectCollisionList;
         private List<GameObject> _objectList;
         private List<Texture2D> _textureList;
 
-        private const int ShipScale = 13;
-        private const int BulletScale = 70;
+        private bool _dead;
+
+        private int _previousFPS = 60;
+        private int _score;
+
+        private float _tileWidth;
+        private float _tileHeight;
 
         public MainGame()
         {
@@ -152,11 +153,13 @@ namespace SpaceShooterV2
                             }
                         }
 
-                        else if (_objectList[i].GetType() == typeof(Charger))
+                        else if (_objectList[i].GetType() == typeof(EnemyShip) || _objectList[i].GetType().IsSubclassOf(typeof(EnemyShip)))
                         {
                             #region Charger Update
 
-                            ((Charger) _objectList[i]).Update(gameTime);
+                            if (_objectList[i].GetType() == typeof(Charger)) 
+                            {
+                                ((Charger) _objectList[i]).Update(gameTime);
 
                             if (((Charger) _objectList[i]).WillFire)
                             {
@@ -204,7 +207,6 @@ namespace SpaceShooterV2
                                             (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
                                             ((Charger) _objectList[i]).getCenterPoint, false));
                                     }
-
                                 }
                                 else
                                 {
@@ -219,13 +221,19 @@ namespace SpaceShooterV2
                                 }
                                 ((Charger) _objectList[i]).UpdateCurCharge();
                             }
+                        }
+
+                        #endregion
 
                             if (_objectList[i].Collision)
                             {
+                                if (_objectList[i].GetType() == typeof(EnemyShip) || _objectList[i].GetType().IsSubclassOf(typeof(EnemyShip)))
+                                {
+                                    _score += ((EnemyShip)_objectList[i]).Score;
+                                    Console.WriteLine("Cur Score: " + _score);
+                                }
                                 _objectList[i] = null;
                             }
-
-                            #endregion
                         }
                         else if (_objectList[i].GetType() == typeof(Bullet))
                         {

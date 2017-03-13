@@ -22,7 +22,7 @@ namespace SpaceShooterV2
         private Vector2 _healthBarPos;
         private int _healthUnitWidth;
         private int _healthUnitHeight;
-        private const int UIScale = 40;
+        private const int UIScale = 55;
 
         private int _bulletCoolDown;
         private const int BulletCdTotal = 30;
@@ -161,7 +161,7 @@ namespace SpaceShooterV2
             {
                 if (i < _health)
                 {
-                    spriteBatch.Draw(healthBarTex, new Rectangle((int)_healthBarPos.X + _healthUnitWidth * i,(int)_healthBarPos.Y,_healthUnitWidth,_healthUnitHeight),Color.White);
+                    spriteBatch.Draw(healthBarTex, new Rectangle((int)_healthBarPos.X + _healthUnitWidth* i,(int)_healthBarPos.Y,_healthUnitWidth,_healthUnitHeight),Color.White);
                 }
             }
         }

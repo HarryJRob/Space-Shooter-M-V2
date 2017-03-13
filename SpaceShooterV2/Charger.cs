@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 namespace SpaceShooterV2
@@ -14,7 +13,7 @@ namespace SpaceShooterV2
 
         private fireState _curState = fireState.Charging;
         private bool _willFire;
-        private const int _coolDownTotal = 40;
+        private const int CoolDownTotal = 40;
         private int _currentCoolDown;
         private int _curCharge;
         private int _bulVel;
@@ -28,11 +27,11 @@ namespace SpaceShooterV2
 
         public override void Update(GameTime gameTime)
         {
-            if (_currentCoolDown < _coolDownTotal)
+            if (_currentCoolDown < CoolDownTotal)
             {
                 _currentCoolDown += 1;
             }
-            else if (_curState == fireState.Charging && _currentCoolDown >= _coolDownTotal)
+            else if (_curState == fireState.Charging && _currentCoolDown >= CoolDownTotal)
             {
                 _currentCoolDown = 0;
                 _curCharge += 1;
@@ -48,7 +47,7 @@ namespace SpaceShooterV2
                 _curState = fireState.Charging;
             }
 
-            if (_curState == fireState.Firing && _currentCoolDown >= _coolDownTotal)
+            if (_curState == fireState.Firing && _currentCoolDown >= CoolDownTotal)
             {
                 _currentCoolDown = 0;
                 _willFire = true;
