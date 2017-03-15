@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -44,7 +44,7 @@ namespace SpaceShooterV2
 
             #region Calculating Control Scheme
 
-            Console.WriteLine("ID: {0}, Control Scheme: {1}", playerID,keyStr);
+            Debug.WriteLine("ID: {0}, Control Scheme: {1}", playerID,keyStr);
 
             _controlScheme.Controls = new List<Keys>();
             _controlScheme.KeyStates = new List<bool>();
@@ -135,7 +135,7 @@ namespace SpaceShooterV2
                             case 4:
                                 if (_bulletCoolDown >= BulletCdTotal)
                                 {
-                                    Console.WriteLine("Firing");
+                                    Debug.WriteLine("Firing");
                                     _bulletCoolDown = 0;
                                     _firing = true;
                                 }
@@ -148,7 +148,7 @@ namespace SpaceShooterV2
                 {
                     _health -= 1;
                     _collision = false;
-                    Console.WriteLine("Health: " + _health + " - " + ToString());
+                    Debug.WriteLine("Health: " + _health + " - " + ToString());
                 }
                 if (_bulletCoolDown != BulletCdTotal)
                     _bulletCoolDown += 1;

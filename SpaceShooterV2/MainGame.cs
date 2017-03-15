@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace SpaceShooterV2
 {
@@ -11,14 +12,14 @@ namespace SpaceShooterV2
     {
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
+        
         private const int ShipScale = 13;
         private const int BulletScale = 70;
         private const int ColumnNum = 10;
         private const int RowNum = 10;
 
         private const bool Testing = true;
-        private const bool _multiplayer = true;
+        private const bool _multiplayer = false;
 
         private List<int>[,] _objectCollisionList;
         private List<GameObject> _objectList;
@@ -36,7 +37,8 @@ namespace SpaceShooterV2
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
+            IsMouseVisible = false;
+            
             #region Force FullScreen
 
             if (!Testing)
@@ -48,14 +50,7 @@ namespace SpaceShooterV2
             }
             Window.IsBorderless = true;
 
-            Console.WriteLine("Window Size: ({0},{1})", Window.ClientBounds.Width, Window.ClientBounds.Height);
-
-            #endregion
-
-            #region Console SetUp
-
-            Console.Title = "Developer console";
-            Console.CursorVisible = false;
+            Debug.WriteLine("Window Size: ({0},{1})", Window.ClientBounds.Width, Window.ClientBounds.Height);
 
             #endregion
 
@@ -97,7 +92,7 @@ namespace SpaceShooterV2
             _textureList.Add(Content.Load<Texture2D>("Game Resources/Ships/HealthBarPiece"));
 
             //0 = collisionTex, 1 = Background, 2 = playerShip, 3 = Long Bullet, 4 = Round Bullet, 5 = Health bar piece
-            Console.WriteLine("Assets loaded");
+            Debug.WriteLine("Assets loaded");
 
             #endregion
 
@@ -129,7 +124,7 @@ namespace SpaceShooterV2
         {
             if ((GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Environment.Exit(1);
+                Environment.Exit(-1);
 
             KeyboardState keyState = Keyboard.GetState();
 
@@ -152,85 +147,89 @@ namespace SpaceShooterV2
                                 ((PlayerShip) _objectList[i]).Firing = false;
                             }
                         }
-
-                        else if (_objectList[i].GetType() == typeof(EnemyShip) || _objectList[i].GetType().IsSubclassOf(typeof(EnemyShip)))
+                        else if ((_objectList[i].GetType() == typeof(EnemyShip)) ||
+                                 _objectList[i].GetType().IsSubclassOf(typeof(EnemyShip)))
                         {
                             #region Charger Update
 
-                            if (_objectList[i].GetType() == typeof(Charger)) 
+                            if (_objectList[i].GetType() == typeof(Charger))
                             {
                                 ((Charger) _objectList[i]).Update(gameTime);
 
-                            if (((Charger) _objectList[i]).WillFire)
-                            {
-                                ((Charger) _objectList[i]).WillFire = false;
-
-                                if (_multiplayer)
+                                if (((Charger) _objectList[i]).WillFire)
                                 {
-                                    Random whichShip = new Random();
-                                    double movementAngle;
+                                    ((Charger) _objectList[i]).WillFire = false;
 
-                                    if (((PlayerShip) _objectList[0]).Health != 0 &&
-                                        ((PlayerShip) _objectList[1]).Health != 0)
+                                    if (_multiplayer)
                                     {
-                                        movementAngle =
-                                            ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
-                                                _objectList[whichShip.Next(0, 2)].getCenterPoint);
+                                        var whichShip = new Random();
+                                        double movementAngle;
 
-                                        _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
-                                            Window.ClientBounds.Height/BulletScale, 4,
-                                            (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
-                                            (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
-                                            ((Charger) _objectList[i]).getCenterPoint, false));
+                                        if ((((PlayerShip) _objectList[0]).Health != 0) &&
+                                            (((PlayerShip) _objectList[1]).Health != 0))
+                                        {
+                                            movementAngle =
+                                                ((Charger) _objectList[i]).GetAngleTwoPoints(
+                                                    _objectList[i].getCenterPoint,
+                                                    _objectList[whichShip.Next(0, 2)].getCenterPoint);
+
+                                            _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                                Window.ClientBounds.Height/BulletScale, 4,
+                                                (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
+                                                (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
+                                                ((Charger) _objectList[i]).getCenterPoint, false));
+                                        }
+                                        else if (((PlayerShip) _objectList[0]).Health != 0)
+                                        {
+                                            movementAngle =
+                                                ((Charger) _objectList[i]).GetAngleTwoPoints(
+                                                    _objectList[i].getCenterPoint,
+                                                    _objectList[0].getCenterPoint);
+
+                                            _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                                Window.ClientBounds.Height/BulletScale, 4,
+                                                (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
+                                                (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
+                                                ((Charger) _objectList[i]).getCenterPoint, false));
+                                        }
+                                        else if (((PlayerShip) _objectList[1]).Health != 0)
+                                        {
+                                            movementAngle =
+                                                ((Charger) _objectList[i]).GetAngleTwoPoints(
+                                                    _objectList[i].getCenterPoint,
+                                                    _objectList[1].getCenterPoint);
+
+                                            _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                                Window.ClientBounds.Height/BulletScale, 4,
+                                                (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
+                                                (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
+                                                ((Charger) _objectList[i]).getCenterPoint, false));
+                                        }
                                     }
-                                    else if (((PlayerShip) _objectList[0]).Health != 0)
+                                    else
                                     {
-                                        movementAngle =
+                                        var movementAngle =
                                             ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
                                                 _objectList[0].getCenterPoint);
-
                                         _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
                                             Window.ClientBounds.Height/BulletScale, 4,
                                             (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
                                             (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
                                             ((Charger) _objectList[i]).getCenterPoint, false));
                                     }
-                                    else if (((PlayerShip) _objectList[1]).Health != 0)
-                                    {
-                                        movementAngle =
-                                            ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
-                                                _objectList[1].getCenterPoint);
-
-                                        _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
-                                            Window.ClientBounds.Height/BulletScale, 4,
-                                            (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
-                                            (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
-                                            ((Charger) _objectList[i]).getCenterPoint, false));
-                                    }
+                                    ((Charger) _objectList[i]).UpdateCurCharge();
                                 }
-                                else
-                                {
-                                    var movementAngle =
-                                        ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
-                                            _objectList[0].getCenterPoint);
-                                    _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
-                                        Window.ClientBounds.Height/BulletScale, 4,
-                                        (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
-                                        (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
-                                        ((Charger) _objectList[i]).getCenterPoint, false));
-                                }
-                                ((Charger) _objectList[i]).UpdateCurCharge();
                             }
-                        }
 
-                        #endregion
+                            #endregion
 
                             if (_objectList[i].Collision)
                             {
-                                if (_objectList[i].GetType() == typeof(EnemyShip) || _objectList[i].GetType().IsSubclassOf(typeof(EnemyShip)))
+                                if ((_objectList[i].GetType() == typeof(EnemyShip)) ||
+                                    _objectList[i].GetType().IsSubclassOf(typeof(EnemyShip)))
                                 {
-                                    _score += ((EnemyShip)_objectList[i]).Score;
-                                    Console.WriteLine("Cur Score: " + _score);
+                                    _score += ((EnemyShip) _objectList[i]).Score;
+                                    Debug.WriteLine("Cur Score: " + _score);
                                 }
                                 _objectList[i] = null;
                             }
@@ -281,7 +280,7 @@ namespace SpaceShooterV2
                                      (curObjRec.X > Window.ClientBounds.Width) ||
                                      (curObjRec.Y > Window.ClientBounds.Height)))
                                 {
-                                    Console.WriteLine("Object {0} left screen", i);
+                                    Debug.WriteLine("Object {0} left screen", i);
                                     _objectList[i] = null;
                                 }
                             }
@@ -323,7 +322,7 @@ namespace SpaceShooterV2
                                                  (curShip.GetType().IsSubclassOf(typeof(EnemyShip)) && curBullet.Owner)) &&
                                                 curShip.BoundingBox.Intersects(curBullet.BoundingBox))
                                             {
-                                                Console.WriteLine("Collision at ({0},{1})", x, y);
+                                                Debug.WriteLine("Collision at ({0},{1})", x, y);
                                                 curShip.Collision = true;
                                                 curBullet.Collision = true;
                                             }
@@ -339,7 +338,7 @@ namespace SpaceShooterV2
                 if (_objectList.Contains(null))
                 {
                     _objectList.RemoveAll(item => item == null);
-                    Console.WriteLine("Collapsed ObjectList");
+                    Debug.WriteLine("Collapsed ObjectList");
                 }
 
                 #endregion
@@ -411,7 +410,7 @@ namespace SpaceShooterV2
 
             if (_dead)
             {
-               Console.WriteLine("Game Over"); 
+               Debug.WriteLine("Game Over");
             }
 
             #endregion
@@ -424,7 +423,7 @@ namespace SpaceShooterV2
 
             if (_previousFPS != Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds))
             {
-                Console.WriteLine("Draw fps: {0}, No. Objects {1}",
+                Debug.WriteLine("Draw fps: {0}, No. Objects {1}",
                     Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds), _objectList.Count);
                 _previousFPS = Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds);
                 //Aprox 500 objects without fps drop

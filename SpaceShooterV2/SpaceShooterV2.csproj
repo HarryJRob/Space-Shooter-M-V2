@@ -7,7 +7,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FEB57758-2064-4BC4-8CF2-27E6EBCA67D1}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SpaceShooterV2</RootNamespace>
     <AssemblyName>SpaceShooterV2</AssemblyName>

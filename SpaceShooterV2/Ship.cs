@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-
-namespace SpaceShooterV2
+﻿namespace SpaceShooterV2
 {
     class Ship : GameObject
     {

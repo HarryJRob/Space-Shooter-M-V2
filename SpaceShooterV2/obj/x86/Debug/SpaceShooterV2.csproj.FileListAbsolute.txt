@@ -49,3 +49,11 @@ C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Wind
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\CollisionArea.xnb
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\obj\x86\Debug\SpaceShooterV2.csprojResolveAssemblyReference.cache
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\CollisionArea.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Backgrounds\BackGround.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Bullets\BulletSheet.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Bullets\LongBullet.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Bullets\RoundBullet.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Ships\HealthBarPiece.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Ships\ship.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Ships\SpaceShip.xnb
