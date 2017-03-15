@@ -38,12 +38,13 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
+    <StartupObject>SpaceShooterV2.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Bullet.cs" />
     <Compile Include="Charger.cs" />
     <Compile Include="EnemyShip.cs" />
+    <Compile Include="Game Manager.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="PlayerShip.cs" />

@@ -5,21 +5,23 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
+using Microsoft.Xna.Framework.Content;
 
 namespace SpaceShooterV2
 {
-    public class MainGame : Game
+    public class MainGame
     {
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        
+        private GameWindow _window;
+
         private const int ShipScale = 13;
         private const int BulletScale = 70;
         private const int ColumnNum = 10;
         private const int RowNum = 10;
 
         private const bool Testing = true;
-        private const bool _multiplayer = false;
+        private bool _multiplayer;
 
         private List<int>[,] _objectCollisionList;
         private List<GameObject> _objectList;
@@ -33,31 +35,32 @@ namespace SpaceShooterV2
         private float _tileWidth;
         private float _tileHeight;
 
-        public MainGame()
+        public MainGame(bool multiplayer,ref GraphicsDeviceManager graphics, GameWindow window, SpriteBatch spriteBatch)
         {
-            _graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-            IsMouseVisible = false;
-            
+            _multiplayer = multiplayer;
+            _graphics = graphics;
+            _window = window;
+            _spriteBatch = spriteBatch;
+
             #region Force FullScreen
 
             if (!Testing)
             {
                 _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
                 _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-                Window.AllowUserResizing = false;
+                _window.AllowUserResizing = false;
                 _graphics.ToggleFullScreen();
             }
-            Window.IsBorderless = true;
+            _window.IsBorderless = true;
 
-            Debug.WriteLine("Window Size: ({0},{1})", Window.ClientBounds.Width, Window.ClientBounds.Height);
+            Debug.WriteLine("_window Size: ({0},{1})", _window.ClientBounds.Width, _window.ClientBounds.Height);
 
             #endregion
 
             _graphics.ApplyChanges();
         }
 
-        protected override void Initialize()
+        public void Initialize()
         {
             _objectList = new List<GameObject>();
             _textureList = new List<Texture2D>();
@@ -72,16 +75,12 @@ namespace SpaceShooterV2
 
             #endregion
 
-            _tileWidth = (float) Window.ClientBounds.Width/ColumnNum;
-            _tileHeight = (float) Window.ClientBounds.Height/RowNum;
-
-            base.Initialize();
+            _tileWidth = (float) _window.ClientBounds.Width/ColumnNum;
+            _tileHeight = (float) _window.ClientBounds.Height/RowNum;
         }
 
-        protected override void LoadContent()
+        public void LoadContent(ContentManager Content)
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-
             #region Load Textures
 
             _textureList.Add(Content.Load<Texture2D>("Game Resources/CollisionArea"));
@@ -101,26 +100,26 @@ namespace SpaceShooterV2
             if (_multiplayer)
             {
                 _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
-                    Window.ClientBounds.Height/ShipScale, 2, 1, "W,A,S,D,Space", Window.ClientBounds.Width,
-                    Window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
+                    _window.ClientBounds.Height/ShipScale, 2, 1, "W,A,S,D,Space", _window.ClientBounds.Width,
+                    _window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
                 _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
-                    Window.ClientBounds.Height/ShipScale, 2, 2, "Up,Left,Down,Right,Enter", Window.ClientBounds.Width,
-                    Window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
+                    _window.ClientBounds.Height/ShipScale, 2, 2, "Up,Left,Down,Right,Enter", _window.ClientBounds.Width,
+                    _window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
             }
             else
             {
                 _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
-                    Window.ClientBounds.Height/ShipScale, 2, 0, "W,A,S,D,Space", Window.ClientBounds.Width,
-                    Window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
+                    _window.ClientBounds.Height/ShipScale, 2, 0, "W,A,S,D,Space", _window.ClientBounds.Width,
+                    _window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
             }
 
             #endregion
 
             _objectList.Add(new Charger(_textureList[2].Width / _textureList[2].Height,
-                Window.ClientBounds.Height / ShipScale,2,Window.ClientBounds.Height/BulletScale,50));
+                _window.ClientBounds.Height / ShipScale,2,_window.ClientBounds.Height/BulletScale,50));
         }
 
-        protected override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             if ((GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -141,7 +140,7 @@ namespace SpaceShooterV2
                             if (((PlayerShip) _objectList[i]).Firing)
                             {
                                 _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
-                                    Window.ClientBounds.Height/BulletScale, 3, Window.ClientBounds.Width/BulletScale,
+                                    _window.ClientBounds.Height/BulletScale, 3, _window.ClientBounds.Width/BulletScale,
                                     0,
                                     ((PlayerShip) _objectList[i]).getCenterPoint, true));
                                 ((PlayerShip) _objectList[i]).Firing = false;
@@ -174,7 +173,7 @@ namespace SpaceShooterV2
                                                     _objectList[whichShip.Next(0, 2)].getCenterPoint);
 
                                             _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
-                                                Window.ClientBounds.Height/BulletScale, 4,
+                                                _window.ClientBounds.Height/BulletScale, 4,
                                                 (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
                                                 (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
                                                 ((Charger) _objectList[i]).getCenterPoint, false));
@@ -187,7 +186,7 @@ namespace SpaceShooterV2
                                                     _objectList[0].getCenterPoint);
 
                                             _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
-                                                Window.ClientBounds.Height/BulletScale, 4,
+                                                _window.ClientBounds.Height/BulletScale, 4,
                                                 (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
                                                 (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
                                                 ((Charger) _objectList[i]).getCenterPoint, false));
@@ -200,7 +199,7 @@ namespace SpaceShooterV2
                                                     _objectList[1].getCenterPoint);
 
                                             _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
-                                                Window.ClientBounds.Height/BulletScale, 4,
+                                                _window.ClientBounds.Height/BulletScale, 4,
                                                 (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
                                                 (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
                                                 ((Charger) _objectList[i]).getCenterPoint, false));
@@ -212,7 +211,7 @@ namespace SpaceShooterV2
                                             ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
                                                 _objectList[0].getCenterPoint);
                                         _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
-                                            Window.ClientBounds.Height/BulletScale, 4,
+                                            _window.ClientBounds.Height/BulletScale, 4,
                                             (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
                                             (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
                                             ((Charger) _objectList[i]).getCenterPoint, false));
@@ -251,34 +250,34 @@ namespace SpaceShooterV2
                             {
                                 var curObjRec = _objectList[i].BoundingBox;
 
-                                if ((curObjRec.X > 0) && (curObjRec.Y > 0) && (curObjRec.X < Window.ClientBounds.Width) &&
-                                    (curObjRec.Y < Window.ClientBounds.Height))
+                                if ((curObjRec.X > 0) && (curObjRec.Y > 0) && (curObjRec.X < _window.ClientBounds.Width) &&
+                                    (curObjRec.Y < _window.ClientBounds.Height))
                                     _objectCollisionList[
                                         (int) Math.Truncate(curObjRec.X/_tileWidth),
                                         (int) Math.Truncate(curObjRec.Y/_tileHeight)].Add(i);
                                 if ((curObjRec.X + curObjRec.Width > 0) && (curObjRec.Y > 0) &&
-                                    (curObjRec.X + curObjRec.Width < Window.ClientBounds.Width) &&
-                                    (curObjRec.Y < Window.ClientBounds.Height))
+                                    (curObjRec.X + curObjRec.Width < _window.ClientBounds.Width) &&
+                                    (curObjRec.Y < _window.ClientBounds.Height))
                                     _objectCollisionList[
                                         (int) Math.Truncate((curObjRec.X + curObjRec.Width)/_tileWidth),
                                         (int) Math.Truncate(curObjRec.Y/_tileHeight)].Add(i);
                                 if ((curObjRec.X > 0) && (curObjRec.Y + curObjRec.Height > 0) &&
-                                    (curObjRec.X < Window.ClientBounds.Width) &&
-                                    (curObjRec.Y + curObjRec.Height < Window.ClientBounds.Height))
+                                    (curObjRec.X < _window.ClientBounds.Width) &&
+                                    (curObjRec.Y + curObjRec.Height < _window.ClientBounds.Height))
                                     _objectCollisionList[
                                         (int) Math.Truncate(curObjRec.X/_tileWidth),
                                         (int) Math.Truncate((curObjRec.Y + curObjRec.Height)/_tileHeight)].Add(i);
                                 if ((curObjRec.X + curObjRec.Width > 0) && (curObjRec.Y + curObjRec.Height > 0) &&
-                                    (curObjRec.X + curObjRec.Width < Window.ClientBounds.Width) &&
-                                    (curObjRec.Y + curObjRec.Height < Window.ClientBounds.Height))
+                                    (curObjRec.X + curObjRec.Width < _window.ClientBounds.Width) &&
+                                    (curObjRec.Y + curObjRec.Height < _window.ClientBounds.Height))
                                     _objectCollisionList[
                                         (int) Math.Truncate((curObjRec.X + curObjRec.Width)/_tileWidth),
                                         (int) Math.Truncate((curObjRec.Y + curObjRec.Height)/_tileHeight)].Add(i);
 
                                 if ((_objectList[i].GetType() == typeof(Bullet)) &&
                                     ((curObjRec.Y + curObjRec.Height < 0) || (curObjRec.X + curObjRec.Width < 0) ||
-                                     (curObjRec.X > Window.ClientBounds.Width) ||
-                                     (curObjRec.Y > Window.ClientBounds.Height)))
+                                     (curObjRec.X > _window.ClientBounds.Width) ||
+                                     (curObjRec.Y > _window.ClientBounds.Height)))
                                 {
                                     Debug.WriteLine("Object {0} left screen", i);
                                     _objectList[i] = null;
@@ -362,15 +361,12 @@ namespace SpaceShooterV2
 
                 #endregion
             }
-            base.Update(gameTime);
         }
 
-        protected override void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.SkyBlue);
             _spriteBatch.Begin();
 
-            if (!Testing)
                 _spriteBatch.Draw(_textureList[1],
                     new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight),
                     Color.White);
@@ -415,8 +411,6 @@ namespace SpaceShooterV2
 
             #endregion
 
-            base.Draw(gameTime);
-
             _spriteBatch.End();
 
             #region Calculate FPS
@@ -438,6 +432,16 @@ namespace SpaceShooterV2
                 if (_objectList[i].GetType() == t || _objectList[i].GetType().IsSubclassOf(t))
                     return true;
             return false;
+        }
+
+        public bool IsDead
+        {
+            get { return _dead;}
+        }
+
+        public int TotalScore
+        {
+            get { return _score; }
         }
     }
 }
