@@ -31,7 +31,7 @@ namespace SpaceShooterV2
 
         private int _windowX;
         private int _windowY;
-        private const int VelocityScale = 17;
+        private const int VelocityScale = 25;
 
         public PlayerShip(int width, int height, byte texNum, byte playerID,string keyStr,int winX, int winY, double UIWidthHeightRatio) : base(width, height,texNum, 0, 0)
         {

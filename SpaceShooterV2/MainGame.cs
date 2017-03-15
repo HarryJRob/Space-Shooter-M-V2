@@ -20,7 +20,7 @@ namespace SpaceShooterV2
         private const int ColumnNum = 10;
         private const int RowNum = 10;
 
-        private const bool Testing = true;
+        private const bool Testing = false;
         private bool _multiplayer;
 
         private List<int>[,] _objectCollisionList;
@@ -96,7 +96,7 @@ namespace SpaceShooterV2
             #endregion
 
             #region player SetUp
-
+            Debug.WriteLine(_window.ClientBounds.Height/ShipScale);
             if (_multiplayer)
             {
                 _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
@@ -116,7 +116,7 @@ namespace SpaceShooterV2
             #endregion
 
             _objectList.Add(new Charger(_textureList[2].Width / _textureList[2].Height,
-                _window.ClientBounds.Height / ShipScale,2,_window.ClientBounds.Height/BulletScale,50));
+                _window.ClientBounds.Height / ShipScale, 2, _window.ClientBounds.Height / BulletScale, 50));
         }
 
         public void Update(GameTime gameTime)
@@ -140,7 +140,7 @@ namespace SpaceShooterV2
                             if (((PlayerShip) _objectList[i]).Firing)
                             {
                                 _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
-                                    _window.ClientBounds.Height/BulletScale, 3, _window.ClientBounds.Width/BulletScale,
+                                    _window.ClientBounds.Height/BulletScale, 3, _window.ClientBounds.Width/(int)(1.5f*BulletScale),
                                     0,
                                     ((PlayerShip) _objectList[i]).getCenterPoint, true));
                                 ((PlayerShip) _objectList[i]).Firing = false;
