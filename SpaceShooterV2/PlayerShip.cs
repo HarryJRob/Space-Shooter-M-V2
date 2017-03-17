@@ -25,15 +25,15 @@ namespace SpaceShooterV2
         private const int UIScale = 55;
 
         private int _bulletCoolDown;
-        private const int BulletCdTotal = 30;
+        private const int BulletCdTotal = 33;
 
         private int _deathAnimationFrame;
 
         private int _windowX;
         private int _windowY;
-        private const int VelocityScale = 25;
+        private const int VelocityScale = 12;
 
-        public PlayerShip(int width, int height, byte texNum, byte playerID,string keyStr,int winX, int winY, double UIWidthHeightRatio) : base(width, height,texNum, 0, 0)
+        public PlayerShip(int widthByHeight, int height, byte texNum, byte playerID,string keyStr,int winX, int winY, double UIWidthHeightRatio) : base(widthByHeight, height,texNum, 0, 0)
         {
             _health = 5;
             _windowX = winX;

@@ -116,7 +116,7 @@ namespace SpaceShooterV2
             #endregion
 
             _objectList.Add(new Charger(_textureList[2].Width / _textureList[2].Height,
-                _window.ClientBounds.Height / ShipScale, 2, _window.ClientBounds.Height / BulletScale, 50));
+                _window.ClientBounds.Height / ShipScale, 2, _window.ClientBounds.Height /(int)(0.75f * BulletScale), 50));
         }
 
         public void Update(GameTime gameTime)
@@ -136,15 +136,17 @@ namespace SpaceShooterV2
                     {
                         if (_objectList[i].GetType() == typeof(PlayerShip))
                         {
+                            #region Player Update
                             ((PlayerShip) _objectList[i]).Update(gameTime, keyState);
                             if (((PlayerShip) _objectList[i]).Firing)
                             {
                                 _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
-                                    _window.ClientBounds.Height/BulletScale, 3, _window.ClientBounds.Width/(int)(1.5f*BulletScale),
+                                    _window.ClientBounds.Height/BulletScale, 3, _window.ClientBounds.Height/(int)(0.8f * BulletScale),
                                     0,
                                     ((PlayerShip) _objectList[i]).getCenterPoint, true));
                                 ((PlayerShip) _objectList[i]).Firing = false;
                             }
+                        #endregion
                         }
                         else if ((_objectList[i].GetType() == typeof(EnemyShip)) ||
                                  _objectList[i].GetType().IsSubclassOf(typeof(EnemyShip)))

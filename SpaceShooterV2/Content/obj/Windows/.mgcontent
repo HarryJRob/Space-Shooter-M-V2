@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V2/SpaceShooterV2/Content/Game Resources/Backgrounds/BackGround.jpg</File>
+    <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V2/SpaceShooterV2/Content/Game Resources/CollisionArea.png</File>
+    <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V2/SpaceShooterV2/Content/Game Resources/Bullets/BulletSheet.png</File>
+    <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V2/SpaceShooterV2/Content/Game Resources/Ships/ship.png</File>
+    <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V2/SpaceShooterV2/Content/Game Resources/Ships/SpaceShip.png</File>
+    <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V2/SpaceShooterV2/Content/Game Resources/Bullets/LongBullet.png</File>
+    <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V2/SpaceShooterV2/Content/Game Resources/Bullets/RoundBullet.png</File>
+    <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V2/SpaceShooterV2/Content/Game Resources/Ships/HealthBarPiece.png</File>
+  </SourceFiles>
+</SourceFileCollection>

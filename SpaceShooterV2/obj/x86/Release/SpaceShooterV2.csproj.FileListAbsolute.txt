@@ -1,0 +1,34 @@
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\Content\CollisionArea.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SpaceShooterV2.exe
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SpaceShooterV2.pdb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\MonoGame.Framework.dll
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.MediaFoundation.dll
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.dll
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.XAudio2.dll
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.DXGI.dll
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.Direct3D11.dll
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.Direct2D1.dll
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.XInput.dll
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.RawInput.dll
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.Direct3D9.dll
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\MonoGame.Framework.xml
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.MediaFoundation.xml
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.xml
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.XAudio2.xml
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.DXGI.xml
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.Direct3D11.xml
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.Direct2D1.xml
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.XInput.xml
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.RawInput.xml
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.Direct3D9.xml
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\obj\x86\Release\SpaceShooterV2.exe
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\obj\x86\Release\SpaceShooterV2.pdb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Backgrounds\BackGround.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\CollisionArea.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Bullets\BulletSheet.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Ships\ship.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Ships\SpaceShip.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\obj\x86\Release\SpaceShooterV2.csprojResolveAssemblyReference.cache
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Bullets\LongBullet.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Bullets\RoundBullet.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Ships\HealthBarPiece.xnb
