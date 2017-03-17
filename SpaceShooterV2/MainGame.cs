@@ -44,7 +44,7 @@ namespace SpaceShooterV2
 
             #region Force FullScreen
 
-            if (!Testing)
+            if (!Testing && !_graphics.IsFullScreen)
             {
                 _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
                 _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
@@ -79,16 +79,16 @@ namespace SpaceShooterV2
             _tileHeight = (float) _window.ClientBounds.Height/RowNum;
         }
 
-        public void LoadContent(ContentManager Content)
+        public void LoadContent(ContentManager content)
         {
             #region Load Textures
 
-            _textureList.Add(Content.Load<Texture2D>("Game Resources/CollisionArea"));
-            _textureList.Add(Content.Load<Texture2D>("Game Resources/Backgrounds/BackGround"));
-            _textureList.Add(Content.Load<Texture2D>("Game Resources/Ships/ship"));
-            _textureList.Add(Content.Load<Texture2D>("Game Resources/Bullets/LongBullet"));
-            _textureList.Add(Content.Load<Texture2D>("Game Resources/Bullets/RoundBullet"));
-            _textureList.Add(Content.Load<Texture2D>("Game Resources/Ships/HealthBarPiece"));
+            _textureList.Add(content.Load<Texture2D>("Game Resources/CollisionArea"));
+            _textureList.Add(content.Load<Texture2D>("Game Resources/Backgrounds/BackGround"));
+            _textureList.Add(content.Load<Texture2D>("Game Resources/Ships/ship"));
+            _textureList.Add(content.Load<Texture2D>("Game Resources/Bullets/LongBullet"));
+            _textureList.Add(content.Load<Texture2D>("Game Resources/Bullets/RoundBullet"));
+            _textureList.Add(content.Load<Texture2D>("Game Resources/Ships/HealthBarPiece"));
 
             //0 = collisionTex, 1 = Background, 2 = playerShip, 3 = Long Bullet, 4 = Round Bullet, 5 = Health bar piece
             Debug.WriteLine("Assets loaded");
@@ -116,7 +116,7 @@ namespace SpaceShooterV2
             #endregion
 
             _objectList.Add(new Charger(_textureList[2].Width / _textureList[2].Height,
-                _window.ClientBounds.Height / ShipScale, 2, _window.ClientBounds.Height /(int)(0.75f * BulletScale), 50));
+                _window.ClientBounds.Height / ShipScale, 2, _window.ClientBounds.Height /(int)(0.5f * BulletScale), 50));
         }
 
         public void Update(GameTime gameTime)
@@ -141,7 +141,7 @@ namespace SpaceShooterV2
                             if (((PlayerShip) _objectList[i]).Firing)
                             {
                                 _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
-                                    _window.ClientBounds.Height/BulletScale, 3, _window.ClientBounds.Height/(int)(0.8f * BulletScale),
+                                    _window.ClientBounds.Height/BulletScale, 3, _window.ClientBounds.Height/(int)(0.7f * BulletScale),
                                     0,
                                     ((PlayerShip) _objectList[i]).getCenterPoint, true));
                                 ((PlayerShip) _objectList[i]).Firing = false;

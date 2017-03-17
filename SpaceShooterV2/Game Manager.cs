@@ -3,12 +3,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceShooterV2
 {
-    class Game_Manager : Game
+    class GameManager : Game
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
         private MainGame CurGame;
+        private MainMenu CurMenu;
 
         private enum GameState
         {
@@ -19,7 +20,7 @@ namespace SpaceShooterV2
 
         private GameState curState;
 
-        public Game_Manager()
+        public GameManager()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -30,23 +31,42 @@ namespace SpaceShooterV2
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            //CurGame = new MainGame(false,ref graphics, Window, spriteBatch);
-            //CurGame.Initialize();
-            //CurGame.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (curState == GameState.PlayingSP)
+            if (curState == GameState.PlayingSP || curState == GameState.PlayingMP)
             {
-                if (CurGame == null)
+                #region Game Logic
+                if (CurGame == null && curState == GameState.PlayingSP)
                 {
                     CurGame = new MainGame(false,ref graphics,Window,spriteBatch);
                     CurGame.Initialize();
                     CurGame.LoadContent(Content);
                 }
-                CurGame.Update(gameTime);
+                else if (CurGame == null && curState == GameState.PlayingMP)
+                {
+                    CurGame = new MainGame(true, ref graphics, Window, spriteBatch);
+                    CurGame.Initialize();
+                    CurGame.LoadContent(Content);
+                }
+                else
+                {
+                    if (CurGame != null)
+                    {
+                        CurGame.Update(gameTime);
+                        if (CurGame.IsDead)
+                        {
+                            CurGame = null;
+                            //Change State
+                        }
+                    }
+                }
+                #endregion
+            }
+            else if (curState == GameState.MainMenu)
+            {
+                
             }
 
             base.Update(gameTime);
@@ -54,7 +74,7 @@ namespace SpaceShooterV2
 
         protected override void Draw(GameTime gameTime)
         {
-            if (curState == GameState.PlayingSP || curState == GameState.PlayingMP)
+            if ((curState == GameState.PlayingSP || curState == GameState.PlayingMP) && CurGame != null)
                 CurGame.Draw(gameTime);
 
             base.Draw(gameTime);
