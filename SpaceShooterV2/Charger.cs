@@ -16,7 +16,8 @@ namespace SpaceShooterV2
         private const int CoolDownTotal = 40;
         private int _currentCoolDown;
         private int _curCharge;
-        private int _bulVel;
+        private int _chargeTo = 4;
+        private readonly int _bulVel;
 
         public Charger(int width, int height, byte texNum,int bulVel, int score)
             : base(width, height, texNum, 0 , 0, score)
@@ -37,13 +38,15 @@ namespace SpaceShooterV2
                 _curCharge += 1;
             }
 
-            if (_curCharge >= 4)
+            if (_curCharge >= _chargeTo)
             {
                 _curState = fireState.Firing;
             }
 
             if (_curCharge == 0 && _curState == fireState.Firing)
             {
+                Random rnd = new Random();
+                _chargeTo = rnd.Next(3, 9);
                 _curState = fireState.Charging;
             }
 

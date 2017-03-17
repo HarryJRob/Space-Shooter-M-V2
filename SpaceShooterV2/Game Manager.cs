@@ -11,6 +11,9 @@ namespace SpaceShooterV2
         private MainGame CurGame;
         private MainMenu CurMenu;
 
+        private bool _transitioning = false; //Can be used for animation later
+        private int _transitionFrameCount = 0;
+
         private enum GameState
         {
             MainMenu,
@@ -35,48 +38,64 @@ namespace SpaceShooterV2
 
         protected override void Update(GameTime gameTime)
         {
-            if (curState == GameState.PlayingSP || curState == GameState.PlayingMP)
+            if (!_transitioning)
             {
-                #region Game Logic
-                if (CurGame == null && curState == GameState.PlayingSP)
+                if (curState == GameState.PlayingSP || curState == GameState.PlayingMP)
                 {
-                    CurGame = new MainGame(false,ref graphics,Window,spriteBatch);
-                    CurGame.Initialize();
-                    CurGame.LoadContent(Content);
-                }
-                else if (CurGame == null && curState == GameState.PlayingMP)
-                {
-                    CurGame = new MainGame(true, ref graphics, Window, spriteBatch);
-                    CurGame.Initialize();
-                    CurGame.LoadContent(Content);
-                }
-                else
-                {
-                    if (CurGame != null)
+                    #region Game Logic
+
+                    if (CurGame == null && curState == GameState.PlayingSP)
                     {
-                        CurGame.Update(gameTime);
-                        if (CurGame.IsDead)
+                        CurGame = new MainGame(false, ref graphics, Window, spriteBatch);
+                        CurGame.Initialize();
+                        CurGame.LoadContent(Content);
+                    }
+                    else if (CurGame == null && curState == GameState.PlayingMP)
+                    {
+                        CurGame = new MainGame(true, ref graphics, Window, spriteBatch);
+                        CurGame.Initialize();
+                        CurGame.LoadContent(Content);
+                    }
+                    else
+                    {
+                        if (CurGame != null)
                         {
-                            CurGame = null;
-                            //Change State
+                            CurGame.Update(gameTime);
+                            if (CurGame.IsDead)
+                            {
+                                CurGame = null;
+                                curState = GameState.MainMenu;
+                                //Change State
+                            }
                         }
                     }
-                }
-                #endregion
-            }
-            else if (curState == GameState.MainMenu)
-            {
-                
-            }
 
+                    #endregion
+                }
+                else if (curState == GameState.MainMenu)
+                {
+                    if (CurMenu == null)
+                    {
+                        CurMenu = new MainMenu();
+                        CurMenu.Initialize();
+                        CurMenu.LoadContent(Content);
+                    }
+                }
+            }
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            if ((curState == GameState.PlayingSP || curState == GameState.PlayingMP) && CurGame != null)
-                CurGame.Draw(gameTime);
+            if (!_transitioning)
+            {
+                GraphicsDevice.Clear(Color.SkyBlue);
 
+                if ((curState == GameState.PlayingSP || curState == GameState.PlayingMP) && CurGame != null)
+                    CurGame.Draw(gameTime);
+                else if (curState == GameState.MainMenu && CurMenu != null)
+                    CurMenu.Draw(gameTime);
+            }
             base.Draw(gameTime);
         }
     }
