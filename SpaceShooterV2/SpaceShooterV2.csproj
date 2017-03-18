@@ -80,6 +80,7 @@
     <Compile Include="GameObject.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="MainMenu.cs" />
+    <Compile Include="MenuButton.cs" />
     <Compile Include="PlayerShip.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

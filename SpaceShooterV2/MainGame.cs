@@ -20,7 +20,7 @@ namespace SpaceShooterV2
         private const int ColumnNum = 10;
         private const int RowNum = 10;
 
-        private const bool Testing = true;
+        private const bool Testing = false;
         private bool _multiplayer;
 
         private List<int>[,] _objectCollisionList;
@@ -121,10 +121,6 @@ namespace SpaceShooterV2
 
         public void Update(GameTime gameTime)
         {
-            if ((GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Environment.Exit(-1);
-
             KeyboardState keyState = Keyboard.GetState();
 
             if (!_dead)
@@ -224,6 +220,7 @@ namespace SpaceShooterV2
 
                             #endregion
 
+                            #region Deletion of EnemyShips if they have collided
                             if (_objectList[i].Collision)
                             {
                                 if ((_objectList[i].GetType() == typeof(EnemyShip)) ||
@@ -234,6 +231,7 @@ namespace SpaceShooterV2
                                 }
                                 _objectList[i] = null;
                             }
+                            #endregion
                         }
                         else if (_objectList[i].GetType() == typeof(Bullet))
                         {
@@ -243,11 +241,10 @@ namespace SpaceShooterV2
                         }
 
                         #region Updating ObjectCollisionList
-
+                        //Every object which has not collided with something and exits i.e. not null, adds a reference to itself in each box its corners are in
                         if ((_objectList[i] != null) && !_objectList[i].Collision)
                         {
-                            if (
-                                !(_objectList[i].GetType() == typeof(PlayerShip) &&
+                            if (!(_objectList[i].GetType() == typeof(PlayerShip) &&
                                   ((PlayerShip) _objectList[i]).Health == 0))
                             {
                                 var curObjRec = _objectList[i].BoundingBox;
@@ -257,18 +254,21 @@ namespace SpaceShooterV2
                                     _objectCollisionList[
                                         (int) Math.Truncate(curObjRec.X/_tileWidth),
                                         (int) Math.Truncate(curObjRec.Y/_tileHeight)].Add(i);
+
                                 if ((curObjRec.X + curObjRec.Width > 0) && (curObjRec.Y > 0) &&
                                     (curObjRec.X + curObjRec.Width < _window.ClientBounds.Width) &&
                                     (curObjRec.Y < _window.ClientBounds.Height))
                                     _objectCollisionList[
                                         (int) Math.Truncate((curObjRec.X + curObjRec.Width)/_tileWidth),
                                         (int) Math.Truncate(curObjRec.Y/_tileHeight)].Add(i);
+
                                 if ((curObjRec.X > 0) && (curObjRec.Y + curObjRec.Height > 0) &&
                                     (curObjRec.X < _window.ClientBounds.Width) &&
                                     (curObjRec.Y + curObjRec.Height < _window.ClientBounds.Height))
                                     _objectCollisionList[
                                         (int) Math.Truncate(curObjRec.X/_tileWidth),
                                         (int) Math.Truncate((curObjRec.Y + curObjRec.Height)/_tileHeight)].Add(i);
+
                                 if ((curObjRec.X + curObjRec.Width > 0) && (curObjRec.Y + curObjRec.Height > 0) &&
                                     (curObjRec.X + curObjRec.Width < _window.ClientBounds.Width) &&
                                     (curObjRec.Y + curObjRec.Height < _window.ClientBounds.Height))
@@ -305,6 +305,7 @@ namespace SpaceShooterV2
                         {
                             //Do collision check
                             //Get the objects which are contained within that square
+                            //Updating the filtered list will update the original list due to the way that C# handles lists as a collection of references
                             List<GameObject> filteredList = new List<GameObject>();
                             foreach (int i in _objectCollisionList[x, y])
                             {

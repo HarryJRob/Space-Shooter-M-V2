@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceShooterV2
 {
-    class GameObject
+    internal class GameObject
     {
         protected Vector2 _position;
         protected int _width, _height;
@@ -14,18 +14,18 @@ namespace SpaceShooterV2
 
         public GameObject() { }
 
-        public GameObject(int Width, int Height, byte TexNum, int xVelocity, int yVelocity)
+        public GameObject(int width, int height, byte texNum, int xVelocity, int yVelocity)
         {
-            _width = Width * Height;
-            _height = Height;
-            _texNum = TexNum;
+            _width = width*height;
+            _height = height;
+            _texNum = texNum;
             _xVelocity = xVelocity;
             _yVelocity = yVelocity;
         }
 
         public virtual void Draw(SpriteBatch spriteBatch, Texture2D tex)
         {
-            spriteBatch.Draw(tex, new Rectangle((int)_position.X, (int)_position.Y, _width, _height), Color.White);
+            spriteBatch.Draw(tex, new Rectangle((int) _position.X, (int) _position.Y, _width, _height), Color.White);
         }
 
         public virtual void Update(GameTime gameTime)
@@ -36,23 +36,23 @@ namespace SpaceShooterV2
 
         public Rectangle BoundingBox
         {
-            get { return new Rectangle((int)_position.X, (int)_position.Y, _width, _height); }
+            get { return new Rectangle((int) _position.X, (int) _position.Y, _width, _height); }
         }
 
         public bool Collision
         {
             set { _collision = value; }
-            get { return _collision;}
+            get { return _collision; }
         }
 
         public int TexNum
         {
-            get { return _texNum;}
+            get { return _texNum; }
         }
 
         public Vector2 getCenterPoint
         {
-            get { return new Vector2(_position.X + _width / 2, _position.Y + _height / 2); }
+            get { return new Vector2(_position.X + _width/2, _position.Y + _height/2); }
         }
     }
 }

@@ -1,5 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+/*Comments are objectives
+ * e.g. obj: 1.9
+ * Show the logic of complex algorithms - brief explanation
+ */
 
 namespace SpaceShooterV2
 {
@@ -21,14 +28,14 @@ namespace SpaceShooterV2
             PlayingMP
         }
 
-        private GameState curState;
+        private GameState _curState;
 
         public GameManager()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            curState = GameState.PlayingSP;
+            _curState = GameState.PlayingSP;
         }
 
         protected override void LoadContent()
@@ -38,19 +45,23 @@ namespace SpaceShooterV2
 
         protected override void Update(GameTime gameTime)
         {
+            if ((GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) ||
+                Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Environment.Exit(-1);
+
             if (!_transitioning)
             {
-                if (curState == GameState.PlayingSP || curState == GameState.PlayingMP)
+                if (_curState == GameState.PlayingSP || _curState == GameState.PlayingMP)
                 {
                     #region Game Logic
 
-                    if (CurGame == null && curState == GameState.PlayingSP)
+                    if (CurGame == null && _curState == GameState.PlayingSP)
                     {
                         CurGame = new MainGame(false, ref graphics, Window, spriteBatch);
                         CurGame.Initialize();
                         CurGame.LoadContent(Content);
                     }
-                    else if (CurGame == null && curState == GameState.PlayingMP)
+                    else if (CurGame == null && _curState == GameState.PlayingMP)
                     {
                         CurGame = new MainGame(true, ref graphics, Window, spriteBatch);
                         CurGame.Initialize();
@@ -64,22 +75,25 @@ namespace SpaceShooterV2
                             if (CurGame.IsDead)
                             {
                                 CurGame = null;
-                                curState = GameState.MainMenu;
-                                //Change State
+                                _curState = GameState.MainMenu;
                             }
                         }
                     }
 
                     #endregion
                 }
-                else if (curState == GameState.MainMenu)
+                else if (_curState == GameState.MainMenu)
                 {
+                    #region Menu Logic
+
                     if (CurMenu == null)
                     {
                         CurMenu = new MainMenu();
                         CurMenu.Initialize();
                         CurMenu.LoadContent(Content);
                     }
+
+                    #endregion
                 }
             }
             base.Update(gameTime);
@@ -91,9 +105,9 @@ namespace SpaceShooterV2
             {
                 GraphicsDevice.Clear(Color.SkyBlue);
 
-                if ((curState == GameState.PlayingSP || curState == GameState.PlayingMP) && CurGame != null)
+                if ((_curState == GameState.PlayingSP || _curState == GameState.PlayingMP) && CurGame != null)
                     CurGame.Draw(gameTime);
-                else if (curState == GameState.MainMenu && CurMenu != null)
+                else if (_curState == GameState.MainMenu && CurMenu != null)
                     CurMenu.Draw(gameTime);
             }
             base.Draw(gameTime);
