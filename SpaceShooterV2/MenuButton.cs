@@ -11,6 +11,7 @@ namespace SpaceShooterV2
         private readonly int _texNum;
         private readonly Vector2 _position;
         private bool _clicked;
+        private bool _isActive;
 
         public MenuButton(int width, int height, int texNum, Vector2 position)
         {
@@ -40,6 +41,12 @@ namespace SpaceShooterV2
         {
             get { return _clicked; }
             set { _clicked = value; }
+        }
+
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set { _isActive = value; }
         }
 
         public int TexNum

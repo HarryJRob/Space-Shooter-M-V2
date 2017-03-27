@@ -20,12 +20,13 @@ namespace SpaceShooterV2
         private const int ColumnNum = 10;
         private const int RowNum = 10;
 
-        private const bool Testing = false;
+        private const bool Testing = true;
         private bool _multiplayer;
 
         private List<int>[,] _objectCollisionList;
         private List<GameObject> _objectList;
         private List<Texture2D> _textureList;
+        private KeyboardState _curKeyState;
 
         private bool _dead;
 
@@ -121,7 +122,7 @@ namespace SpaceShooterV2
 
         public void Update(GameTime gameTime)
         {
-            KeyboardState keyState = Keyboard.GetState();
+            _curKeyState = Keyboard.GetState();
 
             if (!_dead)
             {
@@ -133,7 +134,7 @@ namespace SpaceShooterV2
                         if (_objectList[i].GetType() == typeof(PlayerShip))
                         {
                             #region Player Update
-                            ((PlayerShip) _objectList[i]).Update(gameTime, keyState);
+                            ((PlayerShip) _objectList[i]).Update(gameTime, _curKeyState);
                             if (((PlayerShip) _objectList[i]).Firing)
                             {
                                 _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,

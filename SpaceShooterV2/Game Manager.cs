@@ -25,7 +25,8 @@ namespace SpaceShooterV2
         {
             MainMenu,
             PlayingSP,
-            PlayingMP
+            PlayingMP,
+            Dead
         }
 
         private GameState _curState;
@@ -67,30 +68,37 @@ namespace SpaceShooterV2
                         CurGame.Initialize();
                         CurGame.LoadContent(Content);
                     }
-                    else
+                    else if (CurGame != null)
                     {
-                        if (CurGame != null)
-                        {
                             CurGame.Update(gameTime);
                             if (CurGame.IsDead)
                             {
                                 CurGame = null;
-                                _curState = GameState.MainMenu;
+                                _curState = GameState.Dead;
                             }
-                        }
                     }
 
                     #endregion
                 }
-                else if (_curState == GameState.MainMenu)
+                else if (_curState == GameState.Dead || _curState == GameState.MainMenu)
                 {
                     #region Menu Logic
 
-                    if (CurMenu == null)
+                    if (CurMenu == null && _curState == GameState.Dead)
                     {
-                        CurMenu = new MainMenu();
+                        CurMenu = new MainMenu(true);
                         CurMenu.Initialize();
                         CurMenu.LoadContent(Content);
+                    }
+                    else if (CurMenu == null && _curState != GameState.Dead)
+                    {
+                        CurMenu = new MainMenu(true);
+                        CurMenu.Initialize();
+                        CurMenu.LoadContent(Content);
+                    }
+                    else if (CurMenu != null)
+                    {
+                        CurMenu.Update(gameTime);
                     }
 
                     #endregion
