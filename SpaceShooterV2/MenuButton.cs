@@ -34,7 +34,7 @@ namespace SpaceShooterV2
 
         public void Draw(SpriteBatch spriteBatch, Texture2D tex)
         {
-            spriteBatch.Draw(tex,new Rectangle((int)_position.X,(int)_position.X,_width,_height),Color.White);
+            spriteBatch.Draw(tex,new Rectangle((int)_position.X,(int)_position.Y,_width,_height),Color.White);
         }
 
         public bool IsClicked

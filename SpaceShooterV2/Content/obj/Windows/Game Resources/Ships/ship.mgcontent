@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V2/SpaceShooterV2/Content/Game Resources/Ships/ship.png</SourceFile>
-  <SourceTime>2017-03-01T14:12:30.9082054+00:00</SourceTime>
-  <DestFile>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V2/SpaceShooterV2/Content/bin/Windows/Game Resources/Ships/ship.xnb</DestFile>
-  <DestTime>2017-03-01T14:17:37.8655413+00:00</DestTime>
+  <SourceFile>C:/Users/Harry/Source/Repos/Space-Shooter-M-V2/SpaceShooterV2/Content/Game Resources/Ships/ship.png</SourceFile>
+  <SourceTime>2017-03-31T17:10:16.0406306+01:00</SourceTime>
+  <DestFile>C:/Users/Harry/Source/Repos/Space-Shooter-M-V2/SpaceShooterV2/Content/bin/Windows/Game Resources/Ships/ship.xnb</DestFile>
+  <DestTime>2017-03-31T17:25:44.6287566+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T07:36:08+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

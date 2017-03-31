@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
-using Microsoft.Xna.Framework.Content;
 
 namespace SpaceShooterV2
 {
@@ -80,21 +79,11 @@ namespace SpaceShooterV2
             _tileHeight = (float) _window.ClientBounds.Height/RowNum;
         }
 
-        public void LoadContent(ContentManager content)
+        public void LoadContent(List<Texture2D> texList)
         {
-            #region Load Textures
-
-            _textureList.Add(content.Load<Texture2D>("Game Resources/CollisionArea"));
-            _textureList.Add(content.Load<Texture2D>("Game Resources/Backgrounds/BackGround"));
-            _textureList.Add(content.Load<Texture2D>("Game Resources/Ships/ship"));
-            _textureList.Add(content.Load<Texture2D>("Game Resources/Bullets/LongBullet"));
-            _textureList.Add(content.Load<Texture2D>("Game Resources/Bullets/RoundBullet"));
-            _textureList.Add(content.Load<Texture2D>("Game Resources/Ships/HealthBarPiece"));
-
             //0 = collisionTex, 1 = Background, 2 = playerShip, 3 = Long Bullet, 4 = Round Bullet, 5 = Health bar piece
-            Debug.WriteLine("Assets loaded");
-
-            #endregion
+            _textureList = texList;
+            Debug.WriteLine("Game Assets loaded");
 
             #region player SetUp
             Debug.WriteLine(_window.ClientBounds.Height/ShipScale);
