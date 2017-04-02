@@ -23,9 +23,11 @@ namespace SpaceShooterV2
             GameOver,
             Options,
             LevelSelect,
+            PlayingSP,
+            PlayingMP,
         }
 
-        private MenuState _curMenuState;
+        private MenuState _curMenuState = MenuState.Main;
 
         private const int MenuScale = 2;
 
@@ -38,8 +40,6 @@ namespace SpaceShooterV2
             // _menuButtons.Add(new MenuButton(,,, new Vector2(,)));
             _menuButtons.Add(new MenuButton((int)(_window.ClientBounds.Width / 2.5f), _window.ClientBounds.Height / 4, 1, new Vector2(_window.ClientBounds.Width / 20, _window.ClientBounds.Height / 2 - _window.ClientBounds.Height / 7)));
             _menuButtons.Add(new MenuButton((int)(_window.ClientBounds.Width / 2.5f), _window.ClientBounds.Height / 4, 1, new Vector2(_window.ClientBounds.Width - _window.ClientBounds.Width / 2.5f - _window.ClientBounds.Width / 20, _window.ClientBounds.Height / 2 - _window.ClientBounds.Height / 7)));
-            _menuButtons[0].IsActive = true;
-            _menuButtons[1].IsActive = true;
 
             #endregion
 
@@ -68,11 +68,19 @@ namespace SpaceShooterV2
         {
             _curMouseState = Mouse.GetState();
 
+            //Temporary
+            if (_curMenuState == MenuState.GameOver)
+            {
+                _curMenuState = MenuState.Main;
+            }
+
             #region State Logic
 
             switch (_curMenuState)
             {
                 case MenuState.Main:
+                    _menuButtons[0].IsActive = true;
+                    _menuButtons[1].IsActive = true;
                     break;
                 case MenuState.GameOver:
                     break;
@@ -90,25 +98,29 @@ namespace SpaceShooterV2
                 if (_menuButtons[i].IsActive)
                 {
                     _menuButtons[i].Update(_curMouseState);
-                }
 
-                if (_menuButtons[i].IsClicked)
-                {
-                    //One for each button
-                    Debug.WriteLine("Index {0} is clicked",i);
-                    _menuButtons[i].IsClicked = false;
-                    switch (i)
+                    if (_menuButtons[i].IsClicked)
                     {
-                        case 0:
-                            break;
-                        case 1:
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            break;
+                        //One for each button
+                        _menuButtons[i].IsClicked = false;
+                        Debug.WriteLine("Index {0} is clicked", i);
+
+                        switch (i)
+                        {
+                            case 0:
+                                _curMenuState = MenuState.PlayingSP;
+                                break;
+                            case 1:
+                                _curMenuState = MenuState.PlayingMP;
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                        }
                     }
                 }
+
             }
 
             #endregion
@@ -122,6 +134,19 @@ namespace SpaceShooterV2
                 curMenuButton.Draw(_spriteBatch,_texList[curMenuButton.TexNum]);
             }
             _spriteBatch.End();
+        }
+
+        public int WillPlay()
+        {
+            if (_curMenuState == MenuState.PlayingSP)
+            {
+                return 1;
+            }  
+            if (_curMenuState == MenuState.PlayingMP)
+            {
+                return 2;
+            }
+            return 0;
         }
     }
 }

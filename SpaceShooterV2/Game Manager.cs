@@ -13,12 +13,12 @@ namespace SpaceShooterV2
 {
     class GameManager : Game
     {
-        private GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
+        private GraphicsDeviceManager _graphics;
+        private SpriteBatch _spriteBatch;
         private List<Texture2D> _mainTexList = new List<Texture2D>();
 
-        private MainGame CurGame;
-        private MainMenu CurMenu;
+        private MainGame _curGame;
+        private MainMenu _curMenu;
 
         private bool _transitioning = false; //Can be used for animation later
         private int _transitionFrameCount = 0;
@@ -35,7 +35,7 @@ namespace SpaceShooterV2
 
         public GameManager()
         {
-            graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
             _curState = GameState.MainMenu;
@@ -43,7 +43,7 @@ namespace SpaceShooterV2
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             #region Load Game Textures
             //0 - 5 = MainGame tex (Will need to be greater and background does not need to be passed but would break some of the existing code if removed)
@@ -73,25 +73,29 @@ namespace SpaceShooterV2
                     {
                         IsMouseVisible = false;
                     }
+                    if (_curMenu != null)
+                    {
+                        _curMenu = null;
+                    }
 
-                    if (CurGame == null && _curState == GameState.PlayingSP)
+                    if (_curGame == null && _curState == GameState.PlayingSP)
                     {
-                        CurGame = new MainGame(false, ref graphics, Window, spriteBatch);
-                        CurGame.Initialize();
-                        CurGame.LoadContent(_mainTexList.GetRange(0,6));
+                        _curGame = new MainGame(false, ref _graphics, Window, _spriteBatch);
+                        _curGame.Initialize();
+                        _curGame.LoadContent(_mainTexList.GetRange(0,6));
                     }
-                    else if (CurGame == null && _curState == GameState.PlayingMP)
+                    else if (_curGame == null && _curState == GameState.PlayingMP)
                     {
-                        CurGame = new MainGame(true, ref graphics, Window, spriteBatch);
-                        CurGame.Initialize();
-                        CurGame.LoadContent(_mainTexList.GetRange(0,6));
+                        _curGame = new MainGame(true, ref _graphics, Window, _spriteBatch);
+                        _curGame.Initialize();
+                        _curGame.LoadContent(_mainTexList.GetRange(0,6));
                     }
-                    else if (CurGame != null)
+                    else if (_curGame != null)
                     {
-                            CurGame.Update(gameTime);
-                            if (CurGame.IsDead)
+                            _curGame.Update(gameTime);
+                            if (_curGame.IsDead)
                             {
-                                CurGame = null;
+                                _curGame = null;
                                 _curState = GameState.Dead;
                             }
                     }
@@ -106,20 +110,33 @@ namespace SpaceShooterV2
                     {
                         IsMouseVisible = true;
                     }
+                    if (_curGame != null)
+                    {
+                        _curGame = null;
+                    }
 
-                    if (CurMenu == null && _curState == GameState.Dead)
+                    if (_curMenu == null && _curState == GameState.Dead)
                     {
-                        CurMenu = new MainMenu(true, spriteBatch, Window);
-                        CurMenu.LoadContent(_mainTexList.GetRange(0, 6));
+                        _curState = GameState.MainMenu;
+                        _curMenu = new MainMenu(true, _spriteBatch, Window);
+                        _curMenu.LoadContent(_mainTexList.GetRange(0, 6));
                     }
-                    else if (CurMenu == null && _curState != GameState.Dead)
+                    else if (_curMenu == null && _curState != GameState.Dead)
                     {
-                        CurMenu = new MainMenu(true,spriteBatch,Window);
-                        CurMenu.LoadContent(_mainTexList.GetRange(0, 6));
+                        _curMenu = new MainMenu(false,_spriteBatch,Window);
+                        _curMenu.LoadContent(_mainTexList.GetRange(0, 6));
                     }
-                    else if (CurMenu != null)
+                    else if (_curMenu != null)
                     {
-                        CurMenu.Update(gameTime);
+                        _curMenu.Update(gameTime);
+                        if (_curMenu.WillPlay() == 1)
+                        {
+                            _curState = GameState.PlayingSP;
+                        }
+                        else if (_curMenu.WillPlay() == 2)
+                        {
+                            _curState = GameState.PlayingMP;
+                        }
                     }
 
                     #endregion
@@ -134,10 +151,10 @@ namespace SpaceShooterV2
             {
                 GraphicsDevice.Clear(Color.SkyBlue);
 
-                if ((_curState == GameState.PlayingSP || _curState == GameState.PlayingMP) && CurGame != null)
-                    CurGame.Draw(gameTime);
-                else if (_curState == GameState.MainMenu && CurMenu != null)
-                    CurMenu.Draw(gameTime);
+                if ((_curState == GameState.PlayingSP || _curState == GameState.PlayingMP) && _curGame != null)
+                    _curGame.Draw(gameTime);
+                else if (_curState == GameState.MainMenu && _curMenu != null)
+                    _curMenu.Draw(gameTime);
             }
             base.Draw(gameTime);
         }
