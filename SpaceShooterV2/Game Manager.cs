@@ -39,6 +39,11 @@ namespace SpaceShooterV2
             Content.RootDirectory = "Content";
 
             _curState = GameState.MainMenu;
+
+            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            Window.AllowUserResizing = false;
+            _graphics.ToggleFullScreen();
         }
 
         protected override void LoadContent()

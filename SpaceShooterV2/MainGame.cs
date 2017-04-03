@@ -53,7 +53,7 @@ namespace SpaceShooterV2
             }
             _window.IsBorderless = true;
 
-            Debug.WriteLine("_window Size: ({0},{1})", _window.ClientBounds.Width, _window.ClientBounds.Height);
+            Debug.WriteLine(" Main Game - _window Size: ({0},{1})", _window.ClientBounds.Width, _window.ClientBounds.Height);
 
             #endregion
 
@@ -83,7 +83,7 @@ namespace SpaceShooterV2
         {
             //0 = collisionTex, 1 = Background, 2 = playerShip, 3 = Long Bullet, 4 = Round Bullet, 5 = Health bar piece
             _textureList = texList;
-            Debug.WriteLine("Game Assets loaded");
+            Debug.WriteLine(" Main Game - Game Assets loaded");
 
             #region player SetUp
             Debug.WriteLine(_window.ClientBounds.Height/ShipScale);
@@ -217,7 +217,7 @@ namespace SpaceShooterV2
                                     _objectList[i].GetType().IsSubclassOf(typeof(EnemyShip)))
                                 {
                                     _score += ((EnemyShip) _objectList[i]).Score;
-                                    Debug.WriteLine("Cur Score: " + _score);
+                                    Debug.WriteLine(" Main Game - Cur Score: " + _score);
                                 }
                                 _objectList[i] = null;
                             }
@@ -271,7 +271,7 @@ namespace SpaceShooterV2
                                      (curObjRec.X > _window.ClientBounds.Width) ||
                                      (curObjRec.Y > _window.ClientBounds.Height)))
                                 {
-                                    Debug.WriteLine("Object {0} left screen", i);
+                                    Debug.WriteLine(" Main Game - Object {0} left screen", i);
                                     _objectList[i] = null;
                                 }
                             }
@@ -314,7 +314,7 @@ namespace SpaceShooterV2
                                                  (curShip.GetType().IsSubclassOf(typeof(EnemyShip)) && curBullet.Owner)) &&
                                                 curShip.BoundingBox.Intersects(curBullet.BoundingBox))
                                             {
-                                                Debug.WriteLine("Collision at ({0},{1})", x, y);
+                                                Debug.WriteLine(" Main Game - Collision at ({0},{1})", x, y);
                                                 curShip.Collision = true;
                                                 curBullet.Collision = true;
                                             }
@@ -330,7 +330,7 @@ namespace SpaceShooterV2
                 if (_objectList.Contains(null))
                 {
                     _objectList.RemoveAll(item => item == null);
-                    Debug.WriteLine("Collapsed ObjectList");
+                    Debug.WriteLine(" Main Game - Collapsed ObjectList");
                 }
 
                 #endregion
@@ -399,7 +399,7 @@ namespace SpaceShooterV2
 
             if (_dead)
             {
-               Debug.WriteLine("Game Over");
+               Debug.WriteLine(" Main Game - Game Over");
             }
 
             #endregion
@@ -410,7 +410,7 @@ namespace SpaceShooterV2
 
             if (_previousFPS != Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds))
             {
-                Debug.WriteLine("Draw fps: {0}, No. Objects {1}",
+                Debug.WriteLine(" Main Game - Draw fps: {0}, No. Objects {1}",
                     Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds), _objectList.Count);
                 _previousFPS = Convert.ToInt32(1/gameTime.ElapsedGameTime.TotalSeconds);
                 //Aprox 500 objects without fps drop

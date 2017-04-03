@@ -16,6 +16,7 @@ namespace SpaceShooterV2
         private List<Texture2D> _texList = new List<Texture2D>();
 
         private MouseState _curMouseState;
+        private bool StateChanged;
 
         private enum MenuState
         {
@@ -29,8 +30,6 @@ namespace SpaceShooterV2
 
         private MenuState _curMenuState = MenuState.Main;
 
-        private const int MenuScale = 2;
-
         public MainMenu(bool cameFromGame, SpriteBatch spriteBatch, GameWindow window)
         {
             _spriteBatch = spriteBatch;
@@ -38,9 +37,9 @@ namespace SpaceShooterV2
 
             #region Adding Buttons
             // _menuButtons.Add(new MenuButton(,,, new Vector2(,)));
-            _menuButtons.Add(new MenuButton((int)(_window.ClientBounds.Width / 2.5f), _window.ClientBounds.Height / 4, 1, new Vector2(_window.ClientBounds.Width / 20, _window.ClientBounds.Height / 2 - _window.ClientBounds.Height / 7)));
-            _menuButtons.Add(new MenuButton((int)(_window.ClientBounds.Width / 2.5f), _window.ClientBounds.Height / 4, 1, new Vector2(_window.ClientBounds.Width - _window.ClientBounds.Width / 2.5f - _window.ClientBounds.Width / 20, _window.ClientBounds.Height / 2 - _window.ClientBounds.Height / 7)));
-
+            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width / 20, _window.ClientBounds.Height / 2 - _window.ClientBounds.Height / 15)));
+            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width - _window.ClientBounds.Width / 2.5f - _window.ClientBounds.Width / 20, _window.ClientBounds.Height / 2 - _window.ClientBounds.Height / 15)));
+            _menuButtons.Add(new MenuButton((int)(_window.ClientBounds.Width / 1.2f), _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width / 20, _window.ClientBounds.Height - _window.ClientBounds.Height/3)));
             #endregion
 
             #region MenuState Logic
@@ -76,11 +75,18 @@ namespace SpaceShooterV2
 
             #region State Logic
 
+            if (StateChanged)
+            {
+                StateChanged = false;
+                DeactivateAll();
+            }
+
             switch (_curMenuState)
             {
                 case MenuState.Main:
                     _menuButtons[0].IsActive = true;
                     _menuButtons[1].IsActive = true;
+                    _menuButtons[2].IsActive = true;
                     break;
                 case MenuState.GameOver:
                     break;
@@ -103,19 +109,24 @@ namespace SpaceShooterV2
                     {
                         //One for each button
                         _menuButtons[i].IsClicked = false;
-                        Debug.WriteLine("Index {0} is clicked", i);
+                        Debug.WriteLine(" Main Menu - Index {0} is clicked", i);
 
                         switch (i)
                         {
                             case 0:
                                 _curMenuState = MenuState.PlayingSP;
+                                StateChanged = true;
                                 break;
                             case 1:
                                 _curMenuState = MenuState.PlayingMP;
+                                StateChanged = true;
                                 break;
                             case 2:
+                                _curMenuState = MenuState.Options;
+                                StateChanged = true;
                                 break;
                             case 3:
+                                StateChanged = true;
                                 break;
                         }
                     }
@@ -147,6 +158,14 @@ namespace SpaceShooterV2
                 return 2;
             }
             return 0;
+        }
+
+        private void DeactivateAll()
+        {
+            foreach (MenuButton curButton in _menuButtons)
+            {
+                curButton.IsActive = false;
+            }
         }
     }
 }

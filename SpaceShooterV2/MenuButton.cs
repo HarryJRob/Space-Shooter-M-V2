@@ -23,7 +23,7 @@ namespace SpaceShooterV2
 
         public void Update(MouseState curMouseState)
         {
-            if (curMouseState.LeftButton == ButtonState.Pressed)
+            if (curMouseState.LeftButton == ButtonState.Pressed && _clicked == false)
             {
                 if (curMouseState.X >= _position.X && curMouseState.X < _position.X + _width && curMouseState.Y > _position.Y && curMouseState.Y < _position.Y + _height)
                 {

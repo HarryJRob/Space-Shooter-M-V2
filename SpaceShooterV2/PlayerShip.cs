@@ -44,7 +44,7 @@ namespace SpaceShooterV2
 
             #region Calculating Control Scheme
 
-            Debug.WriteLine("ID: {0}, Control Scheme: {1}", playerID,keyStr);
+            Debug.WriteLine(" Main Game - ID: {0}, Control Scheme: {1}", playerID,keyStr);
 
             _controlScheme.Controls = new List<Keys>();
             _controlScheme.KeyStates = new List<bool>();
@@ -135,7 +135,7 @@ namespace SpaceShooterV2
                             case 4:
                                 if (_bulletCoolDown >= BulletCdTotal)
                                 {
-                                    Debug.WriteLine("Firing");
+                                    Debug.WriteLine(" Main Game - Firing");
                                     _bulletCoolDown = 0;
                                     _firing = true;
                                 }
@@ -148,7 +148,7 @@ namespace SpaceShooterV2
                 {
                     _health -= 1;
                     _collision = false;
-                    Debug.WriteLine("Health: " + _health + " - " + ToString());
+                    Debug.WriteLine(" Main Game - Health: " + _health + " - " + ToString());
                 }
                 if (_bulletCoolDown != BulletCdTotal)
                     _bulletCoolDown += 1;
