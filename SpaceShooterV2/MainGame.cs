@@ -19,12 +19,13 @@ namespace SpaceShooterV2
         private const int ColumnNum = 10;
         private const int RowNum = 10;
 
-        private const bool Testing = true;
+        private const bool Testing = false;
         private bool _multiplayer;
 
         private List<int>[,] _objectCollisionList;
         private List<GameObject> _objectList;
         private List<Texture2D> _textureList;
+        private SpriteFont _font;
         private KeyboardState _curKeyState;
 
         private bool _dead;
@@ -79,10 +80,11 @@ namespace SpaceShooterV2
             _tileHeight = (float) _window.ClientBounds.Height/RowNum;
         }
 
-        public void LoadContent(List<Texture2D> texList)
+        public void LoadContent(List<Texture2D> texList, SpriteFont font)
         {
             //0 = collisionTex, 1 = Background, 2 = playerShip, 3 = Long Bullet, 4 = Round Bullet, 5 = Health bar piece
             _textureList = texList;
+            _font = font;
             Debug.WriteLine(" Main Game - Game Assets loaded");
 
             #region player SetUp
@@ -358,11 +360,10 @@ namespace SpaceShooterV2
 
         public void Draw(GameTime gameTime)
         {
-            _spriteBatch.Begin();
 
-                _spriteBatch.Draw(_textureList[1],
-                    new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight),
-                    Color.White);
+                //_spriteBatch.Draw(_textureList[1],
+                //    new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight),
+                //    Color.White);
 
             #region Drawing Collision Boxes
 
@@ -404,7 +405,11 @@ namespace SpaceShooterV2
 
             #endregion
 
-            _spriteBatch.End();
+            #region Draw Score 
+
+            _spriteBatch.DrawString(_font, Convert.ToString(_score), new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString(Convert.ToString(_score)).X / 2, 0), Color.RoyalBlue);
+
+            #endregion
 
             #region Calculate FPS
 

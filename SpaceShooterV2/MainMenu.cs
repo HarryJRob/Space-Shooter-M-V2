@@ -139,12 +139,10 @@ namespace SpaceShooterV2
 
         public void Draw(GameTime gameTime)
         {
-            _spriteBatch.Begin();
             foreach (MenuButton curMenuButton in _menuButtons.Where(item => item.IsActive))
             {
                 curMenuButton.Draw(_spriteBatch,_texList[curMenuButton.TexNum]);
             }
-            _spriteBatch.End();
         }
 
         public int WillPlay()

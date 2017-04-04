@@ -116,6 +116,7 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\Game Resources\Arial.spritefont" />
     <None Include="Content\Game Resources\Temp\expansion_pack.zip" />
     <None Include="Content\Game Resources\Temp\explosions.zip" />
     <None Include="Content\Game Resources\Temp\ken_fonts.zip" />

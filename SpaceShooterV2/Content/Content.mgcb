@@ -109,3 +109,9 @@
 /processorParam:TextureFormat=Color
 /build:Game Resources/Ships/HealthBarPiece.png
 
+#begin Game Resources/Arial.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Game Resources/Arial.spritefont
+

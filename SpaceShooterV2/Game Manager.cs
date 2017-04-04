@@ -16,6 +16,7 @@ namespace SpaceShooterV2
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private List<Texture2D> _mainTexList = new List<Texture2D>();
+        private SpriteFont _font;
 
         private MainGame _curGame;
         private MainMenu _curMenu;
@@ -40,10 +41,12 @@ namespace SpaceShooterV2
 
             _curState = GameState.MainMenu;
 
+            #region FullScreen
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             Window.AllowUserResizing = false;
             _graphics.ToggleFullScreen();
+            #endregion
         }
 
         protected override void LoadContent()
@@ -51,14 +54,16 @@ namespace SpaceShooterV2
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             #region Load Game Textures
-            //0 - 5 = MainGame tex (Will need to be greater and background does not need to be passed but would break some of the existing code if removed)
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/CollisionArea"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Backgrounds/BackGround"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/ship"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/LongBullet"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/RoundBullet"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/HealthBarPiece"));
 
+                _font = Content.Load<SpriteFont>("Game Resources/Arial");
+
+                //0 - 5 = MainGame tex (Will need to be greater and background does not need to be passed but would break some of the existing code if removed)
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/CollisionArea"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Backgrounds/BackGround"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/ship"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/LongBullet"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/RoundBullet"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/HealthBarPiece"));
             #endregion
         }
 
@@ -87,13 +92,13 @@ namespace SpaceShooterV2
                     {
                         _curGame = new MainGame(false, ref _graphics, Window, _spriteBatch);
                         _curGame.Initialize();
-                        _curGame.LoadContent(_mainTexList.GetRange(0,6));
+                        _curGame.LoadContent(_mainTexList.GetRange(0,6),_font);
                     }
                     else if (_curGame == null && _curState == GameState.PlayingMP)
                     {
                         _curGame = new MainGame(true, ref _graphics, Window, _spriteBatch);
                         _curGame.Initialize();
-                        _curGame.LoadContent(_mainTexList.GetRange(0,6));
+                        _curGame.LoadContent(_mainTexList.GetRange(0, 6), _font);
                     }
                     else if (_curGame != null)
                     {
@@ -152,6 +157,10 @@ namespace SpaceShooterV2
 
         protected override void Draw(GameTime gameTime)
         {
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(_mainTexList[1], new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height), Color.White);
+            //_spriteBatch.DrawString(_font, "Test 123", new Vector2(Window.ClientBounds.Width/2 - _font.MeasureString("Test 123").X/2, 0), Color.Black);
+
             if (!_transitioning)
             {
                 GraphicsDevice.Clear(Color.SkyBlue);
@@ -162,6 +171,7 @@ namespace SpaceShooterV2
                     _curMenu.Draw(gameTime);
             }
             base.Draw(gameTime);
+            _spriteBatch.End();
         }
     }
 }
