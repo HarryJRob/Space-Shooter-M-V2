@@ -15,6 +15,7 @@ namespace SpaceShooterV2
         private List<MenuButton> _menuButtons = new List<MenuButton>();
         private List<Texture2D> _texList = new List<Texture2D>();
 
+        private SpriteFont _font;
         private MouseState _curMouseState;
         private bool StateChanged;
 
@@ -30,16 +31,18 @@ namespace SpaceShooterV2
 
         private MenuState _curMenuState = MenuState.Main;
 
-        public MainMenu(bool cameFromGame, SpriteBatch spriteBatch, GameWindow window)
+        public MainMenu(bool cameFromGame, SpriteBatch spriteBatch, GameWindow window, SpriteFont font)
         {
             _spriteBatch = spriteBatch;
             _window = window;
+            _font = font;
 
             #region Adding Buttons
             // _menuButtons.Add(new MenuButton(,,, new Vector2(,)));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width / 20, _window.ClientBounds.Height / 2 - _window.ClientBounds.Height / 15)));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width - _window.ClientBounds.Width / 2.5f - _window.ClientBounds.Width / 20, _window.ClientBounds.Height / 2 - _window.ClientBounds.Height / 15)));
-            _menuButtons.Add(new MenuButton((int)(_window.ClientBounds.Width / 1.2f), _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width / 20, _window.ClientBounds.Height - _window.ClientBounds.Height/3)));
+            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width / 20, _window.ClientBounds.Height / 2 - _window.ClientBounds.Height / 15),"Single Player"));
+            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width - _window.ClientBounds.Width / 3 - _window.ClientBounds.Width / 20, _window.ClientBounds.Height / 2 - _window.ClientBounds.Height / 15), "Multiplayer Player"));
+            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width / 2 - _window.ClientBounds.Width / 6, _window.ClientBounds.Height - _window.ClientBounds.Height / 3), "Options"));
+            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 5, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 - _window.ClientBounds.Width / 10, _window.ClientBounds.Height / 1.2f), "Continue"));
             #endregion
 
             #region MenuState Logic
@@ -67,12 +70,7 @@ namespace SpaceShooterV2
         {
             _curMouseState = Mouse.GetState();
 
-            //Temporary
-            if (_curMenuState == MenuState.GameOver)
-            {
-                _curMenuState = MenuState.Main;
-            }
-
+            //Temporarya
             #region State Logic
 
             if (StateChanged)
@@ -89,10 +87,12 @@ namespace SpaceShooterV2
                     _menuButtons[2].IsActive = true;
                     break;
                 case MenuState.GameOver:
+                    _menuButtons[3].IsActive = true;
                     break;
                 case MenuState.LevelSelect:
                     break;
                 case MenuState.Options:
+                    _menuButtons[3].IsActive = true;
                     break;
             }
             #endregion
@@ -126,6 +126,7 @@ namespace SpaceShooterV2
                                 StateChanged = true;
                                 break;
                             case 3:
+                                _curMenuState = MenuState.Main;
                                 StateChanged = true;
                                 break;
                         }
@@ -141,7 +142,7 @@ namespace SpaceShooterV2
         {
             foreach (MenuButton curMenuButton in _menuButtons.Where(item => item.IsActive))
             {
-                curMenuButton.Draw(_spriteBatch,_texList[curMenuButton.TexNum]);
+                curMenuButton.Draw(_spriteBatch,_texList[curMenuButton.TexNum], _font);
             }
         }
 

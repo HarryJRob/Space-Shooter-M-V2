@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -10,15 +11,17 @@ namespace SpaceShooterV2
         private readonly int _height;
         private readonly int _texNum;
         private readonly Vector2 _position;
+        private string _buttonText;
         private bool _clicked;
         private bool _isActive;
 
-        public MenuButton(int width, int height, int texNum, Vector2 position)
+        public MenuButton(int width, int height, int texNum, Vector2 position, string buttonText)
         {
             _width = width;
             _height = height;
             _texNum = texNum;
             _position = position;
+            _buttonText = buttonText;
         }
 
         public void Update(MouseState curMouseState)
@@ -32,9 +35,11 @@ namespace SpaceShooterV2
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, Texture2D tex)
+        public void Draw(SpriteBatch spriteBatch, Texture2D tex, SpriteFont font)
         {
-            spriteBatch.Draw(tex,new Rectangle((int)_position.X,(int)_position.Y,_width,_height),Color.White);
+            spriteBatch.Draw(tex, new Rectangle((int) _position.X, (int) _position.Y, _width, _height), Color.White);
+            Vector2 measuredString = font.MeasureString(_buttonText);
+            spriteBatch.DrawString(font, _buttonText, new Vector2(_position.X +_width / 2 - measuredString.X/ 2, _position.Y + _height / 2 - measuredString.Y/ 2), Color.White);
         }
 
         public bool IsClicked
@@ -52,6 +57,12 @@ namespace SpaceShooterV2
         public int TexNum
         {
             get { return _texNum; }
+        }
+
+        public string GetText
+        {
+            get { return _buttonText;}
+            set { _buttonText = value; }
         }
     }
 }

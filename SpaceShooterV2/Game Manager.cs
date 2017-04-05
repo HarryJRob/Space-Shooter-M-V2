@@ -128,12 +128,12 @@ namespace SpaceShooterV2
                     if (_curMenu == null && _curState == GameState.Dead)
                     {
                         _curState = GameState.MainMenu;
-                        _curMenu = new MainMenu(true, _spriteBatch, Window);
+                        _curMenu = new MainMenu(true, _spriteBatch, Window, _font);
                         _curMenu.LoadContent(_mainTexList.GetRange(0, 6));
                     }
                     else if (_curMenu == null && _curState != GameState.Dead)
                     {
-                        _curMenu = new MainMenu(false,_spriteBatch,Window);
+                        _curMenu = new MainMenu(false,_spriteBatch,Window,_font);
                         _curMenu.LoadContent(_mainTexList.GetRange(0, 6));
                     }
                     else if (_curMenu != null)
