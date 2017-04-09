@@ -19,7 +19,7 @@ namespace SpaceShooterV2
         private const int ColumnNum = 10;
         private const int RowNum = 10;
 
-        private const bool Testing = false;
+        private const bool Testing = true;
         private bool _multiplayer;
 
         private List<int>[,] _objectCollisionList;

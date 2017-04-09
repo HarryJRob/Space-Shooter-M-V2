@@ -24,6 +24,8 @@ namespace SpaceShooterV2
         private bool _transitioning = false; //Can be used for animation later
         private int _transitionFrameCount = 0;
 
+        private int _scoreFromGame = -1;
+
         private enum GameState
         {
             MainMenu,
@@ -105,6 +107,7 @@ namespace SpaceShooterV2
                             _curGame.Update(gameTime);
                             if (_curGame.IsDead)
                             {
+                                _scoreFromGame = _curGame.TotalScore;
                                 _curGame = null;
                                 _curState = GameState.Dead;
                             }
@@ -128,12 +131,12 @@ namespace SpaceShooterV2
                     if (_curMenu == null && _curState == GameState.Dead)
                     {
                         _curState = GameState.MainMenu;
-                        _curMenu = new MainMenu(true, _spriteBatch, Window, _font);
+                        _curMenu = new MainMenu(_spriteBatch, Window, _font,_scoreFromGame);
                         _curMenu.LoadContent(_mainTexList.GetRange(0, 6));
                     }
                     else if (_curMenu == null && _curState != GameState.Dead)
                     {
-                        _curMenu = new MainMenu(false,_spriteBatch,Window,_font);
+                        _curMenu = new MainMenu(_spriteBatch,Window,_font);
                         _curMenu.LoadContent(_mainTexList.GetRange(0, 6));
                     }
                     else if (_curMenu != null)

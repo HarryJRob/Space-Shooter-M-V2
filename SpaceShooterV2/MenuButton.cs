@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -14,14 +13,17 @@ namespace SpaceShooterV2
         private string _buttonText;
         private bool _clicked;
         private bool _isActive;
+        private bool _isClickable;
+        private MouseState _preMouseState;
 
-        public MenuButton(int width, int height, int texNum, Vector2 position, string buttonText)
+        public MenuButton(int width, int height, int texNum, Vector2 position, string buttonText, bool isClickable)
         {
             _width = width;
             _height = height;
             _texNum = texNum;
             _position = position;
             _buttonText = buttonText;
+            _isClickable = isClickable;
         }
 
         public void Update(MouseState curMouseState)
@@ -30,9 +32,13 @@ namespace SpaceShooterV2
             {
                 if (curMouseState.X >= _position.X && curMouseState.X < _position.X + _width && curMouseState.Y > _position.Y && curMouseState.Y < _position.Y + _height)
                 {
-                    _clicked = true;
+                    if (_preMouseState.LeftButton == ButtonState.Released)
+                    {
+                        _clicked = true;
+                    }
                 }
             }
+            _preMouseState = curMouseState;
         }
 
         public void Draw(SpriteBatch spriteBatch, Texture2D tex, SpriteFont font)
@@ -63,6 +69,11 @@ namespace SpaceShooterV2
         {
             get { return _buttonText;}
             set { _buttonText = value; }
+        }
+
+        public bool IsClickable
+        {
+            get { return _isClickable;}
         }
     }
 }
