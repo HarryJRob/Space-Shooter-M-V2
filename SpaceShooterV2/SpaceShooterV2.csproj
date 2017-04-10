@@ -110,7 +110,9 @@
     <Content Include="Content\Game Resources\Ships\SpaceShip.png" />
     <Content Include="Content\Game Resources\Temp\JEROM_spaceships0_CC-BY-3.png" />
     <Content Include="Content\Game Resources\Temp\ui_big_pieces.png" />
-    <Content Include="Content\Highscores.txt" />
+    <Content Include="Content\Highscores.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

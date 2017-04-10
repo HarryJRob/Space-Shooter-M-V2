@@ -19,7 +19,7 @@ namespace SpaceShooterV2
         private const int ColumnNum = 10;
         private const int RowNum = 10;
 
-        private const bool Testing = true;
+        private const bool Testing = false;
         private bool _multiplayer;
 
         private List<int>[,] _objectCollisionList;
@@ -439,7 +439,7 @@ namespace SpaceShooterV2
 
         public int TotalScore
         {
-            get { return _score; }
+            get { return _score + 200; }
         }
     }
 }

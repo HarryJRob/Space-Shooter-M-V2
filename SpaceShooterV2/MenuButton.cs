@@ -65,7 +65,7 @@ namespace SpaceShooterV2
             get { return _texNum; }
         }
 
-        public string GetText
+        public string Text
         {
             get { return _buttonText;}
             set { _buttonText = value; }

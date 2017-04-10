@@ -8,7 +8,7 @@ namespace SpaceShooterV2
 {
     class PlayerShip : Ship
     {
-        protected bool _firing;
+        private bool _firing;
 
         private struct ControlScheme
         {
