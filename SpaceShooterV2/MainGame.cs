@@ -28,7 +28,7 @@ namespace SpaceShooterV2
         private SpriteFont _font;
         private KeyboardState _curKeyState;
 
-        private bool _dead = true;
+        private bool _dead;
 
         private int _previousFPS = 60;
         private int _score;
