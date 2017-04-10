@@ -1,1 +1,1 @@
-﻿HJR,500,Jacky,350,Ania,220,Mark,170,Anon,50
+﻿HJR,500,Anon,350,Anon,220,Anon,170,Anon,50

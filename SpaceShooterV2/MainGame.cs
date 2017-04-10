@@ -28,7 +28,7 @@ namespace SpaceShooterV2
         private SpriteFont _font;
         private KeyboardState _curKeyState;
 
-        private bool _dead;
+        private bool _dead = true;
 
         private int _previousFPS = 60;
         private int _score;
@@ -88,7 +88,7 @@ namespace SpaceShooterV2
             Debug.WriteLine(" Main Game - Game Assets loaded");
 
             #region player SetUp
-            Debug.WriteLine(_window.ClientBounds.Height/ShipScale);
+            Debug.WriteLine(" Main Game - ShipScale:" +_window.ClientBounds.Height/ShipScale);
             if (_multiplayer)
             {
                 _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
@@ -439,7 +439,7 @@ namespace SpaceShooterV2
 
         public int TotalScore
         {
-            get { return _score + 200; }
+            get { return _score; }
         }
     }
 }

@@ -150,7 +150,7 @@ namespace SpaceShooterV2
                     {
                         //One for each button
                         _menuButtons[i].IsClicked = false;
-                        Debug.WriteLine(" Main Menu - Index {0} is clicked", i);
+                        Debug.WriteLine(" Main Menu - Button Index {0} is clicked", i);
 
                         switch (i)
                         {
@@ -172,7 +172,7 @@ namespace SpaceShooterV2
                                 else
                                 {
                                     _score = -1;
-                                    if (_highscores[_highScoreEntryPos] == "Name Here")
+                                    if (_highscores[_highScoreEntryPos] == "Name Here" || _highscores[_highScoreEntryPos] == "")
                                     {
                                         _highscores[_highScoreEntryPos] = "Anon";
                                     }
@@ -276,7 +276,7 @@ namespace SpaceShooterV2
                     using (StreamReader sr = new StreamReader(_pathHighscores))
                     {
                         string line = sr.ReadToEnd();
-                        Debug.WriteLine("Main Menu - " + line);
+                        Debug.WriteLine("Main Menu - Loaded: " + line);
                         _highscores = line.Split(',');
                     }
                 }
@@ -287,7 +287,7 @@ namespace SpaceShooterV2
             }
             catch (IOException exception)
             {
-                Debug.WriteLine("Main Menu - " + exception.Message);
+                Debug.WriteLine(" Main Menu - Error Loading: " + exception.Message);
             }
         }
 
@@ -305,6 +305,8 @@ namespace SpaceShooterV2
                                 sw.Write(_highscores[i] + ",");
                             else
                                 sw.Write(_highscores[i]);
+
+                            Debug.WriteLine(" Main Menu - Saving: " + _highscores[i]);
                         }
                     }
                 }
@@ -312,7 +314,7 @@ namespace SpaceShooterV2
             }
             catch (IOException exception)
             {
-                Debug.WriteLine("Main Menu - " + exception.Message);
+                Debug.WriteLine(" Main Menu - Error Saving: " + exception.Message);
             }
         }
     }
