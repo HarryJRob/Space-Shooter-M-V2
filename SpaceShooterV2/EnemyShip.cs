@@ -1,10 +1,10 @@
 ﻿namespace SpaceShooterV2
 {
-    class EnemyShip : Ship
+    internal abstract class EnemyShip : Ship
     {
         protected int _score;
 
-        public EnemyShip(int width, int height, byte texNum, int xVelocity, int yVelocity, int score)
+        protected EnemyShip(int width, int height, byte texNum, int xVelocity, int yVelocity, int score)
             : base(width, height, texNum, xVelocity, yVelocity)
         {
             _score = score;

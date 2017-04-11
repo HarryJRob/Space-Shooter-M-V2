@@ -1,0 +1,2 @@
+﻿W,A,S,D,Space
+Up,Left,Down,Right,Enter

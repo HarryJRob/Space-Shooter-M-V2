@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceShooterV2
 {
-    internal class GameObject
+    internal abstract class GameObject
     {
         protected Vector2 _position;
         protected int _width, _height;
@@ -12,9 +12,9 @@ namespace SpaceShooterV2
         protected int _xVelocity;
         protected int _yVelocity;
 
-        public GameObject() { }
+        protected GameObject() { }
 
-        public GameObject(int width, int height, byte texNum, int xVelocity, int yVelocity)
+        protected GameObject(int width, int height, byte texNum, int xVelocity, int yVelocity)
         {
             _width = width*height;
             _height = height;

@@ -93,3 +93,4 @@ C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\De
 C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
 C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Arial.xnb
 C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Highscores.txt
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Settings.txt

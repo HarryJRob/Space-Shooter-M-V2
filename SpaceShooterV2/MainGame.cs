@@ -36,27 +36,15 @@ namespace SpaceShooterV2
         private float _tileWidth;
         private float _tileHeight;
 
-        public MainGame(bool multiplayer,ref GraphicsDeviceManager graphics, GameWindow window, SpriteBatch spriteBatch)
+        private string _settings;
+
+        public MainGame(bool multiplayer,ref GraphicsDeviceManager graphics, GameWindow window, SpriteBatch spriteBatch, string settings)
         {
             _multiplayer = multiplayer;
             _graphics = graphics;
             _window = window;
             _spriteBatch = spriteBatch;
-
-            #region Force FullScreen
-
-            if (!Testing && !_graphics.IsFullScreen)
-            {
-                _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-                _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-                _window.AllowUserResizing = false;
-                _graphics.ToggleFullScreen();
-            }
-            _window.IsBorderless = true;
-
-            Debug.WriteLine(" Main Game - _window Size: ({0},{1})", _window.ClientBounds.Width, _window.ClientBounds.Height);
-
-            #endregion
+            _settings = settings;
 
             _graphics.ApplyChanges();
         }
@@ -89,19 +77,23 @@ namespace SpaceShooterV2
 
             #region player SetUp
             Debug.WriteLine(" Main Game - ShipScale:" +_window.ClientBounds.Height/ShipScale);
+
+            string[] playerSetting = new string[1];
+            playerSetting = _settings.Split(':');
+
             if (_multiplayer)
             {
                 _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
-                    _window.ClientBounds.Height/ShipScale, 2, 1, "W,A,S,D,Space", _window.ClientBounds.Width,
+                    _window.ClientBounds.Height/ShipScale, 2, 1, playerSetting[0], _window.ClientBounds.Width,
                     _window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
                 _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
-                    _window.ClientBounds.Height/ShipScale, 2, 2, "Up,Left,Down,Right,Enter", _window.ClientBounds.Width,
+                    _window.ClientBounds.Height/ShipScale, 2, 2, playerSetting[1], _window.ClientBounds.Width,
                     _window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
             }
             else
             {
                 _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
-                    _window.ClientBounds.Height/ShipScale, 2, 0, "W,A,S,D,Space", _window.ClientBounds.Width,
+                    _window.ClientBounds.Height / ShipScale, 2, 0, playerSetting[0], _window.ClientBounds.Width,
                     _window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
             }
 
