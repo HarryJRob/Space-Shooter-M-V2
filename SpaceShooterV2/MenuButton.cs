@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SpaceShooterV2
 {
-    class MenuButton
+    internal class MenuButton
     {
         private readonly int _width;
         private readonly int _height;

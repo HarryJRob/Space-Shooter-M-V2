@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace SpaceShooterV2
 {
-    public class MainGame
+    internal class MainGame
     {
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -37,14 +37,16 @@ namespace SpaceShooterV2
         private float _tileHeight;
 
         private string _settings;
+        private int _diffculty;
 
-        public MainGame(bool multiplayer,ref GraphicsDeviceManager graphics, GameWindow window, SpriteBatch spriteBatch, string settings)
+        public MainGame(bool multiplayer,ref GraphicsDeviceManager graphics, GameWindow window, SpriteBatch spriteBatch, string settings, int difficulty)
         {
             _multiplayer = multiplayer;
             _graphics = graphics;
             _window = window;
             _spriteBatch = spriteBatch;
             _settings = settings;
+            _diffculty = difficulty;
 
             _graphics.ApplyChanges();
         }
@@ -100,7 +102,7 @@ namespace SpaceShooterV2
             #endregion
 
             _objectList.Add(new Charger(_textureList[2].Width / _textureList[2].Height,
-                _window.ClientBounds.Height / ShipScale, 2, _window.ClientBounds.Height /(int)(0.5f * BulletScale), 50));
+                _window.ClientBounds.Height / ShipScale, 2, _window.ClientBounds.Height / (int)(0.5f * BulletScale), 50, _diffculty));
         }
 
         public void Update(GameTime gameTime)
@@ -205,7 +207,7 @@ namespace SpaceShooterV2
                             #endregion
 
                             #region Deletion of EnemyShips if they have collided
-                            if (_objectList[i].Collision)
+                            if (((Ship)_objectList[i]).Health == 0)
                             {
                                 if ((_objectList[i].GetType() == typeof(EnemyShip)) ||
                                     _objectList[i].GetType().IsSubclassOf(typeof(EnemyShip)))

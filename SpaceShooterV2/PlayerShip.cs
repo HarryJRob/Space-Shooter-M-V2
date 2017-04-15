@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SpaceShooterV2
 {
-    class PlayerShip : Ship
+    internal class PlayerShip : Ship
     {
         private bool _firing;
 
@@ -267,11 +267,6 @@ namespace SpaceShooterV2
         {
             get { return _firing; }
             set { _firing = value; }
-        }
-
-        public int Health
-        {
-            get { return _health; }
         }
     }
 }

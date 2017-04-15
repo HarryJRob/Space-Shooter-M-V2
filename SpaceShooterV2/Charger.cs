@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 
 namespace SpaceShooterV2
 {
-    class Charger : EnemyShip
+    internal class Charger : EnemyShip
     {
         private enum fireState
         {
@@ -19,10 +20,12 @@ namespace SpaceShooterV2
         private int _chargeTo = 4;
         private readonly int _bulVel;
 
-        public Charger(int width, int height, byte texNum,int bulVel, int score)
+        public Charger(int width, int height, byte texNum,int bulVel, int score, int diffculty)
             : base(width, height, texNum, 0 , 0, score)
         {
             _bulVel = bulVel;
+            _health = 2 * diffculty;
+            _score = score * diffculty;
             _position = new Vector2(400,400);
         }
 
@@ -54,6 +57,12 @@ namespace SpaceShooterV2
             {
                 _currentCoolDown = 0;
                 _willFire = true;
+            }
+
+            if (_collision && _health > 0)
+            {
+                _health -= 1;
+                _collision = false;
             }
             base.Update(gameTime);
         }

@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SpaceShooterV2
 {
-    class GameManager : Game
+    internal class GameManager : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -27,6 +27,7 @@ namespace SpaceShooterV2
         private int _scoreFromGame = -1;
 
         private string _settings;
+        private int _difficulty;
 
         private enum GameState
         {
@@ -94,13 +95,13 @@ namespace SpaceShooterV2
 
                     if (_curGame == null && _curState == GameState.PlayingSP)
                     {
-                        _curGame = new MainGame(false, ref _graphics, Window, _spriteBatch,_settings);
+                        _curGame = new MainGame(false, ref _graphics, Window, _spriteBatch, _settings, _difficulty);
                         _curGame.Initialize();
                         _curGame.LoadContent(_mainTexList.GetRange(0,6),_font);
                     }
                     else if (_curGame == null && _curState == GameState.PlayingMP)
                     {
-                        _curGame = new MainGame(true, ref _graphics, Window, _spriteBatch, _settings);
+                        _curGame = new MainGame(true, ref _graphics, Window, _spriteBatch, _settings, _difficulty);
                         _curGame.Initialize();
                         _curGame.LoadContent(_mainTexList.GetRange(0, 6), _font);
                     }
@@ -147,11 +148,13 @@ namespace SpaceShooterV2
                         if (_curMenu.WillPlay() == 1)
                         {
                             _settings = _curMenu.GetSettings();
+                            _difficulty = _curMenu.GetDiffculty();
                             _curState = GameState.PlayingSP;
                         }
                         else if (_curMenu.WillPlay() == 2)
                         {
                             _settings = _curMenu.GetSettings();
+                            _difficulty = _curMenu.GetDiffculty();
                             _curState = GameState.PlayingMP;
                         }
                     }

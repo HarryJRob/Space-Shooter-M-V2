@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SpaceShooterV2
 {
-    class MainMenu
+    internal class MainMenu
     {
         //Declarations
         //Required resources
@@ -35,6 +35,9 @@ namespace SpaceShooterV2
         private string[] _settingPlayer2 = new string[4];
         private int _settingEntryPos = -1;
 
+        //Difficulty
+        private int _difficulty = 1;
+
         private enum MenuState
         {
             Main,
@@ -44,6 +47,7 @@ namespace SpaceShooterV2
             PlayingMP,
             HighscoreEntry,
             SettingEntry,
+            DifficultyEntry
         }
 
         private MenuState _curMenuState;
@@ -99,6 +103,7 @@ namespace SpaceShooterV2
                     _menuButtons[1].IsActive = true;
                     _menuButtons[2].IsActive = true;
                     _menuButtons[3].IsActive = true;
+                    _menuButtons[5].IsActive = true;
                     break;
                 case MenuState.GameOver:
                     _menuButtons[4].IsActive = true;
@@ -123,27 +128,27 @@ namespace SpaceShooterV2
                     break;
                 case MenuState.Options:
                     _menuButtons[4].IsActive = true;
-
-                    _menuButtons[5].IsActive = true;
-                    _menuButtons[5].Text = _settingPlayer1[0];
+                    _menuButtons[4].Text = "Continue";
                     _menuButtons[6].IsActive = true;
-                    _menuButtons[6].Text = _settingPlayer1[1];
+                    _menuButtons[6].Text = _settingPlayer1[0];
                     _menuButtons[7].IsActive = true;
-                    _menuButtons[7].Text = _settingPlayer1[2];
+                    _menuButtons[7].Text = _settingPlayer1[1];
                     _menuButtons[8].IsActive = true;
-                    _menuButtons[8].Text = _settingPlayer1[3];
+                    _menuButtons[8].Text = _settingPlayer1[2];
                     _menuButtons[9].IsActive = true;
-                    _menuButtons[9].Text = _settingPlayer1[4];
+                    _menuButtons[9].Text = _settingPlayer1[3];
                     _menuButtons[10].IsActive = true;
-                    _menuButtons[10].Text = _settingPlayer2[0];
+                    _menuButtons[10].Text = _settingPlayer1[4];
                     _menuButtons[11].IsActive = true;
-                    _menuButtons[11].Text = _settingPlayer2[1];
+                    _menuButtons[11].Text = _settingPlayer2[0];
                     _menuButtons[12].IsActive = true;
-                    _menuButtons[12].Text = _settingPlayer2[2];
+                    _menuButtons[12].Text = _settingPlayer2[1];
                     _menuButtons[13].IsActive = true;
-                    _menuButtons[13].Text = _settingPlayer2[3];
+                    _menuButtons[13].Text = _settingPlayer2[2];
                     _menuButtons[14].IsActive = true;
-                    _menuButtons[14].Text = _settingPlayer2[4];
+                    _menuButtons[14].Text = _settingPlayer2[3];
+                    _menuButtons[15].IsActive = true;
+                    _menuButtons[15].Text = _settingPlayer2[4];
                     break;
                case MenuState.HighscoreEntry:
                     _menuButtons[4].IsActive = true;
@@ -177,26 +182,26 @@ namespace SpaceShooterV2
                 case MenuState.SettingEntry:
                     _menuButtons[4].IsActive = true;
                     _menuButtons[4].Text = "Confirm Entry";
-                    _menuButtons[5].IsActive = true;
-                    _menuButtons[5].Text = _settingPlayer1[0];
                     _menuButtons[6].IsActive = true;
-                    _menuButtons[6].Text = _settingPlayer1[1];
+                    _menuButtons[6].Text = _settingPlayer1[0];
                     _menuButtons[7].IsActive = true;
-                    _menuButtons[7].Text = _settingPlayer1[2];
+                    _menuButtons[7].Text = _settingPlayer1[1];
                     _menuButtons[8].IsActive = true;
-                    _menuButtons[8].Text = _settingPlayer1[3];
+                    _menuButtons[8].Text = _settingPlayer1[2];
                     _menuButtons[9].IsActive = true;
-                    _menuButtons[9].Text = _settingPlayer1[4];
+                    _menuButtons[9].Text = _settingPlayer1[3];
                     _menuButtons[10].IsActive = true;
-                    _menuButtons[10].Text = _settingPlayer2[0];
+                    _menuButtons[10].Text = _settingPlayer1[4];
                     _menuButtons[11].IsActive = true;
-                    _menuButtons[11].Text = _settingPlayer2[1];
+                    _menuButtons[11].Text = _settingPlayer2[0];
                     _menuButtons[12].IsActive = true;
-                    _menuButtons[12].Text = _settingPlayer2[2];
+                    _menuButtons[12].Text = _settingPlayer2[1];
                     _menuButtons[13].IsActive = true;
-                    _menuButtons[13].Text = _settingPlayer2[3];
+                    _menuButtons[13].Text = _settingPlayer2[2];
                     _menuButtons[14].IsActive = true;
-                    _menuButtons[14].Text = _settingPlayer2[4];
+                    _menuButtons[14].Text = _settingPlayer2[3];
+                    _menuButtons[15].IsActive = true;
+                    _menuButtons[15].Text = _settingPlayer2[4];
 
                     #region Setting Entry
 
@@ -218,6 +223,11 @@ namespace SpaceShooterV2
 
                     #endregion
 
+                    break;
+                case MenuState.DifficultyEntry:
+                    _menuButtons[16].IsActive = true;
+                    _menuButtons[17].IsActive = true;
+                    _menuButtons[18].IsActive = true;
                     break;
             }
 
@@ -275,44 +285,73 @@ namespace SpaceShooterV2
                                 _stateChanged = true;
                                 break;
                             case 5:
-                                _settingEntryPos = 0;
-                                _curMenuState = MenuState.SettingEntry;
+                                _curMenuState = MenuState.DifficultyEntry;
+                                _stateChanged = true;
                                 break;
                             case 6:
-                                _settingEntryPos = 1;
+                                _settingEntryPos = 0;
                                 _curMenuState = MenuState.SettingEntry;
+                                _stateChanged = true;
                                 break;
                             case 7:
-                                _settingEntryPos = 2;
+                                _settingEntryPos = 1;
                                 _curMenuState = MenuState.SettingEntry;
+                                _stateChanged = true;
                                 break;
                             case 8:
-                                _settingEntryPos = 3;
+                                _settingEntryPos = 2;
                                 _curMenuState = MenuState.SettingEntry;
+                                _stateChanged = true;
                                 break;
                             case 9:
-                                _settingEntryPos = 4;
+                                _settingEntryPos = 3;
                                 _curMenuState = MenuState.SettingEntry;
+                                _stateChanged = true;
                                 break;
                             case 10:
-                                _settingEntryPos = 5;
+                                _settingEntryPos = 4;
                                 _curMenuState = MenuState.SettingEntry;
+                                _stateChanged = true;
                                 break;
                             case 11:
-                                _settingEntryPos = 6;
+                                _settingEntryPos = 5;
                                 _curMenuState = MenuState.SettingEntry;
+                                _stateChanged = true;
                                 break;
                             case 12:
-                                _settingEntryPos = 7;
+                                _settingEntryPos = 6;
                                 _curMenuState = MenuState.SettingEntry;
+                                _stateChanged = true;
                                 break;
                             case 13:
-                                _settingEntryPos = 8;
+                                _settingEntryPos = 7;
                                 _curMenuState = MenuState.SettingEntry;
+                                _stateChanged = true;
                                 break;
                             case 14:
+                                _settingEntryPos = 8;
+                                _curMenuState = MenuState.SettingEntry;
+                                _stateChanged = true;
+                                break;
+                            case 15:
                                 _settingEntryPos = 9;
                                 _curMenuState = MenuState.SettingEntry;
+                                _stateChanged = true;
+                                break;
+                            case 16:
+                                _difficulty = 1;
+                                _curMenuState = MenuState.Main;
+                                _stateChanged = true;
+                                break;
+                            case 17:
+                                _difficulty = 2;
+                                _curMenuState = MenuState.Main;
+                                _stateChanged = true;
+                                break;
+                            case 18:
+                                _difficulty = 3;
+                                _curMenuState = MenuState.Main;
+                                _stateChanged = true;
                                 break;
                         }
                     }
@@ -377,6 +416,11 @@ namespace SpaceShooterV2
             return 0;
         }
 
+        public int GetDiffculty()
+        {
+            return _difficulty;
+        }
+
         public string GetSettings()
         {
             string settingsString = "";
@@ -423,9 +467,10 @@ namespace SpaceShooterV2
             //Main Menu
             _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width / 20, _window.ClientBounds.Height / 2 - _window.ClientBounds.Height / 15), "Single Player", true));
             _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width - _window.ClientBounds.Width / 3 - _window.ClientBounds.Width / 20, _window.ClientBounds.Height / 2 - _window.ClientBounds.Height / 15), "Multiplayer Player", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width / 2 - _window.ClientBounds.Width / 6, _window.ClientBounds.Height - _window.ClientBounds.Height / 3), "Options", true));
+            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width / 20, _window.ClientBounds.Height - _window.ClientBounds.Height / 3), "Options", true));
             _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 10, 1, new Vector2(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 8), "Space Shooter", false));
             _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 5, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 - _window.ClientBounds.Width / 10, _window.ClientBounds.Height / 1.2f), "Continue", true));
+            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width - _window.ClientBounds.Width / 3 - _window.ClientBounds.Width / 20, _window.ClientBounds.Height - _window.ClientBounds.Height / 3), "Difficulty", true));
             //Options
             //Player1
             _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 - _window.ClientBounds.Width / 5, _window.ClientBounds.Height / 1.5f - 4.4f*(_window.ClientBounds.Height / 8)), "1", true));
@@ -439,6 +484,10 @@ namespace SpaceShooterV2
             _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 + 0.5f*(_window.ClientBounds.Width / 5), _window.ClientBounds.Height / 1.5f - 2.2f * (_window.ClientBounds.Height / 8)), "8", true));
             _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 + 0.5f*(_window.ClientBounds.Width / 5), _window.ClientBounds.Height / 1.5f - 1.1f * (_window.ClientBounds.Height / 8)), "9", true));
             _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 + 0.5f*(_window.ClientBounds.Width / 5), _window.ClientBounds.Height / 1.5f), "10", true));
+            //Difficulty Entry
+            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 - 1.1f * (_window.ClientBounds.Width / 10) - _window.ClientBounds.Width / 10, _window.ClientBounds.Height / 2 - (_window.ClientBounds.Height / 8) / 2), "Easy", true));
+            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 - (_window.ClientBounds.Width / 10)/2, _window.ClientBounds.Height / 2 - (_window.ClientBounds.Height / 8) / 2), "Medium", true));
+            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 + 1.1f * (_window.ClientBounds.Width / 10), _window.ClientBounds.Height / 2 - (_window.ClientBounds.Height / 8) / 2), "Hard", true));
         }
 
         private void AddKeysToHighscore(List<Keys> newKeysPressed)
