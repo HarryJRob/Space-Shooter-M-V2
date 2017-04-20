@@ -1,56 +1,66 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceShooterV2
 {
     internal class Shotgun : EnemyShip
     {
         private const int CoolDownTotal = 90;
+        private int _target = -1;
 
-        public Shotgun(int width, int height, byte texNum, int bulVel, int score, int diffculty, int maxX, int maxY)
-            : base(width, height, texNum, 0, 0, score, maxX, maxY)
+        public Shotgun(int width, int height, byte texNum, int bulVel, int score, int diffculty, int maxX, int maxY, float startingPosition)
+            : base(width, height, texNum, 0, 0, score, maxX, maxY, startingPosition)
         {
             _bulVel = bulVel;
             _health = 2 * diffculty;
             _score = score * diffculty;
-            _position = new Vector2(5000,2000);
         }
 
         public void Update(GameTime gameTime, Vector2 playerPos)
         {
-            if (_currentCoolDown < CoolDownTotal)
+            if (!initialising)
             {
-                _currentCoolDown += 1;
-            }
-            else
-            {
-                _willFire = true;
-                _currentCoolDown = 0;
-            }
+                if (_currentCoolDown < CoolDownTotal)
+                {
+                    _currentCoolDown += 1;
+                }
+                else
+                {
+                    _willFire = true;
+                    _currentCoolDown = 0;
+                }
 
-            if (!(_position.X >= playerPos.X - 3* _width && _position.X <= playerPos.X + 3*_width))
-            {
-                if (playerPos.X + 3*_width < _position.X)
+                if (!(_position.X <= playerPos.X + 1.5f*_width && _position.X >= playerPos.X + _width))
                 {
-                    _position.X -= _width/60;
+                    if (playerPos.X + 1.5*_width < _position.X)
+                    {
+                        _position.X -= _width/45;
+                    }
+                    else if (playerPos.X  > _position.X && playerPos.X< _maxX)
+                    {
+                        _position.X += _width / 45;
+                    }
                 }
-                else if (playerPos.X + 3*_width > _position.X && playerPos.X + 3*_width < _maxX)
+                //x >= 1 && x <= 100
+                if (!(_position.Y >= playerPos.Y - _height/15 && _position.Y <= playerPos.Y + _height/15))
                 {
-                    _position.X += _width/60;
-                }
-            }
-            //x >= 1 && x <= 100
-            if (!(_position.Y >= playerPos.Y - _height/15 && _position.Y <= playerPos.Y + _height/15))
-            {
-                if (playerPos.Y < _position.Y)
-                {
-                        _position.Y -= _height/60;
-                }
-                else if (playerPos.Y > _position.Y && playerPos.Y < _maxY)
-                {
-                        _position.Y += _height/60;
+                    if (playerPos.Y < _position.Y)
+                    {
+                        _position.Y -= _height / 45;
+                    }
+                    else if (playerPos.Y > _position.Y && playerPos.Y < _maxY)
+                    {
+                        _position.Y += _height / 45;
+                    }
                 }
             }
             base.Update(gameTime);
+        }
+
+        public int Target
+        {
+            get { return _target; }
+            set { _target = value; }
         }
     }
 }
