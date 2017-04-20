@@ -18,7 +18,7 @@ namespace SpaceShooterV2
         private const int BulletScale = 70;
         private const int ColumnNum = 10;
         private const int RowNum = 10;
-        private const int ProbabilityShipSpawn = 60; // 1/ProbabilityShipSpawn
+        private const int ProbabilityShipSpawn = 150; // 1/ProbabilityShipSpawn
 
         private const bool Testing = false;
         private bool _multiplayer;
@@ -39,6 +39,8 @@ namespace SpaceShooterV2
 
         private string _settings;
         private int _diffculty;
+
+        private Random _random = new Random();
 
         public MainGame(bool multiplayer,ref GraphicsDeviceManager graphics, GameWindow window, SpriteBatch spriteBatch, string settings, int difficulty)
         {
@@ -144,7 +146,7 @@ namespace SpaceShooterV2
 
                                     if (_multiplayer)
                                     {
-                                        var whichShip = new Random();
+
                                         double movementAngle;
 
                                         if ((((PlayerShip) _objectList[0]).Health != 0) &&
@@ -153,7 +155,7 @@ namespace SpaceShooterV2
                                             movementAngle =
                                                 ((Charger) _objectList[i]).GetAngleTwoPoints(
                                                     _objectList[i].getCenterPoint,
-                                                    _objectList[whichShip.Next(0, 2)].getCenterPoint);
+                                                    _objectList[_random.Next(0, 2)].getCenterPoint);
 
                                             _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
                                                 _window.ClientBounds.Height/BulletScale, 4,
@@ -214,7 +216,7 @@ namespace SpaceShooterV2
                                         ((PlayerShip) _objectList[1]).Health != 0)
                                     {
                                         Random whichship = new Random();
-                                        ((Shotgun) _objectList[i]).Target = whichship.Next(0, 2);
+                                        ((Shotgun)_objectList[i]).Target = _random.Next(0, 2);
                                     }
                                     else if (((PlayerShip) _objectList[0]).Health != 0)
                                     {
@@ -385,48 +387,53 @@ namespace SpaceShooterV2
                 #endregion
 
                 #region Create Ships at random
-                Random random = new Random();
                 if (_multiplayer)
                 {
-                    if (random.Next(0, (int)(ProbabilityShipSpawn/2) + 1) < 1)
+                    if (_random.Next(0, (int)(ProbabilityShipSpawn / 2) + 1) < 1)
                     {
-                        Debug.WriteLine(" Main Game - Enemy Generated");
-                        int shipChoice = random.Next(0, 2);
-                        if (shipChoice == 0)
+                        int shipChoice = _random.Next(0, 2);
+                        Debug.WriteLine(shipChoice);
+                        switch (shipChoice)
                         {
-                            _objectList.Add(new Shotgun(_textureList[2].Width / _textureList[2].Height,
-                                _window.ClientBounds.Height / ShipScale, 2,
-                                _window.ClientBounds.Height / (int)(1.3f * BulletScale), 100,
-                                _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
-                                random.Next(0, _window.ClientBounds.Height + 1)));
-                        }
-                        else if (shipChoice == 1)
-                        {
-                            _objectList.Add(new Charger(_textureList[2].Width / _textureList[2].Height,
-                                _window.ClientBounds.Height / ShipScale, 2,
-                                _window.ClientBounds.Height / (int)(0.6f * BulletScale), 50,
-                                _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height, random.Next(0, _window.ClientBounds.Height + 1)));
+                            case 0:
+                                Debug.WriteLine(" MainGame - Shotgun Created");
+                                _objectList.Add(new Shotgun(_textureList[2].Width / _textureList[2].Height,
+                                    _window.ClientBounds.Height / ShipScale, 2,
+                                    _window.ClientBounds.Height / (int)(1.3f * BulletScale), 100,
+                                    _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                                    _random.Next(0, _window.ClientBounds.Height + 1)));
+                                break;
+                            case 1:
+                                Debug.WriteLine(" MainGame - Charger Created");
+                                _objectList.Add(new Charger(_textureList[2].Width / _textureList[2].Height,
+                                    _window.ClientBounds.Height / ShipScale, 2,
+                                    _window.ClientBounds.Height / (int)(0.6f * BulletScale), 50,
+                                    _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height, _random.Next(0, _window.ClientBounds.Height + 1)));
+                                break;
                         }
                     }
                 }
-                else if (random.Next(0, ProbabilityShipSpawn + 1) < 1)
+                else if (_random.Next(0, ProbabilityShipSpawn + 1) < 1)
                 {
-                    Debug.WriteLine(" Main Game - Enemy Generated");
-                    int shipChoice = random.Next(0, 2);
-                    if(shipChoice == 0)
+                    int shipChoice = _random.Next(0, 2);
+                    Debug.WriteLine(shipChoice);
+                    switch (shipChoice)
                     {
-                        _objectList.Add(new Shotgun(_textureList[2].Width/_textureList[2].Height,
-                            _window.ClientBounds.Height/ShipScale, 2,
-                            _window.ClientBounds.Height/(int) (1.3f*BulletScale), 100,
-                            _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
-                            random.Next(0, _window.ClientBounds.Height + 1)));
-                    }
-                    else if (shipChoice == 1)
-                    {
-                        _objectList.Add(new Charger(_textureList[2].Width/_textureList[2].Height,
-                            _window.ClientBounds.Height/ShipScale, 2,
-                            _window.ClientBounds.Height/(int) (0.6f*BulletScale), 50,
-                            _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height, random.Next(0, _window.ClientBounds.Height + 1)));  
+                        case 0:
+                            Debug.WriteLine(" MainGame - Shotgun Created");
+                            _objectList.Add(new Shotgun(_textureList[2].Width/_textureList[2].Height,
+                                _window.ClientBounds.Height/ShipScale, 2,
+                                _window.ClientBounds.Height/(int) (1.3f*BulletScale), 100,
+                                _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                                _random.Next(0, _window.ClientBounds.Height + 1)));
+                            break;
+                        case 1:
+                            Debug.WriteLine(" MainGame - Charger Created");
+                            _objectList.Add(new Charger(_textureList[2].Width/_textureList[2].Height,
+                                _window.ClientBounds.Height/ShipScale, 2,
+                                _window.ClientBounds.Height/(int) (0.6f*BulletScale), 50,
+                                _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height, _random.Next(0, _window.ClientBounds.Height + 1)));
+                            break;
                     }
                 }
 

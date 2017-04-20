@@ -43,7 +43,7 @@ namespace SpaceShooterV2
                 _position.Y += _height / 60;
             }
 
-            if(_position.X < _maxX && _position.Y < _maxY && _position.Y > 0)
+            if(_position.X + _width < _maxX && _position.Y + _height < _maxY && _position.Y > 0)
             {
                 initialising = false;
             }
