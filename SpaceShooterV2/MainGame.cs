@@ -18,7 +18,7 @@ namespace SpaceShooterV2
         private const int BulletScale = 70;
         private const int ColumnNum = 10;
         private const int RowNum = 10;
-        private const int ProbabilityShipSpawn = 100; // 1/ProbabilityShipSpawn
+        private const int ProbabilityShipSpawn = 60; // 1/ProbabilityShipSpawn
 
         private const bool Testing = false;
         private bool _multiplayer;
@@ -409,8 +409,7 @@ namespace SpaceShooterV2
                         }
                     }
                 }
-                else
-                if (random.Next(0,ProbabilityShipSpawn + 1) < 1)
+                else if (random.Next(0, ProbabilityShipSpawn + 1) < 1)
                 {
                     Debug.WriteLine(" Main Game - Enemy Generated");
                     int shipChoice = random.Next(0, 2);
@@ -456,10 +455,6 @@ namespace SpaceShooterV2
 
         public void Draw(GameTime gameTime)
         {
-
-                //_spriteBatch.Draw(_textureList[1],
-                //    new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight),
-                //    Color.White);
 
             #region Drawing Collision Boxes
 
