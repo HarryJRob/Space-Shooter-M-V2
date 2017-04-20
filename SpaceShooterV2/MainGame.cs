@@ -101,8 +101,12 @@ namespace SpaceShooterV2
 
             #endregion
 
-            _objectList.Add(new Charger(_textureList[2].Width / _textureList[2].Height,
-                _window.ClientBounds.Height / ShipScale, 2, _window.ClientBounds.Height / (int)(0.5f * BulletScale), 50, _diffculty));
+            _objectList.Add(new Charger(_textureList[2].Width/_textureList[2].Height,
+                _window.ClientBounds.Height/ShipScale, 2, _window.ClientBounds.Height/(int) (0.6f*BulletScale), 50,
+                _diffculty));
+            _objectList.Add(new Shotgun(_textureList[2].Width/_textureList[2].Height,
+                _window.ClientBounds.Height/ShipScale, 2, _window.ClientBounds.Height/(int) (1.3f*BulletScale), 100,
+                _diffculty));
         }
 
         public void Update(GameTime gameTime)
@@ -123,7 +127,7 @@ namespace SpaceShooterV2
                             if (((PlayerShip) _objectList[i]).Firing)
                             {
                                 _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
-                                    _window.ClientBounds.Height/BulletScale, 3, _window.ClientBounds.Height/(int)(0.7f * BulletScale),
+                                    _window.ClientBounds.Height/BulletScale, 3, _window.ClientBounds.Height/(int)(0.5f * BulletScale),
                                     0,
                                     ((PlayerShip) _objectList[i]).getCenterPoint, true));
                                 ((PlayerShip) _objectList[i]).Firing = false;
@@ -158,8 +162,8 @@ namespace SpaceShooterV2
 
                                             _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
                                                 _window.ClientBounds.Height/BulletScale, 4,
-                                                (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
-                                                (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
+                                                (int) (((Charger) _objectList[i]).GetBulVel*Math.Cos(movementAngle)*-1),
+                                                (int) (((Charger) _objectList[i]).GetBulVel*Math.Sin(movementAngle)*-1),
                                                 ((Charger) _objectList[i]).getCenterPoint, false));
                                         }
                                         else if (((PlayerShip) _objectList[0]).Health != 0)
@@ -171,8 +175,8 @@ namespace SpaceShooterV2
 
                                             _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
                                                 _window.ClientBounds.Height/BulletScale, 4,
-                                                (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
-                                                (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
+                                                (int) (((Charger) _objectList[i]).GetBulVel*Math.Cos(movementAngle)*-1),
+                                                (int) (((Charger) _objectList[i]).GetBulVel*Math.Sin(movementAngle)*-1),
                                                 ((Charger) _objectList[i]).getCenterPoint, false));
                                         }
                                         else if (((PlayerShip) _objectList[1]).Health != 0)
@@ -184,8 +188,8 @@ namespace SpaceShooterV2
 
                                             _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
                                                 _window.ClientBounds.Height/BulletScale, 4,
-                                                (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
-                                                (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
+                                                (int) (((Charger) _objectList[i]).GetBulVel*Math.Cos(movementAngle)*-1),
+                                                (int) (((Charger) _objectList[i]).GetBulVel*Math.Sin(movementAngle)*-1),
                                                 ((Charger) _objectList[i]).getCenterPoint, false));
                                         }
                                     }
@@ -196,11 +200,42 @@ namespace SpaceShooterV2
                                                 _objectList[0].getCenterPoint);
                                         _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
                                             _window.ClientBounds.Height/BulletScale, 4,
-                                            (int) (((Charger) _objectList[i]).getBulVel*Math.Cos(movementAngle)*-1),
-                                            (int) (((Charger) _objectList[i]).getBulVel*Math.Sin(movementAngle)*-1),
+                                            (int) (((Charger) _objectList[i]).GetBulVel*Math.Cos(movementAngle)*-1),
+                                            (int) (((Charger) _objectList[i]).GetBulVel*Math.Sin(movementAngle)*-1),
                                             ((Charger) _objectList[i]).getCenterPoint, false));
                                     }
                                     ((Charger) _objectList[i]).UpdateCurCharge();
+                                }
+                            }
+                            #endregion
+
+                            #region ShotGun Update
+
+                            if (_objectList[i].GetType() == typeof(Shotgun))
+                            {
+                                ((Shotgun) _objectList[i]).Update(gameTime);
+
+                                if (((Shotgun) _objectList[i]).WillFire)
+                                {
+                                    ((Shotgun) _objectList[i]).WillFire = false;
+
+                                    _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                        _window.ClientBounds.Height/BulletScale, 4,
+                                        Convert.ToInt32(((Shotgun) _objectList[i]).GetBulVel*Math.Sin(Math.PI/2)*-1),
+                                        Convert.ToInt32(((Shotgun) _objectList[i]).GetBulVel*Math.Cos(Math.PI/2)*-1),
+                                        ((Shotgun) _objectList[i]).getCenterPoint, false));
+
+                                    _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                        _window.ClientBounds.Height/BulletScale, 4,
+                                        Convert.ToInt32(((Shotgun)_objectList[i]).GetBulVel * Math.Sin(1.92) * -1),
+                                        Convert.ToInt32(((Shotgun)_objectList[i]).GetBulVel * Math.Cos(1.92) * -1),
+                                        ((Shotgun) _objectList[i]).getCenterPoint, false));
+
+                                    _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                        _window.ClientBounds.Height/BulletScale, 4,
+                                        Convert.ToInt32(((Shotgun)_objectList[i]).GetBulVel * Math.Sin(1.22) * -1),
+                                        Convert.ToInt32(((Shotgun)_objectList[i]).GetBulVel * Math.Cos(1.22) * -1),
+                                        ((Shotgun) _objectList[i]).getCenterPoint, false));
                                 }
                             }
 

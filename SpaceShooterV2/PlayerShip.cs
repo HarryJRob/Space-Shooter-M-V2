@@ -25,17 +25,21 @@ namespace SpaceShooterV2
         private const int UIScale = 55;
 
         private int _bulletCoolDown;
-        private const int BulletCdTotal = 33;
+        private const int BulletCdTotal = 25;
 
         private int _deathAnimationFrame;
 
         private int _windowX;
         private int _windowY;
         private const int VelocityScale = 12;
+        private const int StartingHealth = 10;
+        private const int UISpacingY = 2;
+        private const int UISpacingX = 5;
+
 
         public PlayerShip(int widthByHeight, int height, byte texNum, byte playerID,string keyStr,int winX, int winY, double UIWidthHeightRatio) : base(widthByHeight, height,texNum, 0, 0)
         {
-            _health = 5;
+            _health = StartingHealth;
             _windowX = winX;
             _windowY = winY;
 
@@ -66,17 +70,17 @@ namespace SpaceShooterV2
 
             if (playerID == 1)
             {
-                _healthBarPos = new Vector2(_healthUnitWidth, _healthUnitHeight);
+                _healthBarPos = new Vector2(3 * _healthUnitWidth, UISpacingY * _healthUnitHeight);
                 _position.Y = height;
             }
             else if (playerID == 2)
             {
-                _healthBarPos = new Vector2(_windowX - 6 * _healthUnitWidth,_healthUnitHeight);
+                _healthBarPos = new Vector2(_windowX - (StartingHealth + UISpacingX) * _healthUnitWidth, UISpacingY * _healthUnitHeight);
                 _position.Y = _windowY - 2*_height;
             }
             else
             {
-                _healthBarPos = new Vector2(_healthUnitWidth, _healthUnitHeight);
+                _healthBarPos = new Vector2(UISpacingX * _healthUnitWidth, UISpacingY * _healthUnitHeight);
                 _position.Y = _windowY/2 - _height/2;
             }
             _position.X += 40;

@@ -4,7 +4,7 @@ namespace SpaceShooterV2
 {
     internal class Bullet : GameObject
     {
-        private bool _owner; //true indiciates player owned and false indicates enemy owned
+        private readonly bool _owner; //true indiciates player owned and false indicates enemy owned
         public Bullet(int Width, int Height, byte TexNum, int xVelocity, int yVelocity,Vector2  startingPos , bool Owner): base(Width, Height, TexNum, xVelocity, yVelocity)
         {
             _owner = Owner;

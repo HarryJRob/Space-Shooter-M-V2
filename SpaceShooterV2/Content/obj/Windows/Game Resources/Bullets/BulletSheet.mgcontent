@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Harry/Source/Repos/Space-Shooter-M-V2/SpaceShooterV2/Content/Game Resources/Bullets/BulletSheet.png</SourceFile>
-  <SourceTime>2017-03-31T17:10:16.0205728+01:00</SourceTime>
-  <DestFile>C:/Users/Harry/Source/Repos/Space-Shooter-M-V2/SpaceShooterV2/Content/bin/Windows/Game Resources/Bullets/BulletSheet.xnb</DestFile>
-  <DestTime>2017-03-31T17:25:44.560585+01:00</DestTime>
+  <SourceFile>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Bullets/BulletSheet.png</SourceFile>
+  <SourceTime>2017-04-20T12:33:19.0487407+01:00</SourceTime>
+  <DestFile>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/bin/Windows/Game Resources/Bullets/BulletSheet.xnb</DestFile>
+  <DestTime>2017-04-20T12:33:52.2879397+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T07:36:08+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

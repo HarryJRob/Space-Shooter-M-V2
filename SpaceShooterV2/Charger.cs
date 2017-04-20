@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using Microsoft.Xna.Framework;
 
 namespace SpaceShooterV2
@@ -13,20 +12,17 @@ namespace SpaceShooterV2
         }
 
         private fireState _curState = fireState.Charging;
-        private bool _willFire;
-        private const int CoolDownTotal = 40;
-        private int _currentCoolDown;
+        private const int CoolDownTotal = 35;
         private int _curCharge;
         private int _chargeTo = 4;
-        private readonly int _bulVel;
 
         public Charger(int width, int height, byte texNum,int bulVel, int score, int diffculty)
             : base(width, height, texNum, 0 , 0, score)
         {
             _bulVel = bulVel;
-            _health = 2 * diffculty;
+            _health = 1 * diffculty;
             _score = score * diffculty;
-            _position = new Vector2(400,400);
+            _position = new Vector2(1600,800);
         }
 
         public override void Update(GameTime gameTime)
@@ -58,12 +54,6 @@ namespace SpaceShooterV2
                 _currentCoolDown = 0;
                 _willFire = true;
             }
-
-            if (_collision && _health > 0)
-            {
-                _health -= 1;
-                _collision = false;
-            }
             base.Update(gameTime);
         }
 
@@ -72,17 +62,6 @@ namespace SpaceShooterV2
             double xDif = point1.X - point2.X;
             double yDif = point1.Y - point2.Y;
             return Math.Atan2(yDif, xDif);
-        }
-
-        public int getBulVel
-        {
-            get { return _bulVel;}
-        }
-
-        public bool WillFire
-        {
-            get { return _willFire; }
-            set { _willFire = value; }
         }
 
         public void UpdateCurCharge()
