@@ -12,13 +12,13 @@ namespace SpaceShooterV2
         protected int _maxX;
         protected int _maxY;
 
-        protected EnemyShip(int width, int height, byte texNum, int xVelocity, int yVelocity, int score, int MaxX, int maxY, float startingPosition)
+        protected EnemyShip(int width, int height, byte texNum, int xVelocity, int yVelocity, int score, int maxX, int maxY, float startingPosition)
             : base(width, height, texNum, xVelocity, yVelocity)
         {
-            _maxX = MaxX;
+            _maxX = maxX;
             _maxY = maxY;
             _score = score;
-            _position = new Vector2(MaxX + 0.5f*_width, startingPosition);
+            _position = new Vector2(maxX + 0.5f*_width, startingPosition);
         }
 
         public override void Update(GameTime gameTime)

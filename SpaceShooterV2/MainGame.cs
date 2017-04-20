@@ -124,7 +124,7 @@ namespace SpaceShooterV2
                             if (((PlayerShip) _objectList[i]).Firing)
                             {
                                 _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
-                                    _window.ClientBounds.Height/BulletScale, 3, _window.ClientBounds.Height/(int)(0.5f * BulletScale),
+                                    _window.ClientBounds.Height/BulletScale, 3, _window.ClientBounds.Height/(int)(0.4f * BulletScale),
                                     0,
                                     ((PlayerShip) _objectList[i]).getCenterPoint, true));
                                 ((PlayerShip) _objectList[i]).Firing = false;
@@ -392,7 +392,6 @@ namespace SpaceShooterV2
                     if (_random.Next(0, (int)(ProbabilityShipSpawn / 2) + 1) < 1)
                     {
                         int shipChoice = _random.Next(0, 2);
-                        Debug.WriteLine(shipChoice);
                         switch (shipChoice)
                         {
                             case 0:
@@ -476,8 +475,7 @@ namespace SpaceShooterV2
 
             #region Drawing Objects
 
-            foreach (var curObj in _objectList)
-                if (curObj != null)
+            foreach (var curObj in _objectList.Where(item => item != null))
                     if (!(curObj.GetType() == typeof(PlayerShip)))
                     {
                         curObj.Draw(_spriteBatch, _textureList[curObj.TexNum]);
@@ -505,7 +503,7 @@ namespace SpaceShooterV2
 
             #region Draw Score 
 
-            _spriteBatch.DrawString(_font, Convert.ToString(_score), new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString(Convert.ToString(_score)).X / 2, 0), Color.RoyalBlue);
+            _spriteBatch.DrawString(_font, "Score: " + Convert.ToString(_score), new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Score: " + Convert.ToString(_score)).X / 2, 0), Color.RoyalBlue);
 
             #endregion
 
