@@ -103,10 +103,10 @@ namespace SpaceShooterV2
 
             _objectList.Add(new Charger(_textureList[2].Width/_textureList[2].Height,
                 _window.ClientBounds.Height/ShipScale, 2, _window.ClientBounds.Height/(int) (0.6f*BulletScale), 50,
-                _diffculty));
+                _diffculty,_window.ClientBounds.Width,_window.ClientBounds.Height));
             _objectList.Add(new Shotgun(_textureList[2].Width/_textureList[2].Height,
                 _window.ClientBounds.Height/ShipScale, 2, _window.ClientBounds.Height/(int) (1.3f*BulletScale), 100,
-                _diffculty));
+                _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height));
         }
 
         public void Update(GameTime gameTime)
@@ -209,11 +209,33 @@ namespace SpaceShooterV2
                             }
                             #endregion
 
-                            #region ShotGun Update
+                            #region Shotgun Update
 
                             if (_objectList[i].GetType() == typeof(Shotgun))
                             {
-                                ((Shotgun) _objectList[i]).Update(gameTime);
+                                if (_multiplayer)
+                                {
+                                    if ((((PlayerShip)_objectList[0]).Health != 0) &&
+                                        (((PlayerShip)_objectList[1]).Health != 0))
+                                    {
+                                        var whichShip = new Random();
+                                        ((Shotgun)_objectList[i]).Update(gameTime, _objectList[whichShip.Next(0,2)].getCenterPoint);
+                                    }
+                                    else if (((PlayerShip)_objectList[0]).Health != 0)
+                                    {
+                                        ((Shotgun)_objectList[i]).Update(gameTime, _objectList[1].getCenterPoint);
+                                    }
+                                    else if (((PlayerShip)_objectList[1]).Health != 0)
+                                    {
+                                        ((Shotgun)_objectList[i]).Update(gameTime, _objectList[0].getCenterPoint);
+                                    }
+                                }
+                                else
+                                {
+                                    ((Shotgun)_objectList[i]).Update(gameTime, _objectList[0].getCenterPoint);
+                                }
+
+
 
                                 if (((Shotgun) _objectList[i]).WillFire)
                                 {

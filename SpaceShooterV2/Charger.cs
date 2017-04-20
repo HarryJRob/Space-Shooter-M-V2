@@ -16,13 +16,13 @@ namespace SpaceShooterV2
         private int _curCharge;
         private int _chargeTo = 4;
 
-        public Charger(int width, int height, byte texNum,int bulVel, int score, int diffculty)
-            : base(width, height, texNum, 0 , 0, score)
+        public Charger(int width, int height, byte texNum,int bulVel, int score, int diffculty,int maxX, int maxY)
+            : base(width, height, texNum, 0 , 0, score, maxX, maxY)
         {
             _bulVel = bulVel;
             _health = 1 * diffculty;
             _score = score * diffculty;
-            _position = new Vector2(1600,800);
+            _position = new Vector2(maxX,800);
         }
 
         public override void Update(GameTime gameTime)
