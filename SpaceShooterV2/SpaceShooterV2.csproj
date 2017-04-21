@@ -79,6 +79,7 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Bomber.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Charger.cs" />
     <Compile Include="EnemyShip.cs" />

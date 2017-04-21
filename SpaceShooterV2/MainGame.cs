@@ -10,26 +10,30 @@ namespace SpaceShooterV2
 {
     internal class MainGame
     {
+        //Declarations
+        //Required resources
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private GameWindow _window;
 
+        //Constants
         private const int ShipScale = 13;
         private const int BulletScale = 70;
         private const int ColumnNum = 10;
         private const int RowNum = 10;
-        private const int ProbabilityShipSpawn = 150; // 1/ProbabilityShipSpawn
+        private const int ProbabilityShipSpawn = 130; // 1/ProbabilityShipSpawn
 
+        //Important bools
         private const bool Testing = false;
-        private bool _multiplayer;
+        private readonly bool _multiplayer;
+        private bool _dead;
 
+        //Main Resources
         private List<int>[,] _objectCollisionList;
         private List<GameObject> _objectList;
         private List<Texture2D> _textureList;
         private SpriteFont _font;
         private KeyboardState _curKeyState;
-
-        private bool _dead;
 
         private int _previousFPS = 60;
         private int _score;
@@ -37,11 +41,13 @@ namespace SpaceShooterV2
         private float _tileWidth;
         private float _tileHeight;
 
-        private string _settings;
-        private int _diffculty;
+        private readonly string _settings;
+        private readonly int _diffculty;
 
-        private Random _random = new Random();
+        private readonly Random _random = new Random();
+        private readonly Stopwatch _aliveTimer = new Stopwatch();
 
+        //Public Methods
         public MainGame(bool multiplayer,ref GraphicsDeviceManager graphics, GameWindow window, SpriteBatch spriteBatch, string settings, int difficulty)
         {
             _multiplayer = multiplayer;
@@ -104,6 +110,20 @@ namespace SpaceShooterV2
 
             #endregion
 
+            #region Testing
+
+            if (Testing)
+            {
+                _objectList.Add(new Bomber(_textureList[2].Width/_textureList[2].Height,
+                    _window.ClientBounds.Height/ShipScale, 2,
+                    _window.ClientBounds.Height/(int) (2.4f*BulletScale), 100,
+                    _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                    _random.Next(0, _window.ClientBounds.Height + 1)));
+            }
+
+            #endregion
+
+            _aliveTimer.Start();
         }
 
         public void Update(GameTime gameTime)
@@ -261,6 +281,26 @@ namespace SpaceShooterV2
 
                             #endregion
 
+                            #region Bomber Update
+
+                            if (_objectList[i].GetType() == typeof(Bomber))
+                            {
+                                ((Bomber)_objectList[i]).Update(gameTime);
+
+                                if (((Bomber) _objectList[i]).WillFire)
+                                {
+                                    ((Bomber)_objectList[i]).WillFire = false;
+
+                                    _objectList.Add(new Bullet(_textureList[4].Width / _textureList[4].Height,
+                                        _window.ClientBounds.Height / BulletScale, 4,
+                                        Convert.ToInt32(((Bomber)_objectList[i]).GetBulVel * Math.Sin(((Bomber)_objectList[i]).FireAngle) * -1),
+                                        Convert.ToInt32(((Bomber)_objectList[i]).GetBulVel * Math.Cos(((Bomber)_objectList[i]).FireAngle) * -1),
+                                        ((Bomber)_objectList[i]).getCenterPoint, false));
+                                }
+                            }
+
+                            #endregion
+
                             #region Deletion of EnemyShips if they have collided
                             if (((Ship)_objectList[i]).Health == 0)
                             {
@@ -387,52 +427,73 @@ namespace SpaceShooterV2
                 #endregion
 
                 #region Create Ships at random
-                if (_multiplayer)
+
+                if (!Testing)
                 {
-                    if (_random.Next(0, (int)(ProbabilityShipSpawn / 2) + 1) < 1)
+                    if (_multiplayer)
                     {
-                        int shipChoice = _random.Next(0, 2);
+                        if (_random.Next(0, (int) (ProbabilityShipSpawn/2) + 1 - _aliveTimer.Elapsed.Minutes) < 1)
+                        {
+                            int shipChoice = _random.Next(0, 3);
+                            switch (shipChoice)
+                            {
+                                case 0:
+                                    Debug.WriteLine(" MainGame - Shotgun Created");
+                                    _objectList.Add(new Shotgun(_textureList[2].Width/_textureList[2].Height,
+                                        _window.ClientBounds.Height/ShipScale, 2,
+                                        _window.ClientBounds.Height/(int) (1.3f*BulletScale), 100,
+                                        _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                                        _random.Next(0, _window.ClientBounds.Height + 1)));
+                                    break;
+                                case 1:
+                                    Debug.WriteLine(" MainGame - Charger Created");
+                                    _objectList.Add(new Charger(_textureList[2].Width/_textureList[2].Height,
+                                        _window.ClientBounds.Height/ShipScale, 2,
+                                        _window.ClientBounds.Height/(int) (BulletScale), 50,
+                                        _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                                        _random.Next(0, _window.ClientBounds.Height + 1)));
+                                    break;
+                                case 2:
+                                    Debug.WriteLine(" MainGame - Bomber Created");
+                                    _objectList.Add(new Bomber(_textureList[2].Width/_textureList[2].Height,
+                                        _window.ClientBounds.Height/ShipScale, 2,
+                                        _window.ClientBounds.Height/(int) (2.4f*BulletScale), 100,
+                                        _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                                        _random.Next(0, _window.ClientBounds.Height + 1)));
+                                    break;
+                            }
+                        }
+                    }
+                    else if (_random.Next(0, ProbabilityShipSpawn + 1 - _aliveTimer.Elapsed.Minutes) < 1)
+                    {
+                        int shipChoice = _random.Next(0, 3);
                         switch (shipChoice)
                         {
                             case 0:
                                 Debug.WriteLine(" MainGame - Shotgun Created");
-                                _objectList.Add(new Shotgun(_textureList[2].Width / _textureList[2].Height,
-                                    _window.ClientBounds.Height / ShipScale, 2,
-                                    _window.ClientBounds.Height / (int)(1.3f * BulletScale), 100,
+                                _objectList.Add(new Shotgun(_textureList[2].Width/_textureList[2].Height,
+                                    _window.ClientBounds.Height/ShipScale, 2,
+                                    _window.ClientBounds.Height/(int) (BulletScale), 100,
                                     _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
                                     _random.Next(0, _window.ClientBounds.Height + 1)));
                                 break;
                             case 1:
                                 Debug.WriteLine(" MainGame - Charger Created");
-                                _objectList.Add(new Charger(_textureList[2].Width / _textureList[2].Height,
+                                _objectList.Add(new Charger(_textureList[2].Width/_textureList[2].Height,
+                                    _window.ClientBounds.Height/ShipScale, 2,
+                                    _window.ClientBounds.Height/(int) (0.8f*BulletScale), 50,
+                                    _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                                    _random.Next(0, _window.ClientBounds.Height + 1)));
+                                break;
+                            case 2:
+                                Debug.WriteLine(" MainGame - Bomber Created");
+                                _objectList.Add(new Bomber(_textureList[2].Width / _textureList[2].Height,
                                     _window.ClientBounds.Height / ShipScale, 2,
-                                    _window.ClientBounds.Height / (int)(0.6f * BulletScale), 50,
-                                    _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height, _random.Next(0, _window.ClientBounds.Height + 1)));
+                                    _window.ClientBounds.Height / (int)(2.4f * BulletScale), 100,
+                                    _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                                    _random.Next(0, _window.ClientBounds.Height + 1)));
                                 break;
                         }
-                    }
-                }
-                else if (_random.Next(0, ProbabilityShipSpawn + 1) < 1)
-                {
-                    int shipChoice = _random.Next(0, 2);
-                    Debug.WriteLine(shipChoice);
-                    switch (shipChoice)
-                    {
-                        case 0:
-                            Debug.WriteLine(" MainGame - Shotgun Created");
-                            _objectList.Add(new Shotgun(_textureList[2].Width/_textureList[2].Height,
-                                _window.ClientBounds.Height/ShipScale, 2,
-                                _window.ClientBounds.Height/(int) (1.3f*BulletScale), 100,
-                                _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
-                                _random.Next(0, _window.ClientBounds.Height + 1)));
-                            break;
-                        case 1:
-                            Debug.WriteLine(" MainGame - Charger Created");
-                            _objectList.Add(new Charger(_textureList[2].Width/_textureList[2].Height,
-                                _window.ClientBounds.Height/ShipScale, 2,
-                                _window.ClientBounds.Height/(int) (0.6f*BulletScale), 50,
-                                _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height, _random.Next(0, _window.ClientBounds.Height + 1)));
-                            break;
                     }
                 }
 
@@ -456,6 +517,25 @@ namespace SpaceShooterV2
                 }
 
                 #endregion
+
+                #region Testing
+
+                if (Testing)
+                {
+                    if (_multiplayer)
+                    {
+                        ((PlayerShip) _objectList[0]).Heal(10);
+                        ((PlayerShip) _objectList[1]).Heal(10);
+                    }
+                    else
+                    {
+                        ((PlayerShip)_objectList[0]).Heal(1);
+                    }
+                }
+
+                #endregion
+
+                Debug.WriteLine(_aliveTimer.Elapsed.Minutes);
             }
         }
 
@@ -520,14 +600,6 @@ namespace SpaceShooterV2
             #endregion
         }
 
-        private bool ContainsCompareTypes(Type t, List<int> intList)
-        {
-            foreach (var i in intList)
-                if (_objectList[i].GetType() == t || _objectList[i].GetType().IsSubclassOf(t))
-                    return true;
-            return false;
-        }
-
         public bool IsDead
         {
             get { return _dead;}
@@ -536,6 +608,15 @@ namespace SpaceShooterV2
         public int TotalScore
         {
             get { return _score; }
+        }
+
+        //Private Methods
+        private bool ContainsCompareTypes(Type t, List<int> intList)
+        {
+            foreach (var i in intList)
+                if (_objectList[i].GetType() == t || _objectList[i].GetType().IsSubclassOf(t))
+                    return true;
+            return false;
         }
     }
 }

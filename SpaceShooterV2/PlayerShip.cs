@@ -272,5 +272,17 @@ namespace SpaceShooterV2
             get { return _firing; }
             set { _firing = value; }
         }
+
+        public void Heal(int healthAdded)
+        {
+            if (_health + healthAdded > StartingHealth)
+            {
+                _health = StartingHealth;
+            }
+            else
+            {
+                _health += healthAdded;
+            }
+        }
     }
 }
