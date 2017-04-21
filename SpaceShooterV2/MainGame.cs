@@ -307,7 +307,7 @@ namespace SpaceShooterV2
                             #endregion
 
                             #region Deletion of EnemyShips if they have collided
-                            if (((Ship)_objectList[i]).Health == 0)
+                            if (((Ship)_objectList[i]).Health <= 0)
                             {
                                 if ((_objectList[i].GetType() == typeof(EnemyShip)) ||
                                     _objectList[i].GetType().IsSubclassOf(typeof(EnemyShip)))

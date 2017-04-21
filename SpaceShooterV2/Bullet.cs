@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceShooterV2
 {
@@ -12,6 +13,18 @@ namespace SpaceShooterV2
             _dmg = dmg;
             _owner = Owner;
             _position = new Vector2(startingPos.X, startingPos.Y - _height/2);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch, Texture2D tex)
+        {
+            if (_dmg == 2)
+            {
+                spriteBatch.Draw(tex, new Rectangle((int) _position.X, (int) _position.Y, _width, _height), Color.DarkRed);
+            }
+            else
+            {
+                base.Draw(spriteBatch,tex);
+            }
         }
 
         public bool Owner
