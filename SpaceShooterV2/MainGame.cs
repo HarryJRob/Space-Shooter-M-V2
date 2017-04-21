@@ -22,6 +22,7 @@ namespace SpaceShooterV2
         private const int ColumnNum = 10;
         private const int RowNum = 10;
         private const int ProbabilityShipSpawn = 130; // 1/ProbabilityShipSpawn
+        private const int ProbabilityPowerUpSpawn = 150; // 1/ProbabilityPowerUpSpawn
 
         //Important bools
         private const bool Testing = false;
@@ -119,6 +120,11 @@ namespace SpaceShooterV2
                     _window.ClientBounds.Height/(int) (2.4f*BulletScale), 100,
                     _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
                     _random.Next(0, _window.ClientBounds.Height + 1)));
+
+                _objectList.Add(new PowerUp(_textureList[4].Width/_textureList[4].Height,
+                    _window.ClientBounds.Height/BulletScale, 4, -_window.ClientBounds.Height/BulletScale,
+                    new Vector2(_window.ClientBounds.Width, _random.Next(0, _window.ClientBounds.Height + 1)),
+                    0));
             }
 
             #endregion
@@ -129,7 +135,6 @@ namespace SpaceShooterV2
         public void Update(GameTime gameTime)
         {
             _curKeyState = Keyboard.GetState();
-
             if (!_dead)
             {
                 #region Update Objects
@@ -146,7 +151,7 @@ namespace SpaceShooterV2
                                 _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
                                     _window.ClientBounds.Height/BulletScale, 3, _window.ClientBounds.Height/(int)(0.4f * BulletScale),
                                     0,
-                                    ((PlayerShip) _objectList[i]).getCenterPoint, true));
+                                    ((PlayerShip)_objectList[i]).getCenterPoint, true, ((PlayerShip)_objectList[i]).BulDamage));
                                 ((PlayerShip) _objectList[i]).Firing = false;
                             }
                         #endregion
@@ -181,7 +186,7 @@ namespace SpaceShooterV2
                                                 _window.ClientBounds.Height/BulletScale, 4,
                                                 (int) (((Charger) _objectList[i]).GetBulVel*Math.Cos(movementAngle)*-1),
                                                 (int) (((Charger) _objectList[i]).GetBulVel*Math.Sin(movementAngle)*-1),
-                                                ((Charger) _objectList[i]).getCenterPoint, false));
+                                                ((Charger) _objectList[i]).getCenterPoint, false,1));
                                         }
                                         else if (((PlayerShip) _objectList[0]).Health != 0)
                                         {
@@ -194,7 +199,7 @@ namespace SpaceShooterV2
                                                 _window.ClientBounds.Height/BulletScale, 4,
                                                 (int) (((Charger) _objectList[i]).GetBulVel*Math.Cos(movementAngle)*-1),
                                                 (int) (((Charger) _objectList[i]).GetBulVel*Math.Sin(movementAngle)*-1),
-                                                ((Charger) _objectList[i]).getCenterPoint, false));
+                                                ((Charger)_objectList[i]).getCenterPoint, false,1));
                                         }
                                         else if (((PlayerShip) _objectList[1]).Health != 0)
                                         {
@@ -207,7 +212,7 @@ namespace SpaceShooterV2
                                                 _window.ClientBounds.Height/BulletScale, 4,
                                                 (int) (((Charger) _objectList[i]).GetBulVel*Math.Cos(movementAngle)*-1),
                                                 (int) (((Charger) _objectList[i]).GetBulVel*Math.Sin(movementAngle)*-1),
-                                                ((Charger) _objectList[i]).getCenterPoint, false));
+                                                ((Charger) _objectList[i]).getCenterPoint, false,1));
                                         }
                                     }
                                     else
@@ -219,7 +224,7 @@ namespace SpaceShooterV2
                                             _window.ClientBounds.Height/BulletScale, 4,
                                             (int) (((Charger) _objectList[i]).GetBulVel*Math.Cos(movementAngle)*-1),
                                             (int) (((Charger) _objectList[i]).GetBulVel*Math.Sin(movementAngle)*-1),
-                                            ((Charger) _objectList[i]).getCenterPoint, false));
+                                            ((Charger)_objectList[i]).getCenterPoint, false, 1));
                                     }
                                     ((Charger) _objectList[i]).UpdateCurCharge();
                                 }
@@ -263,19 +268,19 @@ namespace SpaceShooterV2
                                         _window.ClientBounds.Height/BulletScale, 4,
                                         Convert.ToInt32(((Shotgun) _objectList[i]).GetBulVel*Math.Sin(Math.PI/2)*-1),
                                         Convert.ToInt32(((Shotgun) _objectList[i]).GetBulVel*Math.Cos(Math.PI/2)*-1),
-                                        ((Shotgun) _objectList[i]).getCenterPoint, false));
+                                        ((Shotgun)_objectList[i]).getCenterPoint, false, 1));
 
                                     _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
                                         _window.ClientBounds.Height/BulletScale, 4,
                                         Convert.ToInt32(((Shotgun)_objectList[i]).GetBulVel * Math.Sin(1.92) * -1),
                                         Convert.ToInt32(((Shotgun)_objectList[i]).GetBulVel * Math.Cos(1.92) * -1),
-                                        ((Shotgun) _objectList[i]).getCenterPoint, false));
+                                        ((Shotgun)_objectList[i]).getCenterPoint, false, 1));
 
                                     _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
                                         _window.ClientBounds.Height/BulletScale, 4,
                                         Convert.ToInt32(((Shotgun)_objectList[i]).GetBulVel * Math.Sin(1.22) * -1),
                                         Convert.ToInt32(((Shotgun)_objectList[i]).GetBulVel * Math.Cos(1.22) * -1),
-                                        ((Shotgun) _objectList[i]).getCenterPoint, false));
+                                        ((Shotgun)_objectList[i]).getCenterPoint, false, 1));
                                 }
                             }
 
@@ -295,7 +300,7 @@ namespace SpaceShooterV2
                                         _window.ClientBounds.Height / BulletScale, 4,
                                         Convert.ToInt32(((Bomber)_objectList[i]).GetBulVel * Math.Sin(((Bomber)_objectList[i]).FireAngle) * -1),
                                         Convert.ToInt32(((Bomber)_objectList[i]).GetBulVel * Math.Cos(((Bomber)_objectList[i]).FireAngle) * -1),
-                                        ((Bomber)_objectList[i]).getCenterPoint, false));
+                                        ((Bomber)_objectList[i]).getCenterPoint, false, 1));
                                 }
                             }
 
@@ -315,6 +320,12 @@ namespace SpaceShooterV2
                             #endregion
                         }
                         else if (_objectList[i].GetType() == typeof(Bullet))
+                        {
+                            _objectList[i].Update(gameTime);
+                            if (_objectList[i].Collision)
+                                _objectList[i] = null;
+                        }
+                        else if (_objectList[i].GetType() == typeof(PowerUp))
                         {
                             _objectList[i].Update(gameTime);
                             if (_objectList[i].Collision)
@@ -380,9 +391,11 @@ namespace SpaceShooterV2
                     {
                         //If there are things which can collide
                         if ((_objectCollisionList[x, y].Count >= 2) &&
-                            (ContainsCompareTypes(typeof(PlayerShip), _objectCollisionList[x, y]) |
+                            (ContainsCompareTypes(typeof(PlayerShip), _objectCollisionList[x, y]) ||
                              ContainsCompareTypes(typeof(EnemyShip), _objectCollisionList[x, y])) &&
-                            ContainsCompareTypes(typeof(Bullet), _objectCollisionList[x, y]))
+                            ContainsCompareTypes(typeof(Bullet), _objectCollisionList[x, y]) ||
+                            (ContainsCompareTypes(typeof(PlayerShip), _objectCollisionList[x, y]) &&
+                             ContainsCompareTypes(typeof(PowerUp), _objectCollisionList[x, y])))
                         {
                             //Do collision check
                             //Get the objects which are contained within that square
@@ -394,21 +407,64 @@ namespace SpaceShooterV2
                                     filteredList.Add(_objectList[i]);
                             }
 
+                            #region Bullet Collision
+
                             //Check if any bullets collide with ships
                             foreach (Bullet curBullet in filteredList.OfType<Bullet>())
+                            {
                                 //Dont check if the bullet has already collided with something
                                 if (!curBullet.Collision)
+                                {
                                     foreach (Ship curShip in filteredList.OfType<Ship>())
+                                    {
                                         if (!curShip.Collision)
+                                        {
                                             //Now do the collision check
                                             if ((((curShip.GetType() == typeof(PlayerShip)) && !curBullet.Owner) ||
                                                  (curShip.GetType().IsSubclassOf(typeof(EnemyShip)) && curBullet.Owner)) &&
                                                 curShip.BoundingBox.Intersects(curBullet.BoundingBox))
                                             {
-                                                Debug.WriteLine(" Main Game - Collision at ({0},{1})", x, y);
+                                                Debug.WriteLine(" Main Game - Bullet Collision at ({0},{1})", x, y);
                                                 curShip.Collision = true;
+                                                curShip.dmgToTake = curBullet.Dmg;
                                                 curBullet.Collision = true;
                                             }
+                                        }
+                                    }
+                                }
+                            }
+
+                            #endregion
+
+                            #region PowerUp Collision
+
+                            if (filteredList.Exists(item => item.GetType() == typeof(PlayerShip)) &&
+                                filteredList.Exists(item => item.GetType() == typeof(PowerUp)))
+                            {
+                                foreach (PowerUp curPowerUp in filteredList.OfType<PowerUp>())
+                                {
+                                    foreach (PlayerShip curPlayer in filteredList.OfType<PlayerShip>())
+                                    {
+                                        if (curPowerUp.BoundingBox.Intersects(curPlayer.BoundingBox))
+                                        {
+                                            Debug.WriteLine(" Main Game - PowerUp Collision at ({0},{1})", x, y);
+                                            switch (curPowerUp.type)
+                                            {
+                                                case 0:
+                                                    curPlayer.Heal(2);
+                                                    break;
+                                                case 1:
+                                                    curPlayer.BoostDamage();
+                                                    break;
+                                            }
+                                            curPowerUp.Collision = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            #endregion
+                        
                             filteredList.Clear();
                         }
                         _objectCollisionList[x, y].Clear();
@@ -426,13 +482,14 @@ namespace SpaceShooterV2
 
                 #endregion
 
-                #region Create Ships at random
-
                 if (!Testing)
                 {
+
+                    #region Create Ships at random
+
                     if (_multiplayer)
                     {
-                        if (_random.Next(0, (int) (ProbabilityShipSpawn/2) + 1 - _aliveTimer.Elapsed.Minutes) < 1)
+                        if (_random.Next(0, (int) (ProbabilityShipSpawn/2) - _aliveTimer.Elapsed.Seconds) < 1)
                         {
                             int shipChoice = _random.Next(0, 3);
                             switch (shipChoice)
@@ -464,7 +521,7 @@ namespace SpaceShooterV2
                             }
                         }
                     }
-                    else if (_random.Next(0, ProbabilityShipSpawn + 1 - _aliveTimer.Elapsed.Minutes) < 1)
+                    else if (_random.Next(0, ProbabilityShipSpawn - _aliveTimer.Elapsed.Seconds) < 1)
                     {
                         int shipChoice = _random.Next(0, 3);
                         switch (shipChoice)
@@ -487,17 +544,43 @@ namespace SpaceShooterV2
                                 break;
                             case 2:
                                 Debug.WriteLine(" MainGame - Bomber Created");
-                                _objectList.Add(new Bomber(_textureList[2].Width / _textureList[2].Height,
-                                    _window.ClientBounds.Height / ShipScale, 2,
-                                    _window.ClientBounds.Height / (int)(2.4f * BulletScale), 100,
+                                _objectList.Add(new Bomber(_textureList[2].Width/_textureList[2].Height,
+                                    _window.ClientBounds.Height/ShipScale, 2,
+                                    _window.ClientBounds.Height/(int) (2.4f*BulletScale), 100,
                                     _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
                                     _random.Next(0, _window.ClientBounds.Height + 1)));
                                 break;
                         }
                     }
-                }
 
-                #endregion
+                    #endregion
+
+                    #region Create Power ups at random
+
+                    if (_random.Next(0, ProbabilityPowerUpSpawn) < 1)
+                    {
+                        int powerUp = _random.Next(0, 2);
+                        switch (powerUp)
+                        {
+                            case 0:
+                                _objectList.Add(new PowerUp(_textureList[4].Width/_textureList[4].Height,
+                                    _window.ClientBounds.Height/BulletScale, 4, -_window.ClientBounds.Height/BulletScale,
+                                    new Vector2(_window.ClientBounds.Width,
+                                        _random.Next(0, _window.ClientBounds.Height + 1)),
+                                    0));
+                                break;
+                            case 1:
+                                _objectList.Add(new PowerUp(_textureList[4].Width/_textureList[4].Height,
+                                    _window.ClientBounds.Height/BulletScale, 4, -_window.ClientBounds.Height/BulletScale,
+                                    new Vector2(_window.ClientBounds.Width,
+                                        _random.Next(0, _window.ClientBounds.Height + 1)),
+                                    1));
+                                break;
+                        }
+                    }
+
+                    #endregion
+                }
 
                 #region CheckAlive
 
@@ -534,8 +617,6 @@ namespace SpaceShooterV2
                 }
 
                 #endregion
-
-                Debug.WriteLine(_aliveTimer.Elapsed.Minutes);
             }
         }
 

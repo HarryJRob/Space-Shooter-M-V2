@@ -26,6 +26,9 @@ namespace SpaceShooterV2
 
         private int _bulletCoolDown;
         private const int BulletCdTotal = 25;
+        private int _bulDamage = 1;
+        private int _dmgBoostDuration;
+        private const int DmgBoostDefaultDuration = 100;
 
         private int _deathAnimationFrame;
 
@@ -35,7 +38,6 @@ namespace SpaceShooterV2
         private const int StartingHealth = 10;
         private const int UISpacingY = 2;
         private const int UISpacingX = 5;
-
 
         public PlayerShip(int widthByHeight, int height, byte texNum, byte playerID,string keyStr,int winX, int winY, double UIWidthHeightRatio) : base(widthByHeight, height,texNum, 0, 0)
         {
@@ -156,6 +158,15 @@ namespace SpaceShooterV2
                 }
                 if (_bulletCoolDown != BulletCdTotal)
                     _bulletCoolDown += 1;
+
+                if (_dmgBoostDuration > 0)
+                {
+                    _dmgBoostDuration -= 1;
+                }
+                else
+                {
+                    _bulDamage = 1;
+                }
             }
         }
 
@@ -283,6 +294,18 @@ namespace SpaceShooterV2
             {
                 _health += healthAdded;
             }
+        }
+
+        public void BoostDamage()
+        {
+            _bulDamage = 2;
+            _dmgBoostDuration = DmgBoostDefaultDuration;
+        }
+
+        public int BulDamage
+        {
+            get { return _bulDamage; }
+            set { _bulDamage = value; }
         }
     }
 }

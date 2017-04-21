@@ -23,11 +23,6 @@ namespace SpaceShooterV2
 
         public override void Update(GameTime gameTime)
         {
-            if (_collision && _health > 0)
-            {
-                _health -= 1;
-                _collision = false;
-            }
 
             if (_position.X + 1.4*_width > _maxX && initialising)
             {

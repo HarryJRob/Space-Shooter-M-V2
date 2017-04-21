@@ -5,8 +5,11 @@ namespace SpaceShooterV2
     internal class Bullet : GameObject
     {
         private readonly bool _owner; //true indiciates player owned and false indicates enemy owned
-        public Bullet(int Width, int Height, byte TexNum, int xVelocity, int yVelocity,Vector2  startingPos , bool Owner): base(Width, Height, TexNum, xVelocity, yVelocity)
+        private readonly int _dmg;
+
+        public Bullet(int Width, int Height, byte TexNum, int xVelocity, int yVelocity,Vector2  startingPos , bool Owner, int dmg): base(Width, Height, TexNum, xVelocity, yVelocity)
         {
+            _dmg = dmg;
             _owner = Owner;
             _position = new Vector2(startingPos.X, startingPos.Y - _height/2);
         }
@@ -26,6 +29,11 @@ namespace SpaceShooterV2
         {
             get { return _yVelocity;}
             set { _yVelocity = value; }
+        }
+
+        public int Dmg
+        {
+            get { return _dmg; }
         }
     }
 }
