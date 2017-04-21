@@ -552,6 +552,7 @@ namespace SpaceShooterV2
                 {
                     using (StreamWriter sw = new StreamWriter(_pathHighscores))
                     {
+                        Debug.Write(" Main Menu - Saving: ");
                         for (int i = 0; i < _highscores.Length; i++)
                         {
                             if (i < _highscores.Length - 1)
@@ -559,9 +560,10 @@ namespace SpaceShooterV2
                             else
                                 sw.Write(_highscores[i]);
 
-                            Debug.WriteLine(" Main Menu - Saving: " + _highscores[i]);
+                            Debug.Write(_highscores[i] + ", ");
                         }
                     }
+                    Debug.WriteLine("");
                 }
 
             }

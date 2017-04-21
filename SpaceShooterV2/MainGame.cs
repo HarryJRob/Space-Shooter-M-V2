@@ -21,8 +21,8 @@ namespace SpaceShooterV2
         private const int BulletScale = 70;
         private const int ColumnNum = 10;
         private const int RowNum = 10;
-        private const int ProbabilityShipSpawn = 130; // 1/ProbabilityShipSpawn
-        private const int ProbabilityPowerUpSpawn = 150; // 1/ProbabilityPowerUpSpawn
+        private const int ProbabilityShipSpawn = 140; // 1/ProbabilityShipSpawn
+        private const int ProbabilityPowerUpSpawn = 400; // 1/ProbabilityPowerUpSpawn
 
         //Important bools
         private const bool Testing = false;
@@ -484,7 +484,6 @@ namespace SpaceShooterV2
 
                 if (!Testing)
                 {
-
                     #region Create Ships at random
 
                     if (_multiplayer)
@@ -612,7 +611,7 @@ namespace SpaceShooterV2
                     }
                     else
                     {
-                        ((PlayerShip)_objectList[0]).Heal(1);
+                        ((PlayerShip)_objectList[0]).Heal(10);
                     }
                 }
 
