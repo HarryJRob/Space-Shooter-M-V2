@@ -15,6 +15,7 @@ namespace SpaceShooterV2
             if (_collision && _health > 0)
             {
                 _health -= _dmgToTake;
+                _dmgToTake = 0;
                 _collision = false;
             }
 

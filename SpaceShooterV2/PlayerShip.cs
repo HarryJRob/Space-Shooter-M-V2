@@ -72,7 +72,7 @@ namespace SpaceShooterV2
 
             if (playerID == 1)
             {
-                _healthBarPos = new Vector2(3 * _healthUnitWidth, UISpacingY * _healthUnitHeight);
+                _healthBarPos = new Vector2(UISpacingX * _healthUnitWidth, UISpacingY * _healthUnitHeight);
                 _position.Y = height;
             }
             else if (playerID == 2)

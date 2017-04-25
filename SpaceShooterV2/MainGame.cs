@@ -34,7 +34,6 @@ namespace SpaceShooterV2
         private List<GameObject> _objectList;
         private List<Texture2D> _textureList;
         private SpriteFont _font;
-        private KeyboardState _curKeyState;
 
         private int _previousFPS = 60;
         private int _score;
@@ -43,7 +42,7 @@ namespace SpaceShooterV2
         private float _tileHeight;
 
         private readonly string _settings;
-        private readonly int _diffculty;
+        private readonly int _difficulty;
 
         private readonly Random _random = new Random();
         private readonly Stopwatch _aliveTimer = new Stopwatch();
@@ -56,7 +55,7 @@ namespace SpaceShooterV2
             _window = window;
             _spriteBatch = spriteBatch;
             _settings = settings;
-            _diffculty = difficulty;
+            _difficulty = difficulty;
 
             _graphics.ApplyChanges();
         }
@@ -118,7 +117,7 @@ namespace SpaceShooterV2
                 _objectList.Add(new Bomber(_textureList[2].Width/_textureList[2].Height,
                     _window.ClientBounds.Height/ShipScale, 2,
                     _window.ClientBounds.Height/(int) (2.4f*BulletScale), 100,
-                    _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                    _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
                     _random.Next(0, _window.ClientBounds.Height + 1)));
 
                 _objectList.Add(new PowerUp(_textureList[4].Width/_textureList[4].Height,
@@ -134,18 +133,20 @@ namespace SpaceShooterV2
 
         public void Update(GameTime gameTime)
         {
-            _curKeyState = Keyboard.GetState();
+            KeyboardState curKeyState = Keyboard.GetState();
+
             if (!_dead)
             {
                 #region Update Objects
-
+                //Updates all of the objects in _objectList. 
+                //How objects are updates is dependant on their type
                 for (var i = 0; i < _objectList.Count; i++)
                     if (_objectList[i] != null)
                     {
                         if (_objectList[i].GetType() == typeof(PlayerShip))
                         {
                             #region Player Update
-                            ((PlayerShip) _objectList[i]).Update(gameTime, _curKeyState);
+                            ((PlayerShip) _objectList[i]).Update(gameTime, curKeyState);
                             if (((PlayerShip) _objectList[i]).Firing)
                             {
                                 _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
@@ -321,15 +322,23 @@ namespace SpaceShooterV2
                         }
                         else if (_objectList[i].GetType() == typeof(Bullet))
                         {
+                            #region Bullet Update
+
                             _objectList[i].Update(gameTime);
                             if (_objectList[i].Collision)
                                 _objectList[i] = null;
+
+                            #endregion
                         }
                         else if (_objectList[i].GetType() == typeof(PowerUp))
                         {
+                            #region PowerUp Update
+
                             _objectList[i].Update(gameTime);
                             if (_objectList[i].Collision)
                                 _objectList[i] = null;
+
+                            #endregion
                         }
 
                         #region Updating ObjectCollisionList
@@ -339,35 +348,36 @@ namespace SpaceShooterV2
                             if (!(_objectList[i].GetType() == typeof(PlayerShip) &&
                                   ((PlayerShip) _objectList[i]).Health == 0))
                             {
+                                //add references to a object to each of the boxes the corners are in.
                                 var curObjRec = _objectList[i].BoundingBox;
-
+                                //Top Left
                                 if ((curObjRec.X > 0) && (curObjRec.Y > 0) && (curObjRec.X < _window.ClientBounds.Width) &&
                                     (curObjRec.Y < _window.ClientBounds.Height))
                                     _objectCollisionList[
                                         (int) Math.Truncate(curObjRec.X/_tileWidth),
                                         (int) Math.Truncate(curObjRec.Y/_tileHeight)].Add(i);
-
+                                //Top Right
                                 if ((curObjRec.X + curObjRec.Width > 0) && (curObjRec.Y > 0) &&
                                     (curObjRec.X + curObjRec.Width < _window.ClientBounds.Width) &&
                                     (curObjRec.Y < _window.ClientBounds.Height))
                                     _objectCollisionList[
                                         (int) Math.Truncate((curObjRec.X + curObjRec.Width)/_tileWidth),
                                         (int) Math.Truncate(curObjRec.Y/_tileHeight)].Add(i);
-
+                                //Bottom Left
                                 if ((curObjRec.X > 0) && (curObjRec.Y + curObjRec.Height > 0) &&
                                     (curObjRec.X < _window.ClientBounds.Width) &&
                                     (curObjRec.Y + curObjRec.Height < _window.ClientBounds.Height))
                                     _objectCollisionList[
                                         (int) Math.Truncate(curObjRec.X/_tileWidth),
                                         (int) Math.Truncate((curObjRec.Y + curObjRec.Height)/_tileHeight)].Add(i);
-
+                                //Buttom right
                                 if ((curObjRec.X + curObjRec.Width > 0) && (curObjRec.Y + curObjRec.Height > 0) &&
                                     (curObjRec.X + curObjRec.Width < _window.ClientBounds.Width) &&
                                     (curObjRec.Y + curObjRec.Height < _window.ClientBounds.Height))
                                     _objectCollisionList[
                                         (int) Math.Truncate((curObjRec.X + curObjRec.Width)/_tileWidth),
                                         (int) Math.Truncate((curObjRec.Y + curObjRec.Height)/_tileHeight)].Add(i);
-
+                                //If a bullet is off the screen delete it
                                 if ((_objectList[i].GetType() == typeof(Bullet)) &&
                                     ((curObjRec.Y + curObjRec.Height < 0) || (curObjRec.X + curObjRec.Width < 0) ||
                                      (curObjRec.X > _window.ClientBounds.Width) ||
@@ -437,17 +447,21 @@ namespace SpaceShooterV2
                             #endregion
 
                             #region PowerUp Collision
-
+                            //If two a player and a powerup can collide in this square
                             if (filteredList.Exists(item => item.GetType() == typeof(PlayerShip)) &&
                                 filteredList.Exists(item => item.GetType() == typeof(PowerUp)))
                             {
+                                //for each power up
                                 foreach (PowerUp curPowerUp in filteredList.OfType<PowerUp>())
                                 {
+                                    //and for each player in the square
                                     foreach (PlayerShip curPlayer in filteredList.OfType<PlayerShip>())
                                     {
+                                        //check if they collide
                                         if (curPowerUp.BoundingBox.Intersects(curPlayer.BoundingBox))
                                         {
                                             Debug.WriteLine(" Main Game - PowerUp Collision at ({0},{1})", x, y);
+                                            //If they do:
                                             switch (curPowerUp.type)
                                             {
                                                 case 0:
@@ -464,15 +478,17 @@ namespace SpaceShooterV2
                             }
 
                             #endregion
-                        
-                            filteredList.Clear();
+                        //Clear the list for the next cycle
+                        filteredList.Clear();
                         }
+                        //Clear the list for the next cycle
                         _objectCollisionList[x, y].Clear();
                     }
 
                 #endregion
 
                 #region Deleted null from ObjectList
+                //Removes deleted objects from the list
                 //!_objectList.OfType<EnemyShip>().Any()
                 if (_objectList.Contains(null))
                 {
@@ -485,10 +501,10 @@ namespace SpaceShooterV2
                 if (!Testing)
                 {
                     #region Create Ships at random
-
+                    //Creates ships at random with a random starting Y value
                     if (_multiplayer)
                     {
-                        if (_random.Next(0, (int) (ProbabilityShipSpawn/2) - _aliveTimer.Elapsed.Seconds) < 1)
+                        if (_random.Next(0, (int)(ProbabilityShipSpawn / 2) - _aliveTimer.Elapsed.Seconds) < 1)
                         {
                             int shipChoice = _random.Next(0, 3);
                             switch (shipChoice)
@@ -498,7 +514,7 @@ namespace SpaceShooterV2
                                     _objectList.Add(new Shotgun(_textureList[2].Width/_textureList[2].Height,
                                         _window.ClientBounds.Height/ShipScale, 2,
                                         _window.ClientBounds.Height/(int) (1.3f*BulletScale), 100,
-                                        _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                                        _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
                                         _random.Next(0, _window.ClientBounds.Height + 1)));
                                     break;
                                 case 1:
@@ -506,7 +522,7 @@ namespace SpaceShooterV2
                                     _objectList.Add(new Charger(_textureList[2].Width/_textureList[2].Height,
                                         _window.ClientBounds.Height/ShipScale, 2,
                                         _window.ClientBounds.Height/(int) (BulletScale), 50,
-                                        _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                                        _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
                                         _random.Next(0, _window.ClientBounds.Height + 1)));
                                     break;
                                 case 2:
@@ -514,7 +530,7 @@ namespace SpaceShooterV2
                                     _objectList.Add(new Bomber(_textureList[2].Width/_textureList[2].Height,
                                         _window.ClientBounds.Height/ShipScale, 2,
                                         _window.ClientBounds.Height/(int) (2.4f*BulletScale), 100,
-                                        _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                                        _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
                                         _random.Next(0, _window.ClientBounds.Height + 1)));
                                     break;
                             }
@@ -530,7 +546,7 @@ namespace SpaceShooterV2
                                 _objectList.Add(new Shotgun(_textureList[2].Width/_textureList[2].Height,
                                     _window.ClientBounds.Height/ShipScale, 2,
                                     _window.ClientBounds.Height/(int) (BulletScale), 100,
-                                    _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                                    _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
                                     _random.Next(0, _window.ClientBounds.Height + 1)));
                                 break;
                             case 1:
@@ -538,7 +554,7 @@ namespace SpaceShooterV2
                                 _objectList.Add(new Charger(_textureList[2].Width/_textureList[2].Height,
                                     _window.ClientBounds.Height/ShipScale, 2,
                                     _window.ClientBounds.Height/(int) (0.8f*BulletScale), 50,
-                                    _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                                    _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
                                     _random.Next(0, _window.ClientBounds.Height + 1)));
                                 break;
                             case 2:
@@ -546,7 +562,7 @@ namespace SpaceShooterV2
                                 _objectList.Add(new Bomber(_textureList[2].Width/_textureList[2].Height,
                                     _window.ClientBounds.Height/ShipScale, 2,
                                     _window.ClientBounds.Height/(int) (2.4f*BulletScale), 100,
-                                    _diffculty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                                    _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
                                     _random.Next(0, _window.ClientBounds.Height + 1)));
                                 break;
                         }
@@ -555,7 +571,7 @@ namespace SpaceShooterV2
                     #endregion
 
                     #region Create Power ups at random
-
+                    //Creates powerUps at random with a random Y value
                     if (_random.Next(0, ProbabilityPowerUpSpawn) < 1)
                     {
                         int powerUp = _random.Next(0, 2);
@@ -582,7 +598,7 @@ namespace SpaceShooterV2
                 }
 
                 #region CheckAlive
-
+                //Checks if the cumulative health of the players or player is 0
                 if (_multiplayer)
                 {
                     if (((PlayerShip) _objectList[0]).Health + ((PlayerShip) _objectList[1]).Health == 0)
@@ -601,7 +617,7 @@ namespace SpaceShooterV2
                 #endregion
 
                 #region Testing
-
+                //Used for the testing part of the course work
                 if (Testing)
                 {
                     if (_multiplayer)

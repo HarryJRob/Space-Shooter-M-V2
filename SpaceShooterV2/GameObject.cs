@@ -12,8 +12,6 @@ namespace SpaceShooterV2
         protected int _xVelocity;
         protected int _yVelocity;
 
-        protected GameObject() { }
-
         protected GameObject(int width, int height, byte texNum, int xVelocity, int yVelocity)
         {
             _width = width*height;

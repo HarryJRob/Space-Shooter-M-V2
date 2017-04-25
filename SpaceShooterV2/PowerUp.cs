@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceShooterV2
 {
@@ -15,6 +16,11 @@ namespace SpaceShooterV2
         public int type
         {
             get { return _type;}
+        }
+
+        public override void Draw(SpriteBatch spriteBatch, Texture2D tex)
+        {
+            spriteBatch.Draw(tex, new Rectangle((int)_position.X, (int)_position.Y, _width, _height), Color.Red);
         }
     }
 }

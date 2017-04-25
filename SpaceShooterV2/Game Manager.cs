@@ -21,9 +21,6 @@ namespace SpaceShooterV2
         private MainGame _curGame;
         private MainMenu _curMenu;
 
-        private bool _transitioning = false; //Can be used for animation later
-        private int _transitionFrameCount = 0;
-
         private int _scoreFromGame = -1;
 
         private string _settings;
@@ -78,8 +75,6 @@ namespace SpaceShooterV2
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Environment.Exit(-1);
 
-            if (!_transitioning)
-            {
                 if (_curState == GameState.PlayingSP || _curState == GameState.PlayingMP)
                 {
                     #region Game Logic
@@ -161,7 +156,6 @@ namespace SpaceShooterV2
 
                     #endregion
                 }
-            }
             base.Update(gameTime);
         }
 
@@ -169,17 +163,12 @@ namespace SpaceShooterV2
         {
             _spriteBatch.Begin();
             _spriteBatch.Draw(_mainTexList[1], new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height), Color.White);
-            //_spriteBatch.DrawString(_font, "Test 123", new Vector2(Window.ClientBounds.Width/2 - _font.MeasureString("Test 123").X/2, 0), Color.Black);
-
-            if (!_transitioning)
-            {
-                GraphicsDevice.Clear(Color.SkyBlue);
 
                 if ((_curState == GameState.PlayingSP || _curState == GameState.PlayingMP) && _curGame != null)
                     _curGame.Draw(gameTime);
                 else if (_curState == GameState.MainMenu && _curMenu != null)
                     _curMenu.Draw(gameTime);
-            }
+
             base.Draw(gameTime);
             _spriteBatch.End();
         }
