@@ -21,7 +21,7 @@ namespace SpaceShooterV2
         private const int BulletScale = 70;
         private const int ColumnNum = 10;
         private const int RowNum = 10;
-        private const int ProbabilityShipSpawn = 140; // 1/ProbabilityShipSpawn
+        private const int ProbabilityShipSpawn = 120; // 1/ProbabilityShipSpawn
         private const int ProbabilityPowerUpSpawn = 400; // 1/ProbabilityPowerUpSpawn
 
         //Important bools
