@@ -43,7 +43,6 @@ C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Win
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Arial.xnb
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\CollisionArea.xnb
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Backgrounds\BackGround.xnb
-C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Bullets\BulletSheet.xnb
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Bullets\LongBullet.xnb
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Bullets\RoundBullet.xnb
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Ships\HealthBarPiece.xnb
@@ -72,3 +71,7 @@ C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Win
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.RawInput.xml
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\SharpDX.Direct3D9.xml
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\obj\x86\Release\SpaceShooterV2.csprojResolveAssemblyReference.cache
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Bullets\PowerUp.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\PowerUps\PowerUpDamage.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\PowerUps\PowerUpHeal.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Bullets\BulletDamageBoost.xnb

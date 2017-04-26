@@ -5,7 +5,10 @@ namespace SpaceShooterV2
 {
     internal class PowerUp : GameObject
     {
+        //Variables
         private readonly int _type;
+
+        //Public Procedures
         public PowerUp(int Width, int Height, byte TexNum, int xVelocity, Vector2 startingPos, int type)
             : base(Width, Height, TexNum, xVelocity,0)
         {
@@ -13,14 +16,11 @@ namespace SpaceShooterV2
             _type = type;
         }
 
-        public int type
+        //Public Accessors
+        public int Type
         {
             get { return _type;}
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Texture2D tex)
-        {
-            spriteBatch.Draw(tex, new Rectangle((int)_position.X, (int)_position.Y, _width, _height), Color.Red);
-        }
     }
 }

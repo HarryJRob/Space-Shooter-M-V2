@@ -4,14 +4,16 @@ namespace SpaceShooterV2
 {
     internal abstract class EnemyShip : Ship
     {
+        //Variables
         protected int _score;
         protected int _currentCoolDown;
         protected bool _willFire;
-        protected int _bulVel;
+        protected int _xBulVel;
         protected bool initialising = true;
         protected int _maxX;
         protected int _maxY;
 
+        //Public procedures
         protected EnemyShip(int width, int height, byte texNum, int xVelocity, int yVelocity, int score, int maxX, int maxY, float startingPosition)
             : base(width, height, texNum, xVelocity, yVelocity)
         {
@@ -21,6 +23,7 @@ namespace SpaceShooterV2
             _position = new Vector2(maxX + 0.5f*_width, startingPosition);
         }
 
+        //Procedures Procedures
         public override void Update(GameTime gameTime)
         {
 
@@ -46,14 +49,15 @@ namespace SpaceShooterV2
             base.Update(gameTime);
         }
 
+        //Public Accessors
         public int Score
         {
             get { return _score; }
         }
 
-        public int GetBulVel
+        public int GetBulXVel
         {
-            get { return _bulVel; }
+            get { return _xBulVel; }
         }
 
         public bool WillFire

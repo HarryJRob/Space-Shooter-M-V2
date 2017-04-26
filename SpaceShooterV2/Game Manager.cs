@@ -13,19 +13,21 @@ namespace SpaceShooterV2
 {
     internal class GameManager : Game
     {
+        //Variables
+        //Required Resources
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private List<Texture2D> _mainTexList = new List<Texture2D>();
         private SpriteFont _font;
-
         private MainGame _curGame;
         private MainMenu _curMenu;
 
+        //Passed between menu and game
         private int _scoreFromGame = -1;
-
         private string _settings;
         private int _difficulty;
 
+        //State of the program
         private enum GameState
         {
             MainMenu,
@@ -36,6 +38,7 @@ namespace SpaceShooterV2
 
         private GameState _curState;
 
+        //Public Procedures
         public GameManager()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -51,21 +54,26 @@ namespace SpaceShooterV2
             #endregion
         }
 
+        //Protected Procedure
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             #region Load Game Textures
 
-                _font = Content.Load<SpriteFont>("Game Resources/Arial");
+            _font = Content.Load<SpriteFont>("Game Resources/Arial");
 
-                //0 - 5 = MainGame tex (Will need to be greater and background does not need to be passed but would break some of the existing code if removed)
-                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/CollisionArea"));
-                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Backgrounds/BackGround"));
-                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/ship"));
-                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/LongBullet"));
-                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/RoundBullet"));
-                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/HealthBarPiece"));
+            //0 - 5 = MainGame tex (Will need to be greater and background does not need to be passed but would break some of the existing code if removed)
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/CollisionArea"));
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Backgrounds/BackGround"));
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/ship"));
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/LongBullet"));
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/RoundBullet"));
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/HealthBarPiece"));
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/PowerUps/PowerUpHeal"));
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/PowerUps/PowerUpDamage"));
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/BulletDamageBoost"));
+
             #endregion
         }
 
@@ -92,13 +100,13 @@ namespace SpaceShooterV2
                     {
                         _curGame = new MainGame(false, ref _graphics, Window, _spriteBatch, _settings, _difficulty);
                         _curGame.Initialize();
-                        _curGame.LoadContent(_mainTexList.GetRange(0,6),_font);
+                        _curGame.LoadContent(_mainTexList.GetRange(0,9),_font);
                     }
                     else if (_curGame == null && _curState == GameState.PlayingMP)
                     {
                         _curGame = new MainGame(true, ref _graphics, Window, _spriteBatch, _settings, _difficulty);
                         _curGame.Initialize();
-                        _curGame.LoadContent(_mainTexList.GetRange(0, 6), _font);
+                        _curGame.LoadContent(_mainTexList.GetRange(0, 9), _font);
                     }
                     else if (_curGame != null)
                     {

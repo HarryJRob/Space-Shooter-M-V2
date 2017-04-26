@@ -6,12 +6,14 @@
   <SourceFiles>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Backgrounds/BackGround.jpg</File>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/CollisionArea.png</File>
-    <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Bullets/BulletSheet.png</File>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Ships/ship.png</File>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Ships/SpaceShip.png</File>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Bullets/LongBullet.png</File>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Bullets/RoundBullet.png</File>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Ships/HealthBarPiece.png</File>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Arial.spritefont</File>
+    <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/PowerUps/PowerUpDamage.png</File>
+    <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/PowerUps/PowerUpHeal.png</File>
+    <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Bullets/BulletDamageBoost.png</File>
   </SourceFiles>
 </SourceFileCollection>

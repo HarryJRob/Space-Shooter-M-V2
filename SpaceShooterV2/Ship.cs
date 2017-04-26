@@ -4,12 +4,15 @@ namespace SpaceShooterV2
 {
     internal abstract class Ship : GameObject
     {
+        //Variables
         protected int _health;
         protected int _dmgToTake;
 
+        //Protected Procedures
         protected Ship(int width, int height, byte texNum, int xVelocity, int yVelocity)
             : base(width, height, texNum, xVelocity, yVelocity) { }
 
+        //Public Procedures
         public override void Update(GameTime gameTime)
         {
             if (_collision && _health > 0)
@@ -22,6 +25,7 @@ namespace SpaceShooterV2
             base.Update(gameTime);
         }
 
+        //Public Accessors
         public int Health
         {
             get { return _health; }

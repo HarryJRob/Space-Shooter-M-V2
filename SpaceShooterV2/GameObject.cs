@@ -5,6 +5,7 @@ namespace SpaceShooterV2
 {
     internal abstract class GameObject
     {
+        //Variables
         protected Vector2 _position;
         protected int _width, _height;
         protected byte _texNum;
@@ -12,6 +13,7 @@ namespace SpaceShooterV2
         protected int _xVelocity;
         protected int _yVelocity;
 
+        //Protected Procedures
         protected GameObject(int width, int height, byte texNum, int xVelocity, int yVelocity)
         {
             _width = width*height;
@@ -21,6 +23,7 @@ namespace SpaceShooterV2
             _yVelocity = yVelocity;
         }
 
+        //Public Procedures
         public virtual void Draw(SpriteBatch spriteBatch, Texture2D tex)
         {
             spriteBatch.Draw(tex, new Rectangle((int) _position.X, (int) _position.Y, _width, _height), Color.White);
@@ -32,6 +35,7 @@ namespace SpaceShooterV2
             _position.Y += _yVelocity;
         }
 
+        //Public Accessors
         public Rectangle BoundingBox
         {
             get { return new Rectangle((int) _position.X, (int) _position.Y, _width, _height); }

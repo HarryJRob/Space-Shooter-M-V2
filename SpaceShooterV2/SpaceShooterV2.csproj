@@ -103,11 +103,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Game Resources\Bullets\BulletDamageBoost.png" />
     <Content Include="Content\Game Resources\Bullets\LongBullet.png" />
     <Content Include="Content\Game Resources\Bullets\RoundBullet.png" />
     <Content Include="Content\Game Resources\CollisionArea.png" />
     <Content Include="Content\Game Resources\Backgrounds\BackGround.jpg" />
     <Content Include="Content\Game Resources\Bullets\BulletSheet.png" />
+    <Content Include="Content\Game Resources\PowerUps\PowerUpDamage.png" />
+    <Content Include="Content\Game Resources\PowerUps\PowerUpHeal.png" />
     <Content Include="Content\Game Resources\Ships\HealthBarPiece.png" />
     <Content Include="Content\Game Resources\Ships\ship.png" />
     <Content Include="Content\Game Resources\Ships\SpaceShip.png" />

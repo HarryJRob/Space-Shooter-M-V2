@@ -6,6 +6,7 @@ namespace SpaceShooterV2
 {
     internal class MenuButton
     {
+        //Variables
         private readonly int _width;
         private readonly int _height;
         private readonly int _texNum;
@@ -13,9 +14,10 @@ namespace SpaceShooterV2
         private string _buttonText;
         private bool _clicked;
         private bool _isActive;
-        private bool _isClickable;
+        private readonly bool _isClickable;
         private MouseState _preMouseState;
 
+        //Public Procedures
         public MenuButton(int width, int height, int texNum, Vector2 position, string buttonText, bool isClickable)
         {
             _width = width;
@@ -48,6 +50,7 @@ namespace SpaceShooterV2
             spriteBatch.DrawString(font, _buttonText, new Vector2(_position.X +_width / 2 - measuredString.X/ 2, _position.Y + _height / 2 - measuredString.Y/ 2), Color.White);
         }
 
+        //Public Accessors
         public bool IsClicked
         {
             get { return _clicked; }

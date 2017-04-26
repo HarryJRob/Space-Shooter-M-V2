@@ -8,8 +8,8 @@ namespace SpaceShooterV2
 {
     internal class PlayerShip : Ship
     {
-        private bool _firing;
-
+        //Variables
+        //Controls
         private struct ControlScheme
         {
             public List<Keys> Controls;
@@ -19,26 +19,32 @@ namespace SpaceShooterV2
         private KeyboardState _previousKeyBoardState;
         private ControlScheme _controlScheme;
 
+        //User interface
         private Vector2 _healthBarPos;
         private int _healthUnitWidth;
         private int _healthUnitHeight;
         private const int UIScale = 55;
+        private const int UISpacingY = 2;
+        private const int UISpacingX = 5;
 
+        //Firing and bullet damage
         private int _bulletCoolDown;
-        private const int BulletCdTotal = 25;
+        private const int BulletCdTotal = 20;
         private int _bulDamage = 1;
         private int _dmgBoostDuration;
         private const int DmgBoostDefaultDuration = 100;
+        private bool _firing;
 
+        //Animation
         private int _deathAnimationFrame;
 
+        //Useful constants
         private int _windowX;
         private int _windowY;
         private const int VelocityScale = 12;
         private const int StartingHealth = 10;
-        private const int UISpacingY = 2;
-        private const int UISpacingX = 5;
 
+        //Public Procedures
         public PlayerShip(int widthByHeight, int height, byte texNum, byte playerID,string keyStr,int winX, int winY, double UIWidthHeightRatio) : base(widthByHeight, height,texNum, 0, 0)
         {
             _health = StartingHealth;
@@ -203,6 +209,38 @@ namespace SpaceShooterV2
             }
         }
 
+        public void Heal(int healthAdded)
+        {
+            if (_health + healthAdded > StartingHealth)
+            {
+                _health = StartingHealth;
+            }
+            else
+            {
+                _health += healthAdded;
+            }
+        }
+
+        public void BoostDamage()
+        {
+            _bulDamage = 2;
+            _dmgBoostDuration = DmgBoostDefaultDuration;
+        }
+
+        //Public Accessors
+        public bool Firing
+        {
+            get { return _firing; }
+            set { _firing = value; }
+        }
+
+        public int BulDamage
+        {
+            get { return _bulDamage; }
+            set { _bulDamage = value; }
+        }
+
+        //Private Functions
         private Keys GetKeyCode(string curStr)
         {
             curStr = curStr.ToUpper();
@@ -276,36 +314,6 @@ namespace SpaceShooterV2
                     return Keys.D0;
             }
 
-        }
-
-        public bool Firing
-        {
-            get { return _firing; }
-            set { _firing = value; }
-        }
-
-        public void Heal(int healthAdded)
-        {
-            if (_health + healthAdded > StartingHealth)
-            {
-                _health = StartingHealth;
-            }
-            else
-            {
-                _health += healthAdded;
-            }
-        }
-
-        public void BoostDamage()
-        {
-            _bulDamage = 2;
-            _dmgBoostDuration = DmgBoostDefaultDuration;
-        }
-
-        public int BulDamage
-        {
-            get { return _bulDamage; }
-            set { _bulDamage = value; }
         }
     }
 }

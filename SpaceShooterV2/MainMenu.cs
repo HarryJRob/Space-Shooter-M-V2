@@ -15,10 +15,8 @@ namespace SpaceShooterV2
         //Required resources
         private SpriteBatch _spriteBatch;
         private GameWindow _window;
-
         private List<MenuButton> _menuButtons = new List<MenuButton>();
         private List<Texture2D> _texList = new List<Texture2D>();
-
         private SpriteFont _font;
         private KeyboardState _preKeyboardState;
         private bool _stateChanged;
@@ -38,6 +36,7 @@ namespace SpaceShooterV2
         //Difficulty
         private int _difficulty = 1;
 
+        //State of the menu
         private enum MenuState
         {
             Main,
@@ -403,6 +402,7 @@ namespace SpaceShooterV2
             #endregion
         }
 
+        //Public Accessors
         public int WillPlay()
         {
             if (_curMenuState == MenuState.PlayingSP)
@@ -420,7 +420,8 @@ namespace SpaceShooterV2
         {
             return _difficulty;
         }
-
+        
+        //Public Functions
         public string GetSettings()
         {
             string settingsString = "";

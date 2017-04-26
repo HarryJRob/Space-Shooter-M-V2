@@ -5,6 +5,7 @@ namespace SpaceShooterV2
 {
     internal class Charger : EnemyShip
     {
+        //Variables
         private enum fireState
         {
             Firing,
@@ -16,10 +17,11 @@ namespace SpaceShooterV2
         private int _curCharge;
         private int _chargeTo = 4;
 
+        //Public Procedures
         public Charger(int width, int height, byte texNum, int bulVel, int score, int diffculty, int maxX, int maxY, float startingPosition)
             : base(width, height, texNum, 0 , 0, score, maxX, maxY, startingPosition)
         {
-            _bulVel = bulVel;
+            _xBulVel = bulVel;
             _health = 1 * diffculty;
             _score = score * diffculty;
         }
@@ -56,6 +58,12 @@ namespace SpaceShooterV2
             base.Update(gameTime);
         }
 
+        public void UpdateCurCharge()
+        {
+            _curCharge -= 1;
+        }
+
+        //Public Functions
         public double GetAngleTwoPoints(Vector2 point1, Vector2 point2)
         {
             double xDif = point1.X - point2.X;
@@ -63,9 +71,5 @@ namespace SpaceShooterV2
             return Math.Atan2(yDif, xDif);
         }
 
-        public void UpdateCurCharge()
-        {
-            _curCharge -= 1;
-        }
     }
 }

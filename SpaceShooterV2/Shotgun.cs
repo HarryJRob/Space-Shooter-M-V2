@@ -4,13 +4,15 @@ namespace SpaceShooterV2
 {
     internal class Shotgun : EnemyShip
     {
+        //Variables
         private const int CoolDownTotal = 90;
         private int _target = -1;
 
+        //Public Procedures
         public Shotgun(int width, int height, byte texNum, int bulVel, int score, int diffculty, int maxX, int maxY, float startingPosition)
             : base(width, height, texNum, 0, 0, score, maxX, maxY, startingPosition)
         {
-            _bulVel = bulVel;
+            _xBulVel = bulVel;
             _health = 2 * diffculty;
             _score = score * diffculty;
         }
@@ -56,6 +58,7 @@ namespace SpaceShooterV2
             base.Update(gameTime);
         }
 
+        //Public Accessors
         public int Target
         {
             get { return _target; }
