@@ -29,7 +29,7 @@ namespace SpaceShooterV2
 
         //Firing and bullet damage
         private int _bulletCoolDown;
-        private const int BulletCdTotal = 20;
+        private const int BulletCdTotal = 18;
         private int _bulDamage = 1;
         private int _dmgBoostDuration;
         private const int DmgBoostDefaultDuration = 100;
@@ -41,7 +41,7 @@ namespace SpaceShooterV2
         //Useful constants
         private int _windowX;
         private int _windowY;
-        private const int VelocityScale = 12;
+        private const int VelocityScale = 14;
         private const int StartingHealth = 10;
 
         //Public Procedures

@@ -34,7 +34,7 @@ namespace SpaceShooterV2
         private int _settingEntryPos = -1;
 
         //Difficulty
-        private int _difficulty = 1;
+        private int _difficulty = 2;
 
         //State of the menu
         private enum MenuState
