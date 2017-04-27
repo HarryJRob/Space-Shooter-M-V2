@@ -638,7 +638,7 @@ namespace SpaceShooterV2
 
             #region Draw Score 
 
-            _spriteBatch.DrawString(_font, "Score: " + Convert.ToString(_score), new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Score: " + Convert.ToString(_score)).X / 2, 0), Color.RoyalBlue);
+            _spriteBatch.DrawString(_font, "Score: " + Convert.ToString(_score), new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Score: " + Convert.ToString(_score)).X / 2, 0), Color.Ivory);
 
             #endregion
 
