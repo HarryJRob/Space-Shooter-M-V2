@@ -109,6 +109,7 @@
     <Content Include="Content\Game Resources\CollisionArea.png" />
     <Content Include="Content\Game Resources\Backgrounds\BackGround.jpg" />
     <Content Include="Content\Game Resources\Bullets\BulletSheet.png" />
+    <Content Include="Content\Game Resources\GameUI\CoolDownBarPiece.png" />
     <Content Include="Content\Game Resources\GameUI\HealthBarPiece.png" />
     <Content Include="Content\Game Resources\PowerUps\PowerUpDamage.png" />
     <Content Include="Content\Game Resources\PowerUps\PowerUpHeal.png" />

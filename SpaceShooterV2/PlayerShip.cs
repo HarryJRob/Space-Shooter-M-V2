@@ -21,8 +21,8 @@ namespace SpaceShooterV2
 
         //User interface
         private Vector2 _healthBarPos;
-        private int _healthUnitWidth;
-        private int _healthUnitHeight;
+        private readonly int _UIUnitWidth;
+        private readonly int _UIUnitHeight;
         private const int UIScale = 55;
         private const int UISpacingY = 2;
         private const int UISpacingX = 5;
@@ -32,15 +32,15 @@ namespace SpaceShooterV2
         private const int BulletCdTotal = 18;
         private int _bulDamage = 1;
         private int _dmgBoostDuration;
-        private const int DmgBoostDefaultDuration = 100;
+        private const int DmgBoostDefaultDuration = 300;
         private bool _firing;
 
         //Animation
         private int _deathAnimationFrame;
 
         //Useful constants
-        private int _windowX;
-        private int _windowY;
+        private readonly int _windowX;
+        private readonly int _windowY;
         private const int VelocityScale = 14;
         private const int StartingHealth = 10;
 
@@ -74,22 +74,22 @@ namespace SpaceShooterV2
 
             #region Calculating Starting Position and UI
 
-            _healthUnitHeight = winY / UIScale;
-            _healthUnitWidth = (int)(UIWidthHeightRatio * _healthUnitHeight);
+            _UIUnitHeight = winY / UIScale;
+            _UIUnitWidth = (int)(UIWidthHeightRatio * _UIUnitHeight);
 
             if (playerID == 1)
             {
-                _healthBarPos = new Vector2(UISpacingX * _healthUnitWidth, UISpacingY * _healthUnitHeight);
+                _healthBarPos = new Vector2(UISpacingX * _UIUnitWidth, UISpacingY * _UIUnitHeight);
                 _position.Y = height;
             }
             else if (playerID == 2)
             {
-                _healthBarPos = new Vector2(_windowX - (StartingHealth + UISpacingX) * _healthUnitWidth, UISpacingY * _healthUnitHeight);
+                _healthBarPos = new Vector2(_windowX - (StartingHealth + UISpacingX) * _UIUnitWidth, UISpacingY * _UIUnitHeight);
                 _position.Y = _windowY - 2*_height;
             }
             else
             {
-                _healthBarPos = new Vector2(UISpacingX * _healthUnitWidth, UISpacingY * _healthUnitHeight);
+                _healthBarPos = new Vector2(UISpacingX * _UIUnitWidth, UISpacingY * _UIUnitHeight);
                 _position.Y = _windowY/2 - _height/2;
             }
             _position.X += 40;
@@ -177,14 +177,24 @@ namespace SpaceShooterV2
             }
         }
 
-        public void DrawUI(SpriteBatch spriteBatch, Texture2D healthBarTex)
+        public void DrawUI(SpriteBatch spriteBatch, Texture2D healthBarTex,Texture2D dmgBoostBarTex)
         {
             for (int i = 0; i < _health; i++)
             {
                 if (i < _health)
                 {
-                    spriteBatch.Draw(healthBarTex, new Rectangle((int)_healthBarPos.X + _healthUnitWidth* i,(int)_healthBarPos.Y,_healthUnitWidth,_healthUnitHeight),Color.White);
+                    spriteBatch.Draw(healthBarTex,
+                        new Rectangle((int) _healthBarPos.X + _UIUnitWidth*i, (int) _healthBarPos.Y,
+                            _UIUnitWidth, _UIUnitHeight), Color.White);
                 }
+            }
+            for (int i = 0; i < _dmgBoostDuration/30; i++)
+            {
+                spriteBatch.Draw(dmgBoostBarTex,
+                    new Rectangle((int) _healthBarPos.X + _UIUnitWidth*i,
+                        (int) _healthBarPos.Y + (int) (1.2f*_UIUnitHeight), _UIUnitWidth, _UIUnitHeight),
+                    Color.White);
+                
             }
         }
 

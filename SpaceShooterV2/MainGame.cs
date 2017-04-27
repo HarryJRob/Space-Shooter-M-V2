@@ -515,12 +515,12 @@ namespace SpaceShooterV2
                     //Creates ships at random with a random starting Y value
                     if (_multiplayer)
                     {
-                        if (_random.Next(0, (int)(ProbabilityShipSpawn / 2) - _aliveTimer.Elapsed.Seconds) < 1)
+                        if (_random.Next(0, (int)(ProbabilityShipSpawn / 2) - (int)(_aliveTimer.Elapsed.Seconds / 2)) < 1)
                         {
                             CreateShip();
                         }
                     }
-                    else if (_random.Next(0, ProbabilityShipSpawn - _aliveTimer.Elapsed.Seconds) < 1)
+                    else if (_random.Next(0, ProbabilityShipSpawn - (int)(_aliveTimer.Elapsed.Seconds/2)) < 1)
                     {
                         CreateShip();
                     }
@@ -611,19 +611,19 @@ namespace SpaceShooterV2
             #region Drawing Objects
 
             foreach (var curObj in _objectList.Where(item => item != null))
-                    if (!(curObj.GetType() == typeof(PlayerShip)))
-                    {
-                        curObj.Draw(_spriteBatch, _textureList[curObj.TexNum]);
-                    }
-                    else if (((PlayerShip) curObj).Health == 0)
-                    {
-                        ((PlayerShip) curObj).DrawDeath(_spriteBatch, _textureList[curObj.TexNum]);
-                    }
-                    else
-                    {
-                        curObj.Draw(_spriteBatch, _textureList[curObj.TexNum]);
-                       ((PlayerShip) curObj).DrawUI(_spriteBatch,_textureList[5]); 
-                    }
+                if (!(curObj.GetType() == typeof(PlayerShip)))
+                {
+                    curObj.Draw(_spriteBatch, _textureList[curObj.TexNum]);
+                }
+                else if (((PlayerShip) curObj).Health == 0)
+                {
+                    ((PlayerShip) curObj).DrawDeath(_spriteBatch, _textureList[curObj.TexNum]);
+                }
+                else
+                {
+                    curObj.Draw(_spriteBatch, _textureList[curObj.TexNum]);
+                    ((PlayerShip) curObj).DrawUI(_spriteBatch, _textureList[5], _textureList[12]);
+                }
 
             #endregion
 
