@@ -40,7 +40,7 @@ namespace SpaceShooterV2
         private enum MenuState
         {
             Main,
-            GameOver,
+            Highscore,
             Options,
             PlayingSP,
             PlayingMP,
@@ -67,7 +67,7 @@ namespace SpaceShooterV2
             _window = window;
             _font = font;
             _stateChanged = true;
-            _curMenuState = MenuState.GameOver;
+            _curMenuState = MenuState.Highscore;
             _score = score;
         }
 
@@ -85,8 +85,8 @@ namespace SpaceShooterV2
 
         public void Update(GameTime gameTime)
         {
-            MouseState _curMouseState = Mouse.GetState();
-            KeyboardState _curKeyboardState = Keyboard.GetState();
+            MouseState curMouseState = Mouse.GetState();
+            KeyboardState curKeyboardState = Keyboard.GetState();
 
             #region State Logic
             if (_stateChanged)
@@ -103,8 +103,10 @@ namespace SpaceShooterV2
                     _menuButtons[2].IsActive = true;
                     _menuButtons[3].IsActive = true;
                     _menuButtons[5].IsActive = true;
+                    _menuButtons[4].IsActive = true;
+                    _menuButtons[4].Text = "Highscores";
                     break;
-                case MenuState.GameOver:
+                case MenuState.Highscore:
                     _menuButtons[4].IsActive = true;
 
                     #region Highscore achieved check
@@ -163,7 +165,7 @@ namespace SpaceShooterV2
 
                         {
                             List<Keys> newKeysPressed = new List<Keys>();
-                            foreach (Keys key in _curKeyboardState.GetPressedKeys())
+                            foreach (Keys key in curKeyboardState.GetPressedKeys())
                             {
                                 if (!_preKeyboardState.GetPressedKeys().Contains(key))
                                 {
@@ -212,7 +214,7 @@ namespace SpaceShooterV2
 
                         {
                             List<Keys> newKeysPressed = new List<Keys>();
-                            foreach (Keys key in _curKeyboardState.GetPressedKeys())
+                            foreach (Keys key in curKeyboardState.GetPressedKeys())
                             {
                                 if (!_preKeyboardState.GetPressedKeys().Contains(key))
                                 {
@@ -233,6 +235,8 @@ namespace SpaceShooterV2
                     _menuButtons[16].IsActive = true;
                     _menuButtons[17].IsActive = true;
                     _menuButtons[18].IsActive = true;
+                    _menuButtons[4].IsActive = true;
+                    _menuButtons[4].Text = "Continue";
                     break;
             }
 
@@ -244,7 +248,7 @@ namespace SpaceShooterV2
             {
                 if (_menuButtons[i].IsActive && _menuButtons[i].IsClickable)
                 {
-                    _menuButtons[i].Update(_curMouseState);
+                    _menuButtons[i].Update(curMouseState);
 
                     if (_menuButtons[i].IsClicked)
                     {
@@ -276,12 +280,16 @@ namespace SpaceShooterV2
                                         _highscores[_highScoreEntryPos] = "Anon";
                                     }
                                     SaveHighscores();
-                                    _curMenuState = MenuState.GameOver;
+                                    _curMenuState = MenuState.Highscore;
                                 }
                                 else if (_curMenuState == MenuState.SettingEntry)
                                 {
                                     SaveSettings();
                                     _curMenuState = MenuState.Options;                                   
+                                }
+                                else if (_curMenuState == MenuState.Main)
+                                {
+                                    _curMenuState = MenuState.Highscore;
                                 }
                                 else
                                 {
@@ -345,18 +353,12 @@ namespace SpaceShooterV2
                                 break;
                             case 16:
                                 _difficulty = 1;
-                                _curMenuState = MenuState.Main;
-                                _stateChanged = true;
                                 break;
                             case 17:
                                 _difficulty = 2;
-                                _curMenuState = MenuState.Main;
-                                _stateChanged = true;
                                 break;
                             case 18:
                                 _difficulty = 3;
-                                _curMenuState = MenuState.Main;
-                                _stateChanged = true;
                                 break;
                         }
                     }
@@ -366,7 +368,7 @@ namespace SpaceShooterV2
 
             #endregion
 
-            _preKeyboardState = _curKeyboardState;
+            _preKeyboardState = curKeyboardState;
         }
 
         public void Draw(GameTime gameTime)
@@ -379,7 +381,7 @@ namespace SpaceShooterV2
             #endregion
 
             #region Draw Scoreboard On Gameover 
-            if (_curMenuState == MenuState.GameOver || _curMenuState == MenuState.HighscoreEntry)
+            if (_curMenuState == MenuState.Highscore || _curMenuState == MenuState.HighscoreEntry)
             {
                 int lineSpacing = _window.ClientBounds.Height/40;
 
@@ -405,6 +407,26 @@ namespace SpaceShooterV2
                 _spriteBatch.DrawString(_font, "Right", new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Right").X / 2, _window.ClientBounds.Height / 1.5f - lineSpacing + _font.MeasureString("Right").Y / 2), Color.White);
                 _spriteBatch.DrawString(_font, "Shoot", new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Shoot").X / 2, _window.ClientBounds.Height / 1.5f + lineSpacing/2 - _font.MeasureString("Shoot").Y/2), Color.White);
             }
+            #endregion
+
+            #region Draw Difficulty
+
+            if (_curMenuState == MenuState.DifficultyEntry)
+            {
+                switch (_difficulty)
+                {
+                    case 1:
+                        _spriteBatch.DrawString(_font, "Difficulty: Easy", new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Difficulty: Easy").X / 2, _window.ClientBounds.Height/1.5f), Color.Ivory);
+                        break;
+                    case 2:
+                        _spriteBatch.DrawString(_font, "Difficulty: Medium", new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Difficulty: Medium").X / 2, _window.ClientBounds.Height / 1.5f), Color.Ivory);
+                        break;
+                    case 3:
+                        _spriteBatch.DrawString(_font, "Difficulty: Hard", new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Difficulty: Hard").X / 2, _window.ClientBounds.Height / 1.5f), Color.Ivory);
+                        break;
+                }
+            }
+
             #endregion
         }
 
