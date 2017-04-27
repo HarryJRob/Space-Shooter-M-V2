@@ -94,8 +94,8 @@ namespace SpaceShooterV2
                 _objectList.Add(new PlayerShip((double)_textureList[2].Width / (double)_textureList[2].Height,
                     _window.ClientBounds.Height/ShipScale, 2, 1, playerSetting[0], _window.ClientBounds.Width,
                     _window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
-                _objectList.Add(new PlayerShip((double)_textureList[2].Width / (double)_textureList[2].Height,
-                    _window.ClientBounds.Height/ShipScale, 2, 2, playerSetting[1], _window.ClientBounds.Width,
+                _objectList.Add(new PlayerShip((double)_textureList[13].Width / (double)_textureList[13].Height,
+                    _window.ClientBounds.Height/ShipScale, 13, 2, playerSetting[1], _window.ClientBounds.Width,
                     _window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
             }
             else
@@ -515,7 +515,7 @@ namespace SpaceShooterV2
                     //Creates ships at random with a random starting Y value
                     if (_multiplayer)
                     {
-                        if (_random.Next(0, (int)(ProbabilityShipSpawn / 2) - (int)(_aliveTimer.Elapsed.Seconds / 2)) < 1)
+                        if (_random.Next(0, (int)(ProbabilityShipSpawn / 1.2f) - (int)(_aliveTimer.Elapsed.Seconds / 2)) < 1)
                         {
                             CreateShip();
                         }
