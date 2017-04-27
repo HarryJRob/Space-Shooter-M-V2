@@ -13,11 +13,11 @@ namespace SpaceShooterV2
     {
         //Declarations
         //Required resources
-        private SpriteBatch _spriteBatch;
-        private GameWindow _window;
-        private List<MenuButton> _menuButtons = new List<MenuButton>();
+        private readonly SpriteBatch _spriteBatch;
+        private readonly GameWindow _window;
+        private readonly List<MenuButton> _menuButtons = new List<MenuButton>();
         private List<Texture2D> _texList = new List<Texture2D>();
-        private SpriteFont _font;
+        private readonly SpriteFont _font;
         private KeyboardState _preKeyboardState;
         private bool _stateChanged;
 
@@ -61,7 +61,7 @@ namespace SpaceShooterV2
             _curMenuState = MenuState.Main;
         }
 
-        public MainMenu(SpriteBatch spriteBatch, GameWindow window, SpriteFont font, int score)
+        public MainMenu(SpriteBatch spriteBatch, GameWindow window, SpriteFont font, int score = -1)
         {
             _spriteBatch = spriteBatch;
             _window = window;
@@ -106,23 +106,29 @@ namespace SpaceShooterV2
                     break;
                 case MenuState.GameOver:
                     _menuButtons[4].IsActive = true;
-                    
+
                     #region Highscore achieved check
+
+                    //Find highscore position
                     if (_score != -1)
                     {
                         for (int i = 1; i < _highscores.Length; i += 2)
                         {
                             if (Convert.ToInt16(_highscores[i]) < _score)
                             {
-                                _highscores[i - 1] = "Name Here";
-                                _highscores[i] = Convert.ToString(_score);
+                                _highScoreEntryPos = i;
+                                ShiftHighscores();
+                                _highscores[_highScoreEntryPos - 1] = "Name Here";
+                                _highscores[_highScoreEntryPos] = Convert.ToString(_score);
                                 _curMenuState = MenuState.HighscoreEntry;
-                                _highScoreEntryPos = i - 1;
+                                _highScoreEntryPos = _highScoreEntryPos - 1;
+                                _score = -1;
                                 break;
                             }
                         }
                     }
-                    #endregion
+
+            #endregion
 
                     break;
                 case MenuState.Options:
@@ -637,6 +643,15 @@ namespace SpaceShooterV2
             {
                 Debug.WriteLine(" Main Menu - Error Saving: " + exception.Message);
             }  
+        }
+
+        private void ShiftHighscores()
+        {
+            for (int i = 7; i > _highScoreEntryPos; i -= 1)
+            {
+                _highscores[i + 1] = _highscores[i - 1];
+                _highscores[i + 2] = _highscores[i];
+            }
         }
     }
 }

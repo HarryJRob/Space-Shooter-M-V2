@@ -45,7 +45,8 @@ namespace SpaceShooterV2
         private const int StartingHealth = 10;
 
         //Public Procedures
-        public PlayerShip(int widthByHeight, int height, byte texNum, byte playerID,string keyStr,int winX, int winY, double UIWidthHeightRatio) : base(widthByHeight, height,texNum, 0, 0)
+        public PlayerShip(double widthByHeight, int height, byte texNum, byte playerID, string keyStr, int winX, int winY, double UIWidthHeightRatio)
+            : base(widthByHeight, height, texNum, 0, 0)
         {
             _health = StartingHealth;
             _windowX = winX;

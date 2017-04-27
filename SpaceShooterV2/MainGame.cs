@@ -12,9 +12,8 @@ namespace SpaceShooterV2
     {
         //Declarations
         //Required resources
-        private readonly GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
-        private GameWindow _window;
+        private readonly SpriteBatch _spriteBatch;
+        private readonly GameWindow _window;
 
         //Constants
         private const int ShipScale = 13;
@@ -22,7 +21,7 @@ namespace SpaceShooterV2
         private const int ColumnNum = 10;
         private const int RowNum = 10;
         private const int ProbabilityShipSpawn = 120; // 1/ProbabilityShipSpawn
-        private const int ProbabilityPowerUpSpawn = 400; // 1/ProbabilityPowerUpSpawn
+        private const int ProbabilityPowerUpSpawn = 370; // 1/ProbabilityPowerUpSpawn
 
         //Important bools
         private const bool Testing = false;
@@ -49,16 +48,13 @@ namespace SpaceShooterV2
 
 
         //Public Procedures
-        public MainGame(bool multiplayer,ref GraphicsDeviceManager graphics, GameWindow window, SpriteBatch spriteBatch, string settings, int difficulty)
+        public MainGame(bool multiplayer, GameWindow window, SpriteBatch spriteBatch, string settings, int difficulty)
         {
             _multiplayer = multiplayer;
-            _graphics = graphics;
             _window = window;
             _spriteBatch = spriteBatch;
             _settings = settings;
             _difficulty = difficulty;
-
-            _graphics.ApplyChanges();
         }
 
         public void Initialize()
@@ -95,16 +91,16 @@ namespace SpaceShooterV2
 
             if (_multiplayer)
             {
-                _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
+                _objectList.Add(new PlayerShip((double)_textureList[2].Width / (double)_textureList[2].Height,
                     _window.ClientBounds.Height/ShipScale, 2, 1, playerSetting[0], _window.ClientBounds.Width,
                     _window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
-                _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
+                _objectList.Add(new PlayerShip((double)_textureList[2].Width / (double)_textureList[2].Height,
                     _window.ClientBounds.Height/ShipScale, 2, 2, playerSetting[1], _window.ClientBounds.Width,
                     _window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
             }
             else
             {
-                _objectList.Add(new PlayerShip(_textureList[2].Width/_textureList[2].Height,
+                _objectList.Add(new PlayerShip((double)_textureList[2].Width / (double)_textureList[2].Height,
                     _window.ClientBounds.Height / ShipScale, 2, 0, playerSetting[0], _window.ClientBounds.Width,
                     _window.ClientBounds.Height, (double)_textureList[5].Width / _textureList[5].Height));
             }
@@ -115,16 +111,9 @@ namespace SpaceShooterV2
 
             if (Testing)
             {
-                _objectList.Add(new Bomber(_textureList[2].Width/_textureList[2].Height,
-                    _window.ClientBounds.Height/ShipScale, 2,
-                    _window.ClientBounds.Height/(int) (2.4f*BulletScale), 100,
-                    _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
-                    _random.Next(0, _window.ClientBounds.Height + 1)));
-
-                _objectList.Add(new PowerUp(_textureList[4].Width/_textureList[4].Height,
-                    _window.ClientBounds.Height/BulletScale, 4, -_window.ClientBounds.Height/BulletScale,
-                    new Vector2(_window.ClientBounds.Width, _random.Next(0, _window.ClientBounds.Height + 1)),
-                    0));
+                CreateShip(0);
+                CreateShip(1);
+                CreateShip(2);
             }
 
             #endregion
@@ -152,7 +141,7 @@ namespace SpaceShooterV2
                             {
                                 if (((PlayerShip) _objectList[i]).BulDamage >= 2)
                                 {
-                                    _objectList.Add(new Bullet(_textureList[8].Width/_textureList[8].Height,
+                                    _objectList.Add(new Bullet((double)_textureList[8].Width / (double)_textureList[8].Height,
                                         _window.ClientBounds.Height/BulletScale, 8,
                                         _window.ClientBounds.Height/(int) (0.4f*BulletScale),
                                         0,
@@ -162,7 +151,7 @@ namespace SpaceShooterV2
                                 }
                                 else
                                 {
-                                    _objectList.Add(new Bullet(_textureList[3].Width/_textureList[3].Height,
+                                    _objectList.Add(new Bullet((double)_textureList[3].Width / (double)_textureList[3].Height,
                                         _window.ClientBounds.Height/BulletScale, 3,
                                         _window.ClientBounds.Height/(int) (0.4f*BulletScale),
                                         0,
@@ -199,7 +188,7 @@ namespace SpaceShooterV2
                                                     _objectList[i].getCenterPoint,
                                                     _objectList[_random.Next(0, 2)].getCenterPoint);
 
-                                            _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                            _objectList.Add(new Bullet((double)_textureList[4].Width / (double)_textureList[4].Height,
                                                 _window.ClientBounds.Height/BulletScale, 4,
                                                 (int) (((Charger) _objectList[i]).GetBulXVel*Math.Cos(movementAngle)*-1),
                                                 (int) (((Charger) _objectList[i]).GetBulXVel*Math.Sin(movementAngle)*-1),
@@ -212,7 +201,7 @@ namespace SpaceShooterV2
                                                     _objectList[i].getCenterPoint,
                                                     _objectList[0].getCenterPoint);
 
-                                            _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                            _objectList.Add(new Bullet((double)_textureList[4].Width / (double)_textureList[4].Height,
                                                 _window.ClientBounds.Height/BulletScale, 4,
                                                 (int) (((Charger) _objectList[i]).GetBulXVel*Math.Cos(movementAngle)*-1),
                                                 (int) (((Charger) _objectList[i]).GetBulXVel*Math.Sin(movementAngle)*-1),
@@ -225,7 +214,7 @@ namespace SpaceShooterV2
                                                     _objectList[i].getCenterPoint,
                                                     _objectList[1].getCenterPoint);
 
-                                            _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                            _objectList.Add(new Bullet((double)_textureList[4].Width / (double)_textureList[4].Height,
                                                 _window.ClientBounds.Height/BulletScale, 4,
                                                 (int) (((Charger) _objectList[i]).GetBulXVel*Math.Cos(movementAngle)*-1),
                                                 (int) (((Charger) _objectList[i]).GetBulXVel*Math.Sin(movementAngle)*-1),
@@ -237,7 +226,7 @@ namespace SpaceShooterV2
                                         var movementAngle =
                                             ((Charger) _objectList[i]).GetAngleTwoPoints(_objectList[i].getCenterPoint,
                                                 _objectList[0].getCenterPoint);
-                                        _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                        _objectList.Add(new Bullet((double)_textureList[4].Width / (double)_textureList[4].Height,
                                             _window.ClientBounds.Height/BulletScale, 4,
                                             (int) (((Charger) _objectList[i]).GetBulXVel*Math.Cos(movementAngle)*-1),
                                             (int) (((Charger) _objectList[i]).GetBulXVel*Math.Sin(movementAngle)*-1),
@@ -257,7 +246,6 @@ namespace SpaceShooterV2
                                     if (((PlayerShip) _objectList[0]).Health != 0 &&
                                         ((PlayerShip) _objectList[1]).Health != 0)
                                     {
-                                        Random whichship = new Random();
                                         ((Shotgun)_objectList[i]).Target = _random.Next(0, 2);
                                     }
                                     else if (((PlayerShip) _objectList[0]).Health != 0)
@@ -281,19 +269,19 @@ namespace SpaceShooterV2
                                 {
                                     ((Shotgun) _objectList[i]).WillFire = false;
 
-                                    _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                    _objectList.Add(new Bullet((double)_textureList[4].Width / (double)_textureList[4].Height,
                                         _window.ClientBounds.Height/BulletScale, 4,
                                         Convert.ToInt32(((Shotgun) _objectList[i]).GetBulXVel*Math.Sin(Math.PI/2)*-1),
                                         Convert.ToInt32(((Shotgun) _objectList[i]).GetBulXVel*Math.Cos(Math.PI/2)*-1),
                                         ((Shotgun)_objectList[i]).getCenterPoint, false, 1));
 
-                                    _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                    _objectList.Add(new Bullet((double)_textureList[4].Width / (double)_textureList[4].Height,
                                         _window.ClientBounds.Height/BulletScale, 4,
                                         Convert.ToInt32(((Shotgun)_objectList[i]).GetBulXVel * Math.Sin(1.92) * -1),
                                         Convert.ToInt32(((Shotgun)_objectList[i]).GetBulXVel * Math.Cos(1.92) * -1),
                                         ((Shotgun)_objectList[i]).getCenterPoint, false, 1));
 
-                                    _objectList.Add(new Bullet(_textureList[4].Width/_textureList[4].Height,
+                                    _objectList.Add(new Bullet((double)_textureList[4].Width / (double)_textureList[4].Height,
                                         _window.ClientBounds.Height/BulletScale, 4,
                                         Convert.ToInt32(((Shotgun)_objectList[i]).GetBulXVel * Math.Sin(1.22) * -1),
                                         Convert.ToInt32(((Shotgun)_objectList[i]).GetBulXVel * Math.Cos(1.22) * -1),
@@ -313,7 +301,7 @@ namespace SpaceShooterV2
                                 {
                                     ((Bomber)_objectList[i]).WillFire = false;
 
-                                    _objectList.Add(new Bullet(_textureList[4].Width / _textureList[4].Height,
+                                    _objectList.Add(new Bullet((double)_textureList[4].Width / (double)_textureList[4].Height,
                                         _window.ClientBounds.Height / BulletScale, 4,
                                         Convert.ToInt32(((Bomber)_objectList[i]).GetBulXVel * Math.Sin(((Bomber)_objectList[i]).FireAngle) * -1),
                                         Convert.ToInt32(((Bomber)_objectList[i]).GetBulXVel * Math.Cos(((Bomber)_objectList[i]).FireAngle) * -1),
@@ -393,6 +381,13 @@ namespace SpaceShooterV2
                                     _objectCollisionList[
                                         (int) Math.Truncate((curObjRec.X + curObjRec.Width)/_tileWidth),
                                         (int) Math.Truncate((curObjRec.Y + curObjRec.Height)/_tileHeight)].Add(i);
+                                //Center point
+                                if ((curObjRec.Width >= _tileWidth || curObjRec.Height >= _tileHeight)&&((curObjRec.X + curObjRec.Width/2 > 0) && (curObjRec.Y + curObjRec.Height/2 > 0) &&
+                                    (curObjRec.X + curObjRec.Width/2 < _window.ClientBounds.Width) &&
+                                    (curObjRec.Y + curObjRec.Height/2 < _window.ClientBounds.Height)))
+                                    _objectCollisionList[
+                                        (int)Math.Truncate((curObjRec.X + curObjRec.Width/2) / _tileWidth),
+                                        (int)Math.Truncate((curObjRec.Y + curObjRec.Height/2) / _tileHeight)].Add(i);
                                 //If a bullet is off the screen delete it
                                 if ((_objectList[i].GetType() == typeof(Bullet)) &&
                                     ((curObjRec.Y + curObjRec.Height < 0) || (curObjRec.X + curObjRec.Width < 0) ||
@@ -522,66 +517,12 @@ namespace SpaceShooterV2
                     {
                         if (_random.Next(0, (int)(ProbabilityShipSpawn / 2) - _aliveTimer.Elapsed.Seconds) < 1)
                         {
-                            int shipChoice = _random.Next(0, 3);
-                            switch (shipChoice)
-                            {
-                                case 0:
-                                    Debug.WriteLine(" MainGame - Shotgun Created");
-                                    _objectList.Add(new Shotgun(_textureList[2].Width/_textureList[2].Height,
-                                        _window.ClientBounds.Height/ShipScale, 2,
-                                        _window.ClientBounds.Height/(int) (1.3f*BulletScale), 100,
-                                        _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
-                                        _random.Next(0, _window.ClientBounds.Height + 1)));
-                                    break;
-                                case 1:
-                                    Debug.WriteLine(" MainGame - Charger Created");
-                                    _objectList.Add(new Charger(_textureList[2].Width/_textureList[2].Height,
-                                        _window.ClientBounds.Height/ShipScale, 2,
-                                        _window.ClientBounds.Height/(int) (BulletScale), 50,
-                                        _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
-                                        _random.Next(0, _window.ClientBounds.Height + 1)));
-                                    break;
-                                case 2:
-                                    Debug.WriteLine(" MainGame - Bomber Created");
-                                    _objectList.Add(new Bomber(_textureList[2].Width/_textureList[2].Height,
-                                        _window.ClientBounds.Height/ShipScale, 2,
-                                        _window.ClientBounds.Height/(int) (2.4f*BulletScale), 100,
-                                        _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
-                                        _random.Next(0, _window.ClientBounds.Height + 1)));
-                                    break;
-                            }
+                            CreateShip();
                         }
                     }
                     else if (_random.Next(0, ProbabilityShipSpawn - _aliveTimer.Elapsed.Seconds) < 1)
                     {
-                        int shipChoice = _random.Next(0, 3);
-                        switch (shipChoice)
-                        {
-                            case 0:
-                                Debug.WriteLine(" MainGame - Shotgun Created");
-                                _objectList.Add(new Shotgun(_textureList[2].Width/_textureList[2].Height,
-                                    _window.ClientBounds.Height/ShipScale, 2,
-                                    _window.ClientBounds.Height/(int) (BulletScale), 100,
-                                    _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
-                                    _random.Next(0, _window.ClientBounds.Height + 1)));
-                                break;
-                            case 1:
-                                Debug.WriteLine(" MainGame - Charger Created");
-                                _objectList.Add(new Charger(_textureList[2].Width/_textureList[2].Height,
-                                    _window.ClientBounds.Height/ShipScale, 2,
-                                    _window.ClientBounds.Height/(int) (0.8f*BulletScale), 50,
-                                    _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
-                                    _random.Next(0, _window.ClientBounds.Height + 1)));
-                                break;
-                            case 2:
-                                Debug.WriteLine(" MainGame - Bomber Created");
-                                _objectList.Add(new Bomber(_textureList[2].Width/_textureList[2].Height,
-                                    _window.ClientBounds.Height/ShipScale, 2,
-                                    _window.ClientBounds.Height/(int) (2.4f*BulletScale), 100,
-                                    _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
-                                    _random.Next(0, _window.ClientBounds.Height + 1)));
-                                break;
-                        }
+                        CreateShip();
                     }
 
                     #endregion
@@ -596,7 +537,7 @@ namespace SpaceShooterV2
                                 //Heal
                             case 0:
                                 _objectList.Add(new PowerUp(_textureList[6].Width/_textureList[6].Height,
-                                    _window.ClientBounds.Height/BulletScale, 6, -_window.ClientBounds.Height/BulletScale,
+                                    _window.ClientBounds.Height/BulletScale, 6, -_window.ClientBounds.Height/(int)(1.4f*BulletScale),
                                     new Vector2(_window.ClientBounds.Width,
                                         _random.Next(0, _window.ClientBounds.Height + 1)),
                                     0));
@@ -604,7 +545,7 @@ namespace SpaceShooterV2
                                 //Damage
                             case 1:
                                 _objectList.Add(new PowerUp(_textureList[7].Width/_textureList[7].Height,
-                                    _window.ClientBounds.Height/BulletScale, 7, -_window.ClientBounds.Height/BulletScale,
+                                    _window.ClientBounds.Height / BulletScale, 7, -_window.ClientBounds.Height /(int)(1.4f * BulletScale),
                                     new Vector2(_window.ClientBounds.Width,
                                         _random.Next(0, _window.ClientBounds.Height + 1)),
                                     1));
@@ -655,7 +596,7 @@ namespace SpaceShooterV2
 
         public void Draw(GameTime gameTime)
         {
-
+          
             #region Drawing Collision Boxes
 
             if (Testing)
@@ -725,7 +666,45 @@ namespace SpaceShooterV2
             get { return _score; }
         }
 
-        //Private Functions
+        //Private Methods
+        private void CreateShip(int forcedShip = -1)
+        {
+            int shipChoice = forcedShip;
+            if (shipChoice == -1)
+            {
+                shipChoice = _random.Next(0, 3);
+            }
+
+            switch (shipChoice)
+                {
+                    case 0:
+                        Debug.WriteLine(" Main Game - Shotgun Created");
+                        _objectList.Add(new Shotgun((double) _textureList[10].Width/(double) _textureList[10].Height,
+                            (int) (_window.ClientBounds.Height/(0.6f*ShipScale)), 10,
+                            _window.ClientBounds.Height/(int) (1.4f*BulletScale), 100,
+                            _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                            _random.Next(0, _window.ClientBounds.Height + 1)));
+                        break;
+                    case 1:
+                        Debug.WriteLine(" Main Game - Charger Created");
+                        _objectList.Add(new Charger((double) _textureList[9].Width/(double) _textureList[9].Height,
+                            (int) (_window.ClientBounds.Height/(0.9f*ShipScale)), 9,
+                            _window.ClientBounds.Height/(int) (0.8f*BulletScale), 50,
+                            _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                            _random.Next(0, _window.ClientBounds.Height + 1)));
+                        break;
+                    case 2:
+                        Debug.WriteLine(" MainGame - Bomber Created");
+                        _objectList.Add(new Bomber((double) _textureList[11].Width/(double) _textureList[11].Height,
+                            (int) (_window.ClientBounds.Height/(1.1f*ShipScale)), 11,
+                            _window.ClientBounds.Height/(int) (2.6f*BulletScale), 100,
+                            _difficulty, _window.ClientBounds.Width, _window.ClientBounds.Height,
+                            _random.Next(0, _window.ClientBounds.Height + 1)));
+                        break;
+                }
+            }
+
+        //Private Functions 
         private bool ContainsCompareTypes(Type t, List<int> intList)
         {
             foreach (var i in intList)

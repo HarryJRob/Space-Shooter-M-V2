@@ -10,7 +10,8 @@ namespace SpaceShooterV2
         private readonly int _dmg;
 
         //Public Procedures
-        public Bullet(int Width, int Height, byte TexNum, int xVelocity, int yVelocity,Vector2  startingPos , bool Owner, int dmg): base(Width, Height, TexNum, xVelocity, yVelocity)
+        public Bullet(double widthByHeight, int Height, byte TexNum, int xVelocity, int yVelocity, Vector2 startingPos, bool Owner, int dmg)
+            : base(widthByHeight, Height, TexNum, xVelocity, yVelocity)
         {
             _dmg = dmg;
             _owner = Owner;

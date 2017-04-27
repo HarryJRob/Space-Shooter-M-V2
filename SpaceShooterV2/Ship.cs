@@ -9,8 +9,8 @@ namespace SpaceShooterV2
         protected int _dmgToTake;
 
         //Protected Procedures
-        protected Ship(int width, int height, byte texNum, int xVelocity, int yVelocity)
-            : base(width, height, texNum, xVelocity, yVelocity) { }
+        protected Ship(double widthByHeight, int height, byte texNum, int xVelocity, int yVelocity)
+            : base(widthByHeight, height, texNum, xVelocity, yVelocity) { }
 
         //Public Procedures
         public override void Update(GameTime gameTime)

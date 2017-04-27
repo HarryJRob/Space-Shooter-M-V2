@@ -109,10 +109,13 @@
     <Content Include="Content\Game Resources\CollisionArea.png" />
     <Content Include="Content\Game Resources\Backgrounds\BackGround.jpg" />
     <Content Include="Content\Game Resources\Bullets\BulletSheet.png" />
+    <Content Include="Content\Game Resources\GameUI\HealthBarPiece.png" />
     <Content Include="Content\Game Resources\PowerUps\PowerUpDamage.png" />
     <Content Include="Content\Game Resources\PowerUps\PowerUpHeal.png" />
-    <Content Include="Content\Game Resources\Ships\HealthBarPiece.png" />
-    <Content Include="Content\Game Resources\Ships\ship.png" />
+    <Content Include="Content\Game Resources\Ships\Bomber.png" />
+    <Content Include="Content\Game Resources\Ships\Charger.png" />
+    <Content Include="Content\Game Resources\Ships\PlayerShip.png" />
+    <Content Include="Content\Game Resources\Ships\Shotgun.png" />
     <Content Include="Content\Game Resources\Ships\SpaceShip.png" />
     <Content Include="Content\Game Resources\Temp\JEROM_spaceships0_CC-BY-3.png" />
     <Content Include="Content\Game Resources\Temp\ui_big_pieces.png" />

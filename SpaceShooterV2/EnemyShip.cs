@@ -14,8 +14,8 @@ namespace SpaceShooterV2
         protected int _maxY;
 
         //Public procedures
-        protected EnemyShip(int width, int height, byte texNum, int xVelocity, int yVelocity, int score, int maxX, int maxY, float startingPosition)
-            : base(width, height, texNum, xVelocity, yVelocity)
+        protected EnemyShip(double widthByHeight, int height, byte texNum, int xVelocity, int yVelocity, int score, int maxX, int maxY, float startingPosition)
+            : base(widthByHeight, height, texNum, xVelocity, yVelocity)
         {
             _maxX = maxX;
             _maxY = maxY;

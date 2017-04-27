@@ -10,9 +10,9 @@ namespace SpaceShooterV2
         private const int CoolDownTotal = 10;
 
         //Public Procedures
-        public Bomber(int width, int height, byte texNum, int bulVel, int score, int diffculty, int maxX, int maxY,
+        public Bomber(double widthByHeight, int height, byte texNum, int bulVel, int score, int diffculty, int maxX, int maxY,
             float startingPosition)
-            : base(width, height, texNum, 0, 0, score, maxX, maxY, startingPosition)
+            : base(widthByHeight, height, texNum, 0, 0, score, maxX, maxY, startingPosition)
         {
             _xBulVel = bulVel;
             _health = 2 * diffculty;

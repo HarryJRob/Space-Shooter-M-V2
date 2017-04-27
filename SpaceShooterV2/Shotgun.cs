@@ -5,12 +5,13 @@ namespace SpaceShooterV2
     internal class Shotgun : EnemyShip
     {
         //Variables
-        private const int CoolDownTotal = 90;
+        private const int CoolDownTotal = 85;
+        private const int VelocityScale = 35;
         private int _target = -1;
 
         //Public Procedures
-        public Shotgun(int width, int height, byte texNum, int bulVel, int score, int diffculty, int maxX, int maxY, float startingPosition)
-            : base(width, height, texNum, 0, 0, score, maxX, maxY, startingPosition)
+        public Shotgun(double widthByHeight, int height, byte texNum, int bulVel, int score, int diffculty, int maxX, int maxY, float startingPosition)
+            : base(widthByHeight, height, texNum, 0, 0, score, maxX, maxY, startingPosition)
         {
             _xBulVel = bulVel;
             _health = 2 * diffculty;
@@ -31,27 +32,27 @@ namespace SpaceShooterV2
                     _currentCoolDown = 0;
                 }
 
-                if (!(_position.X <= playerPos.X + 1.5f*_width && _position.X >= playerPos.X + _width))
+                if (!(_position.X <= playerPos.X + 5*_width && _position.X >= playerPos.X + _width))
                 {
-                    if (playerPos.X + 1.5*_width < _position.X)
+                    if (playerPos.X + 5*_width < _position.X)
                     {
-                        _position.X -= _width/45;
+                        _position.X -= _width / VelocityScale;
                     }
-                    else if (playerPos.X  > _position.X && playerPos.X< _maxX)
+                    else if (playerPos.X  > _position.X && playerPos.X < _maxX)
                     {
-                        _position.X += _width / 45;
+                        _position.X += _width / VelocityScale;
                     }
                 }
                 //x >= 1 && x <= 100
-                if (!(_position.Y >= playerPos.Y - _height/15 && _position.Y <= playerPos.Y + _height/15))
+                if (!(getCenterPoint.Y >= playerPos.Y - _height/VelocityScale && getCenterPoint.Y <= playerPos.Y + _height/VelocityScale))
                 {
-                    if (playerPos.Y < _position.Y)
+                    if (playerPos.Y < getCenterPoint.Y)
                     {
-                        _position.Y -= _height / 45;
+                        _position.Y -= _height / VelocityScale;
                     }
-                    else if (playerPos.Y > _position.Y && playerPos.Y < _maxY)
+                    else if (playerPos.Y > getCenterPoint.Y && playerPos.Y < _maxY)
                     {
-                        _position.Y += _height / 45;
+                        _position.Y += _height / VelocityScale;
                     }
                 }
             }

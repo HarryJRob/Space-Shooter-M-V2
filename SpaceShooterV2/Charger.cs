@@ -18,8 +18,8 @@ namespace SpaceShooterV2
         private int _chargeTo = 4;
 
         //Public Procedures
-        public Charger(int width, int height, byte texNum, int bulVel, int score, int diffculty, int maxX, int maxY, float startingPosition)
-            : base(width, height, texNum, 0 , 0, score, maxX, maxY, startingPosition)
+        public Charger(double widthByHeight, int height, byte texNum, int bulVel, int score, int diffculty, int maxX, int maxY, float startingPosition)
+            : base(widthByHeight, height, texNum, 0 , 0, score, maxX, maxY, startingPosition)
         {
             _xBulVel = bulVel;
             _health = 1 * diffculty;

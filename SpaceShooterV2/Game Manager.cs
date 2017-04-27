@@ -63,16 +63,19 @@ namespace SpaceShooterV2
 
             _font = Content.Load<SpriteFont>("Game Resources/Arial");
 
-            //0 - 8 = MainGame tex (Will need to be greater and background does not need to be passed but would break some of the existing code if removed)
+            //0 - 11 = MainGame tex (Will need to be greater and background does not need to be passed but would break some of the existing code if removed)
             _mainTexList.Add(Content.Load<Texture2D>("Game Resources/CollisionArea"));
             _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Backgrounds/BackGround"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/ship"));
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/PlayerShip"));
             _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/LongBullet"));
             _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/RoundBullet"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/HealthBarPiece"));
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/GameUI/HealthBarPiece"));
             _mainTexList.Add(Content.Load<Texture2D>("Game Resources/PowerUps/PowerUpHeal"));
             _mainTexList.Add(Content.Load<Texture2D>("Game Resources/PowerUps/PowerUpDamage"));
             _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/BulletDamageBoost"));
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/Charger"));
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/Shotgun"));
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/Bomber"));
 
             #endregion
         }
@@ -98,15 +101,15 @@ namespace SpaceShooterV2
 
                     if (_curGame == null && _curState == GameState.PlayingSP)
                     {
-                        _curGame = new MainGame(false, ref _graphics, Window, _spriteBatch, _settings, _difficulty);
+                        _curGame = new MainGame(false, Window, _spriteBatch, _settings, _difficulty);
                         _curGame.Initialize();
-                        _curGame.LoadContent(_mainTexList.GetRange(0,9),_font);
+                        _curGame.LoadContent(_mainTexList.GetRange(0,12),_font);
                     }
                     else if (_curGame == null && _curState == GameState.PlayingMP)
                     {
-                        _curGame = new MainGame(true, ref _graphics, Window, _spriteBatch, _settings, _difficulty);
+                        _curGame = new MainGame(true, Window, _spriteBatch, _settings, _difficulty);
                         _curGame.Initialize();
-                        _curGame.LoadContent(_mainTexList.GetRange(0, 9), _font);
+                        _curGame.LoadContent(_mainTexList.GetRange(0, 12), _font);
                     }
                     else if (_curGame != null)
                     {
