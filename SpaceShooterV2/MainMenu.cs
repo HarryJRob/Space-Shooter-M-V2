@@ -394,12 +394,12 @@ namespace SpaceShooterV2
                 int lineSpacing = _window.ClientBounds.Height/40;
 
                 _spriteBatch.DrawString(_font, "Highscores",
-                    new Vector2(_window.ClientBounds.Width/2 - _font.MeasureString("Highscores").X/2, lineSpacing),
+                    new Vector2(_window.ClientBounds.Width / 2 - (_font.MeasureString("Highscores").X * _fontScale) / 2, lineSpacing),
                     Color.White, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f); 
 
                 for (int i = 0; i < _highscores.Length - 1; i+= 2)
                 {
-                    _spriteBatch.DrawString(_font, _highscores[i] + " : " + _highscores[i + 1], new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString(_highscores[i] + " : " + _highscores[i + 1]).X / 2, i * lineSpacing + 3 * lineSpacing), Color.White, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
+                    _spriteBatch.DrawString(_font, _highscores[i] + " : " + _highscores[i + 1], new Vector2(_window.ClientBounds.Width / 2 - (_font.MeasureString(_highscores[i] + " : " + _highscores[i + 1]).X *_fontScale)/ 2, i * lineSpacing + 3 * lineSpacing), Color.White, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
                 }
             }
             #endregion
@@ -409,11 +409,11 @@ namespace SpaceShooterV2
             {
                 int lineSpacing = _window.ClientBounds.Height/8;
 
-                _spriteBatch.DrawString(_font, "Up", new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Up").X / 2, _window.ClientBounds.Height / 1.5f - 4.2f * lineSpacing + _font.MeasureString("Up").Y / 2), Color.White, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
-                _spriteBatch.DrawString(_font, "Left", new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Left").X / 2, _window.ClientBounds.Height / 1.5f - 3.1f * lineSpacing + _font.MeasureString("Left").Y / 2), Color.White, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
-                _spriteBatch.DrawString(_font, "Down", new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Down").X / 2, _window.ClientBounds.Height / 1.5f - 2 * lineSpacing + _font.MeasureString("Down").Y / 2), Color.White, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
-                _spriteBatch.DrawString(_font, "Right", new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Right").X / 2, _window.ClientBounds.Height / 1.5f - lineSpacing + _font.MeasureString("Right").Y / 2), Color.White, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
-                _spriteBatch.DrawString(_font, "Shoot", new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Shoot").X / 2, _window.ClientBounds.Height / 1.5f + lineSpacing / 2 - _font.MeasureString("Shoot").Y / 2), Color.White, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
+                _spriteBatch.DrawString(_font, "Up", new Vector2(_window.ClientBounds.Width / 2 - (_font.MeasureString("Up").X*_fontScale) / 2, _window.ClientBounds.Height / 1.5f - 4.2f * lineSpacing + _font.MeasureString("Up").Y / 2), Color.White, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
+                _spriteBatch.DrawString(_font, "Left", new Vector2(_window.ClientBounds.Width / 2 - (_font.MeasureString("Left").X*_fontScale) / 2, _window.ClientBounds.Height / 1.5f - 3.1f * lineSpacing + _font.MeasureString("Left").Y / 2), Color.White, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
+                _spriteBatch.DrawString(_font, "Down", new Vector2(_window.ClientBounds.Width / 2 - (_font.MeasureString("Down").X * _fontScale) / 2, _window.ClientBounds.Height / 1.5f - 2 * lineSpacing + _font.MeasureString("Down").Y / 2), Color.White, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
+                _spriteBatch.DrawString(_font, "Right", new Vector2(_window.ClientBounds.Width / 2 - (_font.MeasureString("Right").X *_fontScale)/ 2, _window.ClientBounds.Height / 1.5f - lineSpacing + _font.MeasureString("Right").Y / 2), Color.White, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
+                _spriteBatch.DrawString(_font, "Shoot", new Vector2(_window.ClientBounds.Width / 2 - (_font.MeasureString("Shoot").X * _fontScale) / 2, _window.ClientBounds.Height / 1.5f + lineSpacing / 2 - _font.MeasureString("Shoot").Y / 2), Color.White, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
             }
             #endregion
 
@@ -424,13 +424,13 @@ namespace SpaceShooterV2
                 switch (_difficulty)
                 {
                     case 1:
-                        _spriteBatch.DrawString(_font, "Difficulty: Easy", new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Difficulty: Easy").X / 2, _window.ClientBounds.Height / 1.5f), Color.Ivory, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
+                        _spriteBatch.DrawString(_font, "Difficulty: Easy", new Vector2(_window.ClientBounds.Width / 2 - (_font.MeasureString("Difficulty: Easy").X * _fontScale) / 2, _window.ClientBounds.Height / 1.5f), Color.Ivory, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
                         break;
                     case 2:
-                        _spriteBatch.DrawString(_font, "Difficulty: Medium", new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Difficulty: Medium").X / 2, _window.ClientBounds.Height / 1.5f), Color.Ivory, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
+                        _spriteBatch.DrawString(_font, "Difficulty: Medium", new Vector2(_window.ClientBounds.Width / 2 - (_font.MeasureString("Difficulty: Medium").X * _fontScale) / 2, _window.ClientBounds.Height / 1.5f), Color.Ivory, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
                         break;
                     case 3:
-                        _spriteBatch.DrawString(_font, "Difficulty: Hard", new Vector2(_window.ClientBounds.Width / 2 - _font.MeasureString("Difficulty: Hard").X / 2, _window.ClientBounds.Height / 1.5f), Color.Ivory,0f,new Vector2(0,0),new Vector2(_fontScale,1f),SpriteEffects.None,0f);
+                        _spriteBatch.DrawString(_font, "Difficulty: Hard", new Vector2(_window.ClientBounds.Width / 2 - (_font.MeasureString("Difficulty: Hard").X * _fontScale) / 2, _window.ClientBounds.Height / 1.5f), Color.Ivory, 0f, new Vector2(0, 0), new Vector2(_fontScale, 1f), SpriteEffects.None, 0f);
                         break;
                 }
             }
