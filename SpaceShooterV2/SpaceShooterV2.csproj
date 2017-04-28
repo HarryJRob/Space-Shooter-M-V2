@@ -108,7 +108,6 @@
     <Content Include="Content\Game Resources\Bullets\RoundBullet.png" />
     <Content Include="Content\Game Resources\CollisionArea.png" />
     <Content Include="Content\Game Resources\Backgrounds\BackGround.jpg" />
-    <Content Include="Content\Game Resources\Bullets\BulletSheet.png" />
     <Content Include="Content\Game Resources\GameUI\CoolDownBarPiece.png" />
     <Content Include="Content\Game Resources\GameUI\HealthBarPiece.png" />
     <Content Include="Content\Game Resources\Menu\MenuButton.png" />
@@ -119,9 +118,6 @@
     <Content Include="Content\Game Resources\Ships\PlayerShip.png" />
     <Content Include="Content\Game Resources\Ships\PlayerShip2.png" />
     <Content Include="Content\Game Resources\Ships\Shotgun.png" />
-    <Content Include="Content\Game Resources\Ships\SpaceShip.png" />
-    <Content Include="Content\Game Resources\Temp\JEROM_spaceships0_CC-BY-3.png" />
-    <Content Include="Content\Game Resources\Temp\ui_big_pieces.png" />
     <Content Include="Content\Highscores.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -135,9 +131,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\Game Resources\KenVector.spritefont" />
-    <None Include="Content\Game Resources\Temp\expansion_pack.zip" />
-    <None Include="Content\Game Resources\Temp\explosions.zip" />
-    <None Include="Content\Game Resources\Temp\ken_fonts.zip" />
     <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
