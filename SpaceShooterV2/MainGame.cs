@@ -631,8 +631,8 @@ namespace SpaceShooterV2
 
             _spriteBatch.DrawString(_font, "Score: " + Convert.ToString(_score),
                 new Vector2(
-                    _window.ClientBounds.Width / 2 - (_font.MeasureString("Score: " + Convert.ToString(_score)).X * (1920f / (float)_window.ClientBounds.Width)) / 2, _window.ClientBounds.Height / 64),
-                Color.Ivory, 0f, new Vector2(0, 0), new Vector2(1920f/(float)_window.ClientBounds.Width, 1f), SpriteEffects.None, 0f);
+                    _window.ClientBounds.Width / 2 - (_font.MeasureString("Score: " + Convert.ToString(_score)).X * ((float)_window.ClientBounds.Width / 1920f )) / 2, _window.ClientBounds.Height / 64),
+                Color.Ivory, 0f, new Vector2(0, 0), new Vector2((float)_window.ClientBounds.Width / 1920f, 1f), SpriteEffects.None, 0f);
 
             #endregion
 
