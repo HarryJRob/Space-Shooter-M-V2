@@ -640,7 +640,7 @@ namespace SpaceShooterV2
 
             _spriteBatch.DrawString(_font, "Score: " + Convert.ToString(_score),
                 new Vector2(
-                    _window.ClientBounds.Width/2 - _font.MeasureString("Score: " + Convert.ToString(_score)).X/2, 0),
+                    _window.ClientBounds.Width/2 - _font.MeasureString("Score: " + Convert.ToString(_score)).X/2, _window.ClientBounds.Height/64),
                 Color.Ivory);
 
             #endregion
