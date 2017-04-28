@@ -9,7 +9,6 @@
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Ships/SpaceShip.png</File>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Bullets/LongBullet.png</File>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Bullets/RoundBullet.png</File>
-    <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Arial.spritefont</File>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/PowerUps/PowerUpDamage.png</File>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/PowerUps/PowerUpHeal.png</File>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Bullets/BulletDamageBoost.png</File>
@@ -21,5 +20,6 @@
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/GameUI/CoolDownBarPiece.png</File>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Ships/PlayerShip2.png</File>
     <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/Menu/MenuButton.png</File>
+    <File>C:/Users/Harry Robertson/Source/Repos/Space-Shooter-M-V24/SpaceShooterV2/Content/Game Resources/KenVector.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>

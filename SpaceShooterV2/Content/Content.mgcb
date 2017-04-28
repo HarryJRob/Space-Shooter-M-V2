@@ -73,12 +73,6 @@
 /processorParam:TextureFormat=Color
 /build:Game Resources/Bullets/RoundBullet.png
 
-#begin Game Resources/Arial.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:TextureFormat=Compressed
-/build:Game Resources/Arial.spritefont
-
 #begin Game Resources/PowerUps/PowerUpDamage.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -210,4 +204,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Game Resources/Menu/MenuButton.png
+
+#begin Game Resources/KenVector.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Game Resources/KenVector.spritefont
 

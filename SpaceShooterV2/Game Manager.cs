@@ -64,7 +64,7 @@ namespace SpaceShooterV2
             try
             {
 
-                _font = Content.Load<SpriteFont>("Game Resources/Arial");
+                _font = Content.Load<SpriteFont>("Game Resources/KenVector");
 
                 //0 - 13 = MainGame tex (Will need to be greater and background does not need to be passed but would break some of the existing code if removed)
                 _mainTexList.Add(Content.Load<Texture2D>("Game Resources/CollisionArea"));
