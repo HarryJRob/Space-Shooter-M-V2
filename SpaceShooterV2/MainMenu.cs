@@ -159,7 +159,7 @@ namespace SpaceShooterV2
                     break;
                case MenuState.HighscoreEntry:
                     _menuButtons[4].IsActive = true;
-                    _menuButtons[4].Text = "Confirm Entry";
+                    _menuButtons[4].Text = "Confirm";
                     
                     #region HighScore Entry
 
@@ -188,7 +188,7 @@ namespace SpaceShooterV2
                     break;
                 case MenuState.SettingEntry:
                     _menuButtons[4].IsActive = true;
-                    _menuButtons[4].Text = "Confirm Entry";
+                    _menuButtons[4].Text = "Confirm";
                     _menuButtons[6].IsActive = true;
                     _menuButtons[6].Text = _settingPlayer1[0];
                     _menuButtons[7].IsActive = true;
@@ -494,29 +494,29 @@ namespace SpaceShooterV2
         private void AddButtons()
         {
             //Main Menu
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width / 20, _window.ClientBounds.Height / 2 - _window.ClientBounds.Height / 15), "Single Player", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width - _window.ClientBounds.Width / 3 - _window.ClientBounds.Width / 20, _window.ClientBounds.Height / 2 - _window.ClientBounds.Height / 15), "Multiplayer Player", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width / 20, _window.ClientBounds.Height - _window.ClientBounds.Height / 3), "Options", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 10, 1, new Vector2(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 8), "Space Shooter", false));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 5, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 - _window.ClientBounds.Width / 10, _window.ClientBounds.Height / 1.2f), "Continue", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 5, 1, new Vector2(_window.ClientBounds.Width - _window.ClientBounds.Width / 3 - _window.ClientBounds.Width / 20, _window.ClientBounds.Height - _window.ClientBounds.Height / 3), "Difficulty", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 10, 0, new Vector2(_window.ClientBounds.Width / 4, _window.ClientBounds.Height / 2), "Single Player", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 10, 0, new Vector2(3*_window.ClientBounds.Width/4, _window.ClientBounds.Height / 2), "Multiplayer Player", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 10, 0, new Vector2(_window.ClientBounds.Width / 4, 3*_window.ClientBounds.Height/4), "Options", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 10, 0, new Vector2(_window.ClientBounds.Width / 2, _window.ClientBounds.Height / 8), "Space Shooter", false));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 16, 0, new Vector2(_window.ClientBounds.Width / 2, 7*_window.ClientBounds.Height /8), "Continue", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 10, 0, new Vector2(3*_window.ClientBounds.Width/4, 3*_window.ClientBounds.Height/4), "Difficulty", true));
             //Options
             //Player1
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 - _window.ClientBounds.Width / 5, _window.ClientBounds.Height / 1.5f - 4.4f*(_window.ClientBounds.Height / 8)), "1", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 - _window.ClientBounds.Width / 5, _window.ClientBounds.Height / 1.5f - 3.3f * (_window.ClientBounds.Height / 8)), "2", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 - _window.ClientBounds.Width / 5, _window.ClientBounds.Height / 1.5f - 2.2f * (_window.ClientBounds.Height / 8)), "3", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 - _window.ClientBounds.Width / 5, _window.ClientBounds.Height / 1.5f - 1.1f * (_window.ClientBounds.Height / 8)), "4", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 - _window.ClientBounds.Width / 5, _window.ClientBounds.Height / 1.5f), "5", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 16, 0, new Vector2(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 1.5f - 4.4f * (_window.ClientBounds.Height / 8)), "1", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 16, 0, new Vector2(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 1.5f - 3.3f * (_window.ClientBounds.Height / 8)), "2", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 16, 0, new Vector2(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 1.5f - 2.2f * (_window.ClientBounds.Height / 8)), "3", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 16, 0, new Vector2(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 1.5f - 1.1f * (_window.ClientBounds.Height / 8)), "4", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 16, 0, new Vector2(_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 1.5f), "5", true));
             //Player2
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 + 0.5f*(_window.ClientBounds.Width / 5), _window.ClientBounds.Height / 1.5f - 4.4f * (_window.ClientBounds.Height / 8)), "6", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 + 0.5f*(_window.ClientBounds.Width / 5), _window.ClientBounds.Height / 1.5f - 3.3f * (_window.ClientBounds.Height / 8)), "7", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 + 0.5f*(_window.ClientBounds.Width / 5), _window.ClientBounds.Height / 1.5f - 2.2f * (_window.ClientBounds.Height / 8)), "8", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 + 0.5f*(_window.ClientBounds.Width / 5), _window.ClientBounds.Height / 1.5f - 1.1f * (_window.ClientBounds.Height / 8)), "9", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 + 0.5f*(_window.ClientBounds.Width / 5), _window.ClientBounds.Height / 1.5f), "10", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 16, 0, new Vector2(2*_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 1.5f - 4.4f * (_window.ClientBounds.Height / 8)), "6", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 16, 0, new Vector2(2*_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 1.5f - 3.3f * (_window.ClientBounds.Height / 8)), "7", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 16, 0, new Vector2(2*_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 1.5f - 2.2f * (_window.ClientBounds.Height / 8)), "8", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 16, 0, new Vector2(2*_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 1.5f - 1.1f * (_window.ClientBounds.Height / 8)), "9", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 16, 0, new Vector2(2*_window.ClientBounds.Width / 3, _window.ClientBounds.Height / 1.5f), "10", true));
             //Difficulty Entry
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 - 1.1f * (_window.ClientBounds.Width / 10) - _window.ClientBounds.Width / 10, _window.ClientBounds.Height / 2 - (_window.ClientBounds.Height / 8) / 2), "Easy", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 - (_window.ClientBounds.Width / 10)/2, _window.ClientBounds.Height / 2 - (_window.ClientBounds.Height / 8) / 2), "Medium", true));
-            _menuButtons.Add(new MenuButton(_window.ClientBounds.Width / 10, _window.ClientBounds.Height / 8, 1, new Vector2(_window.ClientBounds.Width / 2 + 1.1f * (_window.ClientBounds.Width / 10), _window.ClientBounds.Height / 2 - (_window.ClientBounds.Height / 8) / 2), "Hard", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 16, 0, new Vector2(_window.ClientBounds.Width / 4, _window.ClientBounds.Height / 2), "Easy", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 16, 0, new Vector2(_window.ClientBounds.Width / 2, _window.ClientBounds.Height / 2), "Medium", true));
+            _menuButtons.Add(new MenuButton((double)_texList[0].Width / (double)_texList[0].Height, _window.ClientBounds.Height / 16, 0, new Vector2(3*_window.ClientBounds.Width / 4, _window.ClientBounds.Height / 2), "Hard", true));
         }
 
         private void AddKeysToHighscore(List<Keys> newKeysPressed)

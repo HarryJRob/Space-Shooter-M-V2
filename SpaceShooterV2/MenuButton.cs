@@ -18,12 +18,12 @@ namespace SpaceShooterV2
         private MouseState _preMouseState;
 
         //Public Procedures
-        public MenuButton(int width, int height, int texNum, Vector2 position, string buttonText, bool isClickable)
+        public MenuButton(double widthByHeight, int height, int texNum, Vector2 centerPosition, string buttonText, bool isClickable)
         {
-            _width = width;
+            _width = (int)(widthByHeight*height);
             _height = height;
             _texNum = texNum;
-            _position = position;
+            _position = new Vector2(centerPosition.X - _width/2,centerPosition.Y - _height/2);
             _buttonText = buttonText;
             _isClickable = isClickable;
         }

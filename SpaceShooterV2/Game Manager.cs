@@ -59,7 +59,7 @@ namespace SpaceShooterV2
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            #region Load Game Textures
+            #region Load Textures
 
             _font = Content.Load<SpriteFont>("Game Resources/Arial");
 
@@ -78,6 +78,9 @@ namespace SpaceShooterV2
             _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/Bomber"));
             _mainTexList.Add(Content.Load<Texture2D>("Game Resources/GameUI/CoolDownBarPiece"));
             _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/PlayerShip2"));
+
+            //14-15 = MainMenu tex
+            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Menu/MenuButton"));
 
             #endregion
         }
@@ -143,12 +146,12 @@ namespace SpaceShooterV2
                     {
                         _curState = GameState.MainMenu;
                         _curMenu = new MainMenu(_spriteBatch, Window, _font,_scoreFromGame);
-                        _curMenu.LoadContent(_mainTexList.GetRange(0, 6));
+                        _curMenu.LoadContent(_mainTexList.GetRange(14, 1));
                     }
                     else if (_curMenu == null && _curState != GameState.Dead)
                     {
                         _curMenu = new MainMenu(_spriteBatch,Window,_font);
-                        _curMenu.LoadContent(_mainTexList.GetRange(0, 6));
+                        _curMenu.LoadContent(_mainTexList.GetRange(14, 1));
                     }
                     else if (_curMenu != null)
                     {

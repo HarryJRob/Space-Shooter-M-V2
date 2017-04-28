@@ -82,3 +82,4 @@ C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Win
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Ships\Shotgun.xnb
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\GameUI\CoolDownBarPiece.xnb
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Ships\PlayerShip2.xnb
+C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Release\Content\Game Resources\Menu\MenuButton.xnb
