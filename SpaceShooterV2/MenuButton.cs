@@ -43,11 +43,11 @@ namespace SpaceShooterV2
             _preMouseState = curMouseState;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Texture2D tex, SpriteFont font)
+        public void Draw(SpriteBatch spriteBatch, Texture2D tex, SpriteFont font,float fontScale)
         {
             spriteBatch.Draw(tex, new Rectangle((int) _position.X, (int) _position.Y, _width, _height), Color.White);
             Vector2 measuredString = font.MeasureString(_buttonText);
-            spriteBatch.DrawString(font, _buttonText, new Vector2(_position.X +_width / 2 - measuredString.X/ 2, _position.Y + _height / 2 - measuredString.Y/ 2), Color.White);
+            spriteBatch.DrawString(font, _buttonText, new Vector2(_position.X +_width / 2 - measuredString.X/ 2, _position.Y + _height / 2 - measuredString.Y/ 2), Color.White,0f,new Vector2(0,0),new Vector2(fontScale,1f),SpriteEffects.None,0f  );
         }
 
         //Public Accessors

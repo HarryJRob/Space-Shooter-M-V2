@@ -20,6 +20,7 @@ namespace SpaceShooterV2
         private readonly SpriteFont _font;
         private KeyboardState _preKeyboardState;
         private bool _stateChanged;
+        private readonly float _fontScale = 1920f;
 
         //Scoring
         private int _score = -1;
@@ -59,6 +60,7 @@ namespace SpaceShooterV2
             _window = window;
             _font = font;
             _curMenuState = MenuState.Main;
+            _fontScale = (float)(_window.ClientBounds.Width)/_fontScale;
         }
 
         public MainMenu(SpriteBatch spriteBatch, GameWindow window, SpriteFont font, int score = -1)
@@ -69,6 +71,7 @@ namespace SpaceShooterV2
             _stateChanged = true;
             _curMenuState = MenuState.Highscore;
             _score = score;
+            _fontScale = (float)(_window.ClientBounds.Width * 20) / _fontScale;
         }
 
         public void LoadContent(List<Texture2D> textureList)
@@ -376,7 +379,7 @@ namespace SpaceShooterV2
             #region Draw Relevant Buttons
             foreach (MenuButton curMenuButton in _menuButtons.Where(item => item.IsActive))
             {
-                curMenuButton.Draw(_spriteBatch,_texList[curMenuButton.TexNum], _font);
+                curMenuButton.Draw(_spriteBatch,_texList[curMenuButton.TexNum], _font,_fontScale);
             }
             #endregion
 
