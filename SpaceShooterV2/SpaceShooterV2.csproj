@@ -131,7 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\Game Resources\KenVector.spritefont" />
-    <None Include="Content\kenvector_future_thin.ttf" />
+    <None Include="Content\Game Resources\kenvector_future_thin.ttf" />
     <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
