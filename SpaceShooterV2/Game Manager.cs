@@ -97,11 +97,13 @@ namespace SpaceShooterV2
 
         protected override void Update(GameTime gameTime)
         {
-            if ((GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Environment.Exit(-1);
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) && (_curState == GameState.PlayingSP || _curState == GameState.PlayingMP))
+            {
+                _curState = GameState.Dead; 
+            }
 
-                if (_curState == GameState.PlayingSP || _curState == GameState.PlayingMP)
+
+            if (_curState == GameState.PlayingSP || _curState == GameState.PlayingMP)
                 {
                     #region Game Logic
 
