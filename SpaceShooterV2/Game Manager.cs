@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -60,26 +61,36 @@ namespace SpaceShooterV2
 
             #region Load Textures
 
-            _font = Content.Load<SpriteFont>("Game Resources/Arial");
+            try
+            {
 
-            //0 - 13 = MainGame tex (Will need to be greater and background does not need to be passed but would break some of the existing code if removed)
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/CollisionArea"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Backgrounds/BackGround"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/PlayerShip"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/LongBullet"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/RoundBullet"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/GameUI/HealthBarPiece"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/PowerUps/PowerUpHeal"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/PowerUps/PowerUpDamage"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/BulletDamageBoost"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/Charger"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/Shotgun"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/Bomber"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/GameUI/CoolDownBarPiece"));
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/PlayerShip2"));
+                _font = Content.Load<SpriteFont>("Game Resources/Arial");
 
-            //14-15 = MainMenu tex
-            _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Menu/MenuButton"));
+                //0 - 13 = MainGame tex (Will need to be greater and background does not need to be passed but would break some of the existing code if removed)
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/CollisionArea"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Backgrounds/BackGround"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/PlayerShip"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/LongBullet"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/RoundBullet"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/GameUI/HealthBarPiece"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/PowerUps/PowerUpHeal"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/PowerUps/PowerUpDamage"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Bullets/BulletDamageBoost"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/Charger"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/Shotgun"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/Bomber"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/GameUI/CoolDownBarPiece"));
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Ships/PlayerShip2"));
+
+                //14-15 = MainMenu tex
+                _mainTexList.Add(Content.Load<Texture2D>("Game Resources/Menu/MenuButton"));
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+                throw;
+            }
 
             #endregion
         }
