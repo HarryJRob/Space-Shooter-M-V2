@@ -570,6 +570,7 @@ namespace SpaceShooterV2
             catch (IOException exception)
             {
                 Debug.WriteLine(" Main Menu - Error Loading: " + exception.Message);
+                throw;
             }
         }
 
@@ -599,6 +600,7 @@ namespace SpaceShooterV2
             catch (IOException exception)
             {
                 Debug.WriteLine(" Main Menu - Error Saving: " + exception.Message);
+                throw;
             }
         }
 
@@ -623,7 +625,8 @@ namespace SpaceShooterV2
             }
             catch (IOException exception)
             {
-                Debug.WriteLine(" Main Menu - Error Loading: " + exception.Message);  
+                Debug.WriteLine(" Main Menu - Error Loading: " + exception.Message);
+                throw;
             }
         }
 
@@ -664,6 +667,7 @@ namespace SpaceShooterV2
             catch (IOException exception)
             {
                 Debug.WriteLine(" Main Menu - Error Saving: " + exception.Message);
+                throw;
             }  
         }
 

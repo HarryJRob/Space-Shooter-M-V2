@@ -15,9 +15,8 @@ namespace SpaceShooterV2
     {
         //Variables
         //Required Resources
-        private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private List<Texture2D> _mainTexList = new List<Texture2D>();
+        private readonly List<Texture2D> _mainTexList = new List<Texture2D>();
         private SpriteFont _font;
         private MainGame _curGame;
         private MainMenu _curMenu;
@@ -41,16 +40,16 @@ namespace SpaceShooterV2
         //Public Procedures
         public GameManager()
         {
-            _graphics = new GraphicsDeviceManager(this);
+            var graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
             _curState = GameState.MainMenu;
 
             #region FullScreen
-            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             Window.AllowUserResizing = false;
-            _graphics.ToggleFullScreen();
+            graphics.ToggleFullScreen();
             #endregion
         }
 
