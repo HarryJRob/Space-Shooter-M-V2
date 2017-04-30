@@ -28,6 +28,9 @@ namespace SpaceShooterV2
 
         public override void Update(GameTime gameTime)
         {
+            #region Charging & Firing Logic
+            // Obj: 1.ii.2 a
+
             if (_currentCoolDown < CoolDownTotal)
             {
                 _currentCoolDown += 1;
@@ -55,6 +58,9 @@ namespace SpaceShooterV2
                 _currentCoolDown = 0;
                 _willFire = true;
             }
+
+            #endregion
+
             base.Update(gameTime);
         }
 

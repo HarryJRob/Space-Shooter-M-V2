@@ -170,7 +170,8 @@ namespace SpaceShooterV2
                     _menuButtons[4].Text = "Confirm";
                     
                     #region HighScore Entry
-
+                    // Obj: 2 b
+                    // {} are there so newKeysPressed is local to that set of {}
                         {
                             List<Keys> newKeysPressed = new List<Keys>();
                             foreach (Keys key in curKeyboardState.GetPressedKeys())
@@ -219,7 +220,8 @@ namespace SpaceShooterV2
                     _menuButtons[15].Text = _settingPlayer2[4];
 
                     #region Setting Entry
-
+                    // Obj: 2 c
+                    // {} are there so newKeysPressed is local to that set of {}
                         {
                             List<Keys> newKeysPressed = new List<Keys>();
                             foreach (Keys key in curKeyboardState.GetPressedKeys())
@@ -261,6 +263,8 @@ namespace SpaceShooterV2
                     if (_menuButtons[i].IsClicked)
                     {
                         //One for each button
+                        //If a button is clicked perform logic
+                        // Obj: 2 a
                         _menuButtons[i].IsClicked = false;
                         Debug.WriteLine(" Main Menu - Button Index {0} is clicked", i);
 
@@ -557,6 +561,7 @@ namespace SpaceShooterV2
             }
         }
 
+        // Obj: 2 d
         private void LoadHighscores()
         {
             try
@@ -612,6 +617,7 @@ namespace SpaceShooterV2
             }
         }
 
+        // Obj: 2 e
         private void LoadSettings()
         {
             //Load Format = Up,Left,Down,Right,Fire

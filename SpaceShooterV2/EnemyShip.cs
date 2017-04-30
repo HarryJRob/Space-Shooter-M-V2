@@ -27,25 +27,30 @@ namespace SpaceShooterV2
         public override void Update(GameTime gameTime)
         {
 
+            #region Move on screen
+            // Obj: 1.ii 1
+
             if (_position.X + 1.4*_width > _maxX && initialising)
             {
                 _position.X -= _width/60;
             }
-            
+
             if (_position.Y + 1.4*_height > _maxY && initialising)
             {
-                _position.Y -= _height / 60;
+                _position.Y -= _height/60;
             }
             if (_position.Y < 0 && initialising)
             {
-                _position.Y += _height / 60;
+                _position.Y += _height/60;
             }
 
-            if(_position.X + 1.1*_width < _maxX && _position.Y + _height < _maxY && _position.Y > 0)
+            if (_position.X + 1.1*_width < _maxX && _position.Y + _height < _maxY && _position.Y > 0)
             {
                 initialising = false;
             }
 
+            #endregion
+            
             base.Update(gameTime);
         }
 

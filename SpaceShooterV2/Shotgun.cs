@@ -22,6 +22,8 @@ namespace SpaceShooterV2
         {
             if (!initialising)
             {
+                #region Firing Logic
+                // Obj: 1.ii.3 c
                 if (_currentCoolDown < CoolDownTotal)
                 {
                     _currentCoolDown += 1;
@@ -32,30 +34,39 @@ namespace SpaceShooterV2
                     _currentCoolDown = 0;
                 }
 
+                #endregion
+
+                #region Moving Logic
+                // Obj: 1.ii.3 a
                 if (!(_position.X <= playerPos.X + 5*_width && _position.X >= playerPos.X + _width))
                 {
                     if (playerPos.X + 5*_width < _position.X)
                     {
-                        _position.X -= _width / VelocityScale;
+                        _position.X -= _width/VelocityScale;
                     }
-                    else if (playerPos.X  > _position.X && playerPos.X < _maxX)
+                    else if (playerPos.X > _position.X && playerPos.X < _maxX)
                     {
-                        _position.X += _width / VelocityScale;
+                        _position.X += _width/VelocityScale;
                     }
                 }
-                //x >= 1 && x <= 100
-                if (!(getCenterPoint.Y >= playerPos.Y - _height/VelocityScale && getCenterPoint.Y <= playerPos.Y + _height/VelocityScale))
+
+                if (
+                    !(getCenterPoint.Y >= playerPos.Y - _height/VelocityScale &&
+                      getCenterPoint.Y <= playerPos.Y + _height/VelocityScale))
                 {
                     if (playerPos.Y < getCenterPoint.Y)
                     {
-                        _position.Y -= _height / VelocityScale;
+                        _position.Y -= _height/VelocityScale;
                     }
                     else if (playerPos.Y > getCenterPoint.Y && playerPos.Y < _maxY)
                     {
-                        _position.Y += _height / VelocityScale;
+                        _position.Y += _height/VelocityScale;
                     }
                 }
+
+                #endregion
             }
+
             base.Update(gameTime);
         }
 

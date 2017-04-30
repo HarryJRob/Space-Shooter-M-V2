@@ -17,12 +17,14 @@ namespace SpaceShooterV2
             _xBulVel = bulVel;
             _health = 2 * diffculty;
             _score = score * diffculty;
+            _xVelocity = -_width / 70;
         }
 
         public override void Update(GameTime gameTime)
         {
             if (!initialising)
             {
+                // Obj: 1.ii.4 b
                 if (_currentCoolDown < CoolDownTotal)
                 {
                     _currentCoolDown += 1;
@@ -35,16 +37,12 @@ namespace SpaceShooterV2
                     _currentCoolDown = 0;
                 }
 
+                // Obj: 1.ii.4 a
                 if (_position.X + _width < 0)
                 {
                     _position.X = _maxX;
                     Random rnd = new Random();
                     _position.Y = rnd.Next(0, _maxY - _height + 1);
-                }
-
-                if (_xVelocity == 0)
-                {
-                    _xVelocity = -_width / 70;
                 }
             }
             base.Update(gameTime);

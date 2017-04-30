@@ -10,11 +10,11 @@ namespace SpaceShooterV2
         private readonly int _dmg;
 
         //Public Procedures
-        public Bullet(double widthByHeight, int Height, byte TexNum, int xVelocity, int yVelocity, Vector2 startingPos, bool Owner, int dmg)
-            : base(widthByHeight, Height, TexNum, xVelocity, yVelocity)
+        public Bullet(double widthByHeight, int height, byte texNum, int xVelocity, int yVelocity, Vector2 startingPos, bool owner, int dmg)
+            : base(widthByHeight, height, texNum, xVelocity, yVelocity)
         {
             _dmg = dmg;
-            _owner = Owner;
+            _owner = owner;
             _position = new Vector2(startingPos.X, startingPos.Y - _height/2);
         }
 

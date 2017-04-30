@@ -56,6 +56,7 @@ namespace SpaceShooterV2
             _yVelocity = _xVelocity;
 
             #region Calculating Control Scheme
+            // Obj: 1.i 4
 
             Debug.WriteLine(" Main Game - ID: {0}, Control Scheme: {1}", playerID,keyStr);
 
@@ -100,6 +101,10 @@ namespace SpaceShooterV2
         {
             if (_health != 0)
             {
+
+                #region User Input
+                //Obj: 1.i 1
+
                 #region Check Controls
 
                 if (curKeyboardState.GetPressedKeys() != _previousKeyBoardState.GetPressedKeys())
@@ -157,14 +162,20 @@ namespace SpaceShooterV2
 
                 #endregion
 
+                #endregion
+
                 if (_collision)
                 {
+                    // Obj: 1.i 5
                     _health -= 1;
                     _collision = false;
                     Debug.WriteLine(" Main Game - Health: " + _health + " - " + ToString());
                 }
                 if (_bulletCoolDown != BulletCdTotal)
+                {
+                    // Obj: 1.i 3
                     _bulletCoolDown += 1;
+                }
 
                 if (_dmgBoostDuration > 0)
                 {
@@ -179,6 +190,7 @@ namespace SpaceShooterV2
 
         public void DrawUI(SpriteBatch spriteBatch, Texture2D healthBarTex,Texture2D dmgBoostBarTex)
         {
+            // Obj: 1.i 6
             for (int i = 0; i < _health; i++)
             {
                 if (i < _health)
@@ -220,6 +232,7 @@ namespace SpaceShooterV2
             }
         }
 
+        // Obj: 1.i 7
         public void Heal(int healthAdded)
         {
             if (_health + healthAdded > StartingHealth)
