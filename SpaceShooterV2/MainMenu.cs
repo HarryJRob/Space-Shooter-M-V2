@@ -61,6 +61,7 @@ namespace SpaceShooterV2
             _font = font;
             _curMenuState = MenuState.Main;
             _fontScale = (float)(_window.ClientBounds.Width)/_fontScale;
+            _preKeyboardState = new KeyboardState(Keys.Escape);
         }
 
         public MainMenu(SpriteBatch spriteBatch, GameWindow window, SpriteFont font, int score = -1)
@@ -72,7 +73,8 @@ namespace SpaceShooterV2
             _curMenuState = MenuState.Highscore;
             _score = score;
             _fontScale = (float)(_window.ClientBounds.Width) / _fontScale;
-        }
+            _preKeyboardState = new KeyboardState(Keys.Escape);
+         }
 
         public void LoadContent(List<Texture2D> textureList)
         {
@@ -88,13 +90,13 @@ namespace SpaceShooterV2
 
         public void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape) && _curMenuState != MenuState.Highscore)
+            MouseState curMouseState = Mouse.GetState();
+            KeyboardState curKeyboardState = Keyboard.GetState();
+
+            if (!_preKeyboardState.IsKeyDown(Keys.Escape) && curKeyboardState.IsKeyDown(Keys.Escape))
             {
                 Environment.Exit(-1);
             }
-
-            MouseState curMouseState = Mouse.GetState();
-            KeyboardState curKeyboardState = Keyboard.GetState();
 
             #region State Logic
             if (_stateChanged)
