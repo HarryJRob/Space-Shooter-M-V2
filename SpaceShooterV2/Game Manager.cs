@@ -50,7 +50,7 @@ namespace SpaceShooterV2
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             Window.AllowUserResizing = false;
-            graphics.ToggleFullScreen();
+            //graphics.ToggleFullScreen();
             #endregion
         }
 

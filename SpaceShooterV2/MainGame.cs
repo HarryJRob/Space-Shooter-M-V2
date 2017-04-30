@@ -447,7 +447,7 @@ namespace SpaceShooterV2
                                      (curObjRec.X > _window.ClientBounds.Width) ||
                                      (curObjRec.Y > _window.ClientBounds.Height)))
                                 {
-                                    Debug.WriteLine(" Main Game - Object {0} left screen", i);
+                                    Debug.WriteLine(" Main Game - Object {0} of type {1} left screen", i, _objectList[i].GetType().ToString());
                                     _objectList[i] = null;
                                 }
                             }
@@ -592,26 +592,7 @@ namespace SpaceShooterV2
                     
                     if (_random.Next(0, ProbabilityPowerUpSpawn) < 1)
                     {
-                        int powerUp = _random.Next(0, 2);
-                        switch (powerUp)
-                        {
-                            //Heal
-                            case 0:
-                                _objectList.Add(new PowerUp(_textureList[6].Width/_textureList[6].Height,
-                                    _window.ClientBounds.Height/BulletScale, 6, -_window.ClientBounds.Height/(int)(1.4f*BulletScale),
-                                    new Vector2(_window.ClientBounds.Width,
-                                        _random.Next(0, _window.ClientBounds.Height + 1)),
-                                    0));
-                                break;
-                            //Damage
-                            case 1:
-                                _objectList.Add(new PowerUp(_textureList[7].Width/_textureList[7].Height,
-                                    _window.ClientBounds.Height / BulletScale, 7, -_window.ClientBounds.Height /(int)(1.4f * BulletScale),
-                                    new Vector2(_window.ClientBounds.Width,
-                                        _random.Next(0, _window.ClientBounds.Height + 1)),
-                                    1));
-                                break;
-                        }
+                        CreatePowerUp();
                     }
 
                     #endregion
@@ -759,6 +740,35 @@ namespace SpaceShooterV2
                         break;
                 }
             }
+
+        private void CreatePowerUp(int forcedPowerUp = -1)
+        {
+            int powerUpChoice = forcedPowerUp;
+            if (powerUpChoice == -1)
+            {
+                powerUpChoice = _random.Next(0, 3);
+            }
+
+            switch (powerUpChoice)
+            {
+                //Heal
+                case 0:
+                    _objectList.Add(new PowerUp(_textureList[6].Width / _textureList[6].Height,
+                        _window.ClientBounds.Height / BulletScale, 6, -_window.ClientBounds.Height / (int)(1.4f * BulletScale),
+                        new Vector2(_window.ClientBounds.Width,
+                            _random.Next(0, _window.ClientBounds.Height + 1)),
+                        0));
+                    break;
+                //Damage
+                case 1:
+                    _objectList.Add(new PowerUp(_textureList[7].Width / _textureList[7].Height,
+                        _window.ClientBounds.Height / BulletScale, 7, -_window.ClientBounds.Height / (int)(1.4f * BulletScale),
+                        new Vector2(_window.ClientBounds.Width,
+                            _random.Next(0, _window.ClientBounds.Height + 1)),
+                        1));
+                    break;
+            }
+        }
 
         //Private Functions 
         private bool ContainsCompareTypes(Type t, List<int> intList)
