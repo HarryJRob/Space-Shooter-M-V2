@@ -112,9 +112,11 @@ namespace SpaceShooterV2
 
             if (Testing)
             {
-                CreateShip(0);
-                CreateShip(1);
-                CreateShip(2);
+                //CreateShip(0);
+                //CreateShip(1);
+                //CreateShip(2);
+                //CreatePowerUp(0);
+                //CreatePowerUp(1);
             }
 
             #endregion
@@ -616,23 +618,6 @@ namespace SpaceShooterV2
                 }
 
                 #endregion
-
-                #region Testing
-                //Used for the testing part of the course work
-                if (Testing)
-                {
-                    if (_multiplayer)
-                    {
-                        ((PlayerShip) _objectList[0]).Heal(10);
-                        ((PlayerShip) _objectList[1]).Heal(10);
-                    }
-                    else
-                    {
-                        ((PlayerShip)_objectList[0]).Heal(10);
-                    }
-                }
-
-                #endregion
             }
         }
 
@@ -690,6 +675,7 @@ namespace SpaceShooterV2
             }
 
             #endregion
+
         }
 
         //Public Accessors

@@ -101,7 +101,6 @@ namespace SpaceShooterV2
         {
             if (_health != 0)
             {
-
                 #region User Input
                 //Obj: 1.i 1
 
@@ -114,9 +113,8 @@ namespace SpaceShooterV2
                             _controlScheme.KeyStates[i] = true;
                         else
                             _controlScheme.KeyStates[i] = false;
-                    _previousKeyBoardState = curKeyboardState;
                 }
-
+                _previousKeyBoardState = curKeyboardState;
                 #endregion
 
                 #region Action Based on Control State 

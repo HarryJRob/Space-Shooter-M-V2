@@ -57,37 +57,6 @@ C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Wind
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Ships\HealthBarPiece.xnb
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Ships\ship.xnb
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Ships\SpaceShip.xnb
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\obj\x86\Debug\SpaceShooterV2.exe
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\obj\x86\Debug\SpaceShooterV2.pdb
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\obj\x86\Debug\SpaceShooterV2.csprojResolveAssemblyReference.cache
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\CollisionArea.xnb
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Backgrounds\BackGround.xnb
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Bullets\LongBullet.xnb
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Bullets\RoundBullet.xnb
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SpaceShooterV2.exe
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SpaceShooterV2.pdb
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\MonoGame.Framework.dll
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.dll
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.DXGI.dll
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.XInput.dll
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.RawInput.dll
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\MonoGame.Framework.xml
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.xml
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.DXGI.xml
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.XInput.xml
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.RawInput.xml
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Highscores.txt
-C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Settings.txt
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\obj\x86\Debug\SpaceShooterV2.exe
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\obj\x86\Debug\SpaceShooterV2.pdb
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Debug\Content\CollisionArea.xnb
@@ -170,8 +139,14 @@ C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Win
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Ships\Charger.xnb
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Ships\PlayerShip.xnb
 C:\Users\Harry Robertson\Source\Repos\Space-Shooter-M-V24\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Ships\Shotgun.xnb
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Highscores.txt
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Settings.txt
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\CollisionArea.xnb
 C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\KenVector.xnb
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Backgrounds\BackGround.xnb
 C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Bullets\BulletDamageBoost.xnb
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Bullets\LongBullet.xnb
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Bullets\RoundBullet.xnb
 C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\GameUI\CoolDownBarPiece.xnb
 C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\GameUI\HealthBarPiece.xnb
 C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Menu\MenuButton.xnb
@@ -182,3 +157,28 @@ C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\De
 C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Ships\PlayerShip.xnb
 C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Ships\PlayerShip2.xnb
 C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\Content\Game Resources\Ships\Shotgun.xnb
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SpaceShooterV2.exe
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SpaceShooterV2.pdb
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\MonoGame.Framework.dll
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.dll
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.XInput.dll
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.RawInput.dll
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\MonoGame.Framework.xml
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.xml
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.XInput.xml
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.RawInput.xml
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\obj\x86\Debug\SpaceShooterV2.exe
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\obj\x86\Debug\SpaceShooterV2.pdb
+C:\Users\Harry\Source\Repos\Space-Shooter-M-V2\SpaceShooterV2\obj\x86\Debug\SpaceShooterV2.csprojResolveAssemblyReference.cache
